@@ -1,0 +1,2912 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset default browser margins and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #000000;
+  min-height: 100vh;
+}
+
+.App {
+  background-color: #000000;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  padding: 20px 20px 20px 270px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  gap: 20px;
+}
+
+.menu-panel {
+  width: 250px;
+  background-color: #111111;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 15px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.picture-box {
+  width: 100%;
+  height: 198.375px;
+  background-color: #1f1f1f;
+  border: 2px solid #555;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.picture-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+.picture-placeholder {
+  text-align: center;
+  padding: 10px;
+}
+
+.menu-items-container {
+  flex: 1;
+}
+
+.menu-item {
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.menu-button {
+  width: 100%;
+  background-color: #1f1f1f;
+  color: #ffffff;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-button:hover {
+  background-color: #2a2a2a;
+  border-color: #555;
+}
+
+.menu-button.active {
+  background-color: #1e40af;
+  border-color: #1e40af;
+}
+
+.submenu {
+  margin-top: 8px;
+  padding-left: 16px;
+  border-left: 2px solid #333;
+}
+
+.submenu-button {
+  width: 100%;
+  background-color: #0a0a0a;
+  color: #cccccc;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  margin-bottom: 4px;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.submenu-button:hover {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.chat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-window {
+  flex: 1;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 20px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  background-color: #111111;
+}
+
+.message {
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  line-height: 1.5;
+  max-width: 80%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+.message.user {
+  background-color: #1e40af;
+  margin-left: auto;
+  margin-right: 0;
+  text-align: right;
+}
+
+.message.assistant {
+  background-color: #374151;
+  margin-left: 0;
+  margin-right: auto;
+  text-align: left;
+}
+
+/* Message Header and Copy Button Styles */
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.copy-button {
+  background-color: #4b5563;
+  color: #ffffff;
+  border: 1px solid #6b7280;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.copy-button:hover {
+  background-color: #6b7280;
+  border-color: #9ca3af;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.copy-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.copy-button.copied {
+  background-color: #10b981;
+  border-color: #34d399;
+  color: #ffffff;
+  animation: copySuccess 0.3s ease;
+}
+
+.copy-button.copied:hover {
+  background-color: #059669;
+  border-color: #10b981;
+}
+
+@keyframes copySuccess {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.message-content {
+  margin-top: 8px;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  box-sizing: border-box;
+}
+
+/* Markdown content styling for ReactMarkdown */
+.message-content ul,
+.message-content ol {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.message-content li {
+  margin: 4px 0;
+  line-height: 1.5;
+}
+
+.message-content p {
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.message-content h1,
+.message-content h2,
+.message-content h3,
+.message-content h4,
+.message-content h5,
+.message-content h6 {
+  margin: 12px 0 8px 0;
+  line-height: 1.3;
+}
+
+.message-content code {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.message-content pre {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 8px 0;
+}
+
+.message-content pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+.message-content blockquote {
+  border-left: 3px solid #888;
+  margin: 8px 0;
+  padding-left: 12px;
+  color: #ccc;
+}
+
+.message-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 8px 0;
+}
+
+.message-content th,
+.message-content td {
+  border: 1px solid #555;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.message-content th {
+  background-color: rgba(255, 255, 255, 0.1);
+  font-weight: bold;
+}
+
+/* Ensure proper spacing and containment */
+.message-content > *:first-child {
+  margin-top: 0;
+}
+
+.message-content > *:last-child {
+  margin-bottom: 0;
+}
+
+input[type="text"] {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 16px;
+  flex: 1;
+  margin-right: 10px;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #1e40af;
+  box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.2);
+}
+
+input[type="text"]::placeholder {
+  color: #9ca3af;
+}
+
+button {
+  background-color: #1e40af;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+button:disabled {
+  background-color: #374151;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+  padding: 20px;
+}
+
+/* Main content editor container */
+.main-content .editor-container {
+  width: 100%;
+  max-width: 1200px;
+  height: calc(100vh - 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: #111111;
+  border: 2px solid #333;
+  border-radius: 12px;
+  padding: 20px;
+  overflow: hidden; /* Prevent content from extending outside */
+}
+
+.main-content .editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #1f1f1f;
+  border: 2px solid #333;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.main-content .editor-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.main-content .editor-toolbar {
+  display: flex;
+  gap: 6px;
+  padding: 10px;
+  background-color: #1f1f1f;
+  border: 2px solid #333;
+  border-radius: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: visible; /* Allow content to wrap naturally */
+  max-width: 100%;
+  width: 100%; /* Ensure toolbar takes full container width */
+  box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
+/* Main content toolbar button styles */
+.main-content .toolbar-button {
+  background-color: #374151;
+  color: #ffffff;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: auto;
+  max-width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  flex-shrink: 1;
+}
+
+.main-content .toolbar-button[title*="Nitartha Dictionary"],
+.main-content .toolbar-button[title*="Rangjung Yeshe"] {
+  background-color: #4f46e5;
+  border-color: #4f46e5;
+  font-weight: 500;
+  min-width: 80px;
+  max-width: 95px;
+  padding: 6px 8px;
+  font-size: 10px;
+}
+
+.main-content .zoom-button {
+  background-color: #1f1f1f !important;
+  border-color: #333 !important;
+  font-weight: 500;
+  min-width: 32px !important;
+  max-width: 40px !important;
+  padding: 6px 6px !important;
+  font-size: 10px !important;
+}
+
+.main-content .zoom-level {
+  background-color: #1f1f1f;
+  color: #fbbf24;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  min-width: 40px;
+  max-width: 50px;
+  flex-shrink: 1;
+}
+
+.main-content .rich-text-editor {
+  flex: 1;
+  min-height: 400px;
+  max-height: none;
+  padding: 20px;
+  border: 2px solid #333;
+  border-radius: 8px;
+  background-color: #1f1f1f;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1.6;
+  outline: none;
+  overflow-y: auto;
+  resize: none;
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: embed !important;
+  writing-mode: horizontal-tb !important;
+  font-family: "Noto Sans Tibetan", "Microsoft Himalaya", "Tibetan Machine Uni", "Arial Unicode MS", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* Image styling for main content rich text editor */
+.main-content .rich-text-editor img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin: 10px 0;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.main-content .rich-text-editor img:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.rigpa-logo {
+  font-size: 240px;
+  color: rgba(255, 255, 255, 0.15);
+  font-family: "Noto Serif Tibetan", "BabelStone Tibetan", "Tibetan Machine Uni", "Microsoft Himalaya", "Qomolangma-Uchen Sarchen", serif;
+  font-weight: 300;
+  font-style: normal;
+  user-select: none;
+  pointer-events: none;
+  text-shadow: 
+    0 0 30px rgba(255, 255, 255, 0.03),
+    1px 1px 2px rgba(0, 0, 0, 0.1),
+    -1px -1px 1px rgba(255, 255, 255, 0.05);
+  letter-spacing: 0.075em;
+  line-height: 0.9;
+  transform: perspective(1000px) rotateX(5deg);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+}
+
+/* Chat Modal Styles */
+.chat-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.chat-modal {
+  background-color: #111111;
+  border: 3px solid #1e40af;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 1000px;
+  height: 85%;
+  max-height: 700px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+}
+
+.chat-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 2px solid #1e40af;
+  background-color: #1f1f1f;
+  border-radius: 9px 9px 0 0;
+}
+
+.chat-modal-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.close-button {
+  background: none;
+  border: 2px solid #555;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.close-button:hover {
+  background-color: #dc2626;
+  border-color: #dc2626;
+}
+
+.chat-modal .chat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+  min-height: 0;
+}
+
+.chat-modal .chat-window {
+  flex: 1;
+  min-height: 0;
+  max-height: 100%;
+  margin-bottom: 0;
+  border: 2px solid #333;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  background-color: #111111;
+  border-radius: 8px;
+}
+
+.chat-modal .chat-window::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-modal .chat-window::-webkit-scrollbar-track {
+  background: #1f1f1f;
+  border-radius: 4px;
+}
+
+.chat-modal .chat-window::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.chat-modal .chat-window::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+/* Gallery Modal Styles */
+.gallery-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.gallery-modal {
+  background-color: #111111;
+  border: 3px solid #1e40af;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 1000px;
+  height: 85%;
+  max-height: 700px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+}
+
+.gallery-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 2px solid #1e40af;
+  background-color: #1f1f1f;
+  border-radius: 9px 9px 0 0;
+}
+
+.gallery-modal-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.gallery-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+  min-height: 0;
+}
+
+.gallery-grid {
+  flex: 1;
+  min-height: 0;
+  max-height: 100%;
+  margin-bottom: 0;
+  border: 2px solid #333;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  background-color: #111111;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  align-content: start;
+  justify-items: center;
+}
+
+.gallery-item {
+  background-color: #1f1f1f;
+  border: 2px solid #333;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+}
+
+.gallery-item:hover {
+  border-color: #1e40af;
+  transform: scale(1.02);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+}
+
+.gallery-item h3 {
+  margin: 0;
+  padding: 10px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  background-color: #1f1f1f;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gallery-item-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: #888;
+  font-size: 14px;
+  text-align: center;
+  padding: 10px;
+}
+
+.gallery-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.gallery-grid::-webkit-scrollbar-track {
+  background: #1f1f1f;
+  border-radius: 4px;
+}
+
+.gallery-grid::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.gallery-grid::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+/* Dzogchen Terms Modal Styles */
+.dzogchen-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+  min-height: 0;
+}
+
+.dzogchen-upload-section {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: #1f1f1f;
+  border: 2px solid #333;
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  max-width: 350px;
+  min-width: 250px;
+}
+
+.search-input {
+  background-color: #111111;
+  color: #ffffff;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #1e40af;
+  box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.2);
+}
+
+.search-input::placeholder {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.search-results-info {
+  font-size: 12px;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.add-term-button {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  border: 2px solid #333;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-term-button:hover:not(:disabled) {
+  background-color: #2a2a2a;
+}
+
+.add-term-button:disabled {
+  background-color: #2a2a2a;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.export-excel-button {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  border: 2px solid #333;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.export-excel-button:hover:not(:disabled) {
+  background-color: #2a2a2a;
+}
+
+.export-excel-button:disabled {
+  background-color: #2a2a2a;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.term-count {
+  color: #9ca3af;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Edit Form Styles */
+.edit-form {
+  background-color: #1f1f1f;
+  border: 2px solid #1e40af;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.edit-form h3 {
+  margin: 0 0 15px 0;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 200px 150px 200px 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-input {
+  background-color: #111111;
+  color: #ffffff;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #1e40af;
+  box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.2);
+}
+
+.definition-input {
+  grid-column: span 1;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.save-button {
+  background-color: #059669;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.save-button:hover {
+  background-color: #047857;
+}
+
+.cancel-button {
+  background-color: #6b7280;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cancel-button:hover {
+  background-color: #4b5563;
+}
+
+.upload-button {
+  background-color: #1e40af;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.upload-button:hover {
+  background-color: #1d4ed8;
+}
+
+.sample-data-button {
+  background-color: #059669;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.sample-data-button:hover {
+  background-color: #047857;
+}
+
+.dzogchen-grid-container {
+  flex: 1;
+  min-height: 0;
+  border: 2px solid #333;
+  border-radius: 8px;
+  background-color: #111111;
+  overflow: hidden;
+  position: relative;
+}
+
+.dzogchen-grid {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: auto;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.grid-header {
+  display: grid;
+  grid-template-columns: 60px 200px 150px 200px 300px 120px; /* Fixed consistent widths */
+  background-color: #1e40af;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 2px solid #333;
+}
+
+.grid-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.grid-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.grid-row {
+  display: grid;
+  grid-template-columns: 60px 200px 150px 200px 300px 120px; /* Exact match with header */
+  border-bottom: 1px solid #333;
+}
+
+.grid-row:hover {
+  background-color: #1a1a1a;
+}
+
+.grid-cell {
+  padding: 12px;
+  border-right: 1px solid #333;
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  overflow-wrap: break-word;
+  word-break: normal; /* Changed from break-word to normal */
+}
+
+.header-cell {
+  font-weight: 600;
+  background-color: #1e40af;
+  color: #ffffff;
+  text-align: center;
+  justify-content: center;
+}
+
+.tibetan-text {
+  font-family: 'Tibetan Machine Uni', 'Microsoft Himalaya', serif;
+  font-size: 24px;
+  color: #fbbf24;
+}
+
+.wiley-text {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: #a78bfa;
+  font-style: italic;
+}
+
+.definition-cell {
+  font-size: 13px;
+  line-height: 1.4;
+  color: #e5e7eb;
+}
+
+.translation-cell {
+  font-size: 13px;
+  line-height: 1.4;
+  color: #e5e7eb;
+  text-align: left;
+  white-space: normal;
+  word-break: normal;
+}
+
+.actions-cell {
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Action Button Styles */
+.edit-btn, .delete-btn, .save-btn, .cancel-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.edit-btn:hover {
+  background-color: #1e40af;
+}
+
+.delete-btn:hover {
+  background-color: #dc2626;
+}
+
+.save-btn:hover {
+  background-color: #059669;
+}
+
+.cancel-btn:hover {
+  background-color: #6b7280;
+}
+
+/* Edit Input Styles */
+.edit-input {
+  background-color: #111111;
+  color: #ffffff;
+  border: 1px solid #1e40af;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 13px;
+  width: 100%;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.no-data {
+  padding: 40px;
+  text-align: center;
+  color: #888;
+  font-size: 16px;
+  background-color: #111111;
+}
+
+.dzogchen-grid::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dzogchen-grid::-webkit-scrollbar-track {
+  background: #1f1f1f;
+  border-radius: 4px;
+}
+
+.dzogchen-grid::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.dzogchen-grid::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+/* Editor Modal Styles */
+.editor-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 15px;
+  min-height: 0;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #1f1f1f;
+  border: 2px solid #333;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.editor-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.editor-toolbar {
+  display: flex;
+  gap: 7px;
+  padding: 11px;
+  background-color: #1f1f1f;
+  border: 2px solid #333;
+  border-radius: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: visible; /* Allow content to wrap naturally */
+  max-width: 100%;
+  width: 100%; /* Ensure toolbar takes full container width */
+  box-sizing: border-box; /* Include padding and border in width calculation */
+  min-height: auto; /* Let height adjust based on content */
+}
+
+.toolbar-button {
+  background-color: #374151;
+  color: #ffffff;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 7px 9px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  flex-shrink: 1; /* Allow buttons to shrink if needed */
+  max-width: 132px; /* Reasonable max width */
+}
+
+.toolbar-button:hover {
+  background-color: #1e40af;
+  border-color: #1e40af;
+}
+
+.toolbar-button:active {
+  transform: scale(0.95);
+}
+
+/* Dictionary buttons styling */
+.toolbar-button[title*="Nitartha Dictionary"],
+.toolbar-button[title*="Rangjung Yeshe"] {
+  background-color: #4f46e5;
+  border-color: #4f46e5;
+  font-weight: 500;
+  min-width: 110px;
+  max-width: 132px;
+  padding: 7px 11px;
+  font-size: 12px;
+  flex-shrink: 1;
+}
+
+.toolbar-button[title*="Nitartha Dictionary"]:hover,
+.toolbar-button[title*="Rangjung Yeshe"]:hover {
+  background-color: #3730a3;
+  border-color: #3730a3;
+  transform: translateY(-1px);
+}
+
+/* Zoom controls styling */
+.zoom-button {
+  background-color: #1f1f1f !important;
+  border-color: #333 !important;
+  font-weight: 500;
+  min-width: 33px !important;
+  max-width: 44px !important;
+  padding: 7px 7px !important;
+  font-size: 12px !important;
+  flex-shrink: 1 !important;
+}
+
+.zoom-button:hover {
+  background-color: #2a2a2a !important;
+  border-color: #555 !important;
+  transform: translateY(-1px);
+}
+
+.zoom-level {
+  background-color: #1f1f1f;
+  color: #fbbf24;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 7px 9px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  max-width: 55px;
+  flex-shrink: 1;
+  white-space: nowrap;
+}
+
+.rich-text-editor {
+  flex: 1;
+  min-height: 400px;
+  max-height: 500px;
+  padding: 20px;
+  border: 2px solid #333;
+  border-radius: 8px;
+  background-color: #1f1f1f;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1.6;
+  outline: none;
+  overflow-y: auto;
+  resize: vertical;
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: embed !important;
+  writing-mode: horizontal-tb !important;
+  font-family: "Noto Sans Tibetan", "Microsoft Himalaya", "Tibetan Machine Uni", "Arial Unicode MS", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.rich-text-editor:focus {
+  border-color: #1e40af;
+  box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.2);
+}
+
+.rich-text-editor *,
+.rich-text-editor p,
+.rich-text-editor div,
+.rich-text-editor span {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: embed !important;
+}
+
+/* Force all text nodes to be LTR */
+.rich-text-editor::before {
+  content: '\200E'; /* Left-to-right mark */
+}
+
+.rich-text-editor h1,
+.rich-text-editor h2,
+.rich-text-editor h3 {
+  color: #fbbf24;
+  margin: 10px 0;
+}
+
+.rich-text-editor ul,
+.rich-text-editor ol {
+  margin: 10px 0;
+  padding-left: 30px;
+}
+
+.rich-text-editor li {
+  margin: 5px 0;
+}
+
+.rich-text-editor p {
+  margin: 8px 0;
+}
+
+.rich-text-editor strong {
+  color: #60a5fa;
+}
+
+.rich-text-editor em {
+  color: #a78bfa;
+}
+
+/* Image scaling within rich text editor based on zoom level */
+.rich-text-editor img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin: 10px 0;
+  transition: transform 0.2s ease;
+  transform: scale(var(--editor-zoom-scale, 1));
+  transform-origin: left top;
+  display: block;
+}
+
+.rich-text-editor img:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.editor-actions {
+  display: flex;
+  gap: 8px;
+  padding: 13px;
+  background-color: #1f1f1f;
+  border: 2px solid #333;
+  border-radius: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.editor-save-btn,
+.editor-load-btn,
+.editor-clear-btn,
+.editor-export-btn,
+.editor-export-text-btn,
+.editor-import-btn {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  border: 2px solid #333;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+.editor-save-btn:hover,
+.editor-load-btn:hover,
+.editor-clear-btn:hover,
+.editor-export-btn:hover,
+.editor-export-text-btn:hover,
+.editor-import-btn:hover {
+  background-color: #2a2a2a;
+  border-color: #555;
+}
+
+.editor-export-btn {
+  background-color: #1f1f1f;
+}
+
+.editor-export-text-btn {
+  background-color: #1f1f1f;
+}
+
+.editor-import-btn {
+  background-color: #1f1f1f;
+}
+
+.editor-load-btn {
+  background-color: #1f1f1f;
+}
+
+.editor-clear-btn {
+  background-color: #1f1f1f;
+}
+
+.rich-text-editor::-webkit-scrollbar {
+  width: 8px;
+}
+
+.rich-text-editor::-webkit-scrollbar-track {
+  background: #111111;
+  border-radius: 4px;
+}
+
+.rich-text-editor::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.rich-text-editor::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+/* Responsive design for editor actions */
+/* Larger screens (1400px and up) */
+@media (min-width: 1400px) {
+  .editor-toolbar {
+    gap: 8px;
+    padding: 12px;
+  }
+  
+  .toolbar-button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  .toolbar-button[title*="Nitartha Dictionary"],
+  .toolbar-button[title*="Rangjung Yeshe"] {
+    min-width: 150px;
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+  
+  .zoom-button {
+    min-width: 45px !important;
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* Universal toolbar fix for ALL screen sizes - Balanced proportions */
+.editor-toolbar,
+.main-content .editor-toolbar {
+  gap: 6px !important;
+  padding: 10px !important;
+  flex-wrap: wrap !important;
+  overflow: visible !important;
+  min-height: auto !important;
+}
+
+.toolbar-button,
+.main-content .toolbar-button {
+  padding: 6px 8px !important;
+  font-size: 11px !important;
+  min-width: auto !important;
+  max-width: 90px !important;
+  flex-shrink: 1 !important;
+}
+
+.toolbar-button[title*="Nitartha Dictionary"],
+.toolbar-button[title*="Rangjung Yeshe"],
+.main-content .toolbar-button[title*="Nitartha Dictionary"],
+.main-content .toolbar-button[title*="Rangjung Yeshe"] {
+  min-width: 80px !important;
+  max-width: 95px !important;
+  padding: 6px 8px !important;
+  font-size: 10px !important;
+}
+
+.zoom-button,
+.main-content .zoom-button {
+  min-width: 32px !important;
+  max-width: 40px !important;
+  padding: 6px 6px !important;
+  font-size: 10px !important;
+}
+
+.zoom-level,
+.main-content .zoom-level {
+  min-width: 40px !important;
+  max-width: 50px !important;
+  padding: 6px 8px !important;
+  font-size: 10px !important;
+}
+
+/* Aggressive fix for small monitors (1366px and below) */
+@media (max-width: 1366px) {
+  .editor-toolbar,
+  .main-content .editor-toolbar {
+    gap: 4px !important;
+    padding: 8px !important;
+    flex-wrap: wrap !important;
+    min-height: auto !important;
+    height: auto !important;
+  }
+  
+  .toolbar-button {
+    padding: 4px 6px !important;
+    font-size: 10px !important;
+    min-width: auto !important;
+    max-width: 70px !important;
+    flex-shrink: 1 !important;
+  }
+  
+  .toolbar-button[title*="Nitartha Dictionary"],
+  .toolbar-button[title*="Rangjung Yeshe"] {
+    min-width: 60px !important;
+    max-width: 70px !important;
+    padding: 4px 5px !important;
+    font-size: 9px !important;
+  }
+  
+  .zoom-button {
+    min-width: 22px !important;
+    max-width: 28px !important;
+    padding: 4px 3px !important;
+    font-size: 8px !important;
+  }
+  
+  .zoom-level {
+    min-width: 28px !important;
+    max-width: 35px !important;
+    padding: 4px 4px !important;
+    font-size: 9px !important;
+  }
+}
+
+/* Very small monitors (1024px and below) */
+@media (max-width: 1024px) {
+  .App {
+    padding: 10px 10px 10px 260px;
+    gap: 10px;
+  }
+
+  .main-content {
+    width: 100%;
+    max-width: calc(100vw - 280px);
+  }
+
+  .main-content .editor-container,
+  .editor-container {
+    height: calc(100vh - 20px);
+    padding: 15px;
+    max-width: 100%;
+  }
+  
+  .editor-toolbar {
+    gap: 3px;
+    padding: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    min-height: auto;
+    max-height: none;
+  }
+  
+  .toolbar-button {
+    padding: 4px 6px;
+    font-size: 10px;
+    max-width: 80px;
+    min-width: auto;
+    flex-shrink: 1;
+  }
+  
+  .toolbar-button[title*="Nitartha Dictionary"],
+  .toolbar-button[title*="Rangjung Yeshe"] {
+    min-width: 65px;
+    max-width: 80px;
+    padding: 4px 5px;
+    font-size: 9px;
+  }
+  
+  .zoom-button {
+    min-width: 24px !important;
+    max-width: 30px !important;
+    padding: 4px 3px !important;
+    font-size: 9px !important;
+  }
+  
+  .zoom-level {
+    min-width: 30px;
+    max-width: 40px;
+    padding: 4px 5px;
+    font-size: 9px;
+  }
+}
+
+/* Small monitors and laptops (1200px and below) */
+@media (max-width: 1200px) {
+  .editor-toolbar {
+    gap: 4px;
+    padding: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .toolbar-button {
+    padding: 5px 8px;
+    font-size: 11px;
+    max-width: 100px;
+    flex-shrink: 1;
+  }
+  
+  .toolbar-button[title*="Nitartha Dictionary"],
+  .toolbar-button[title*="Rangjung Yeshe"] {
+    min-width: 80px;
+    max-width: 100px;
+    padding: 5px 6px;
+    font-size: 10px;
+  }
+  
+  .zoom-button {
+    min-width: 28px !important;
+    max-width: 35px !important;
+    padding: 5px 4px !important;
+    font-size: 10px !important;
+  }
+  
+  .zoom-level {
+    min-width: 35px;
+    max-width: 45px;
+    padding: 5px 6px;
+    font-size: 10px;
+  }
+}
+
+/* Medium screens (1000px to 1399px) */
+@media (min-width: 1000px) and (max-width: 1399px) {
+  .editor-toolbar {
+    gap: 6px;
+    padding: 10px;
+  }
+  
+  .toolbar-button {
+    padding: 7px 10px;
+    font-size: 12px;
+    max-width: 140px;
+  }
+  
+  .toolbar-button[title*="Nitartha Dictionary"],
+  .toolbar-button[title*="Rangjung Yeshe"] {
+    min-width: 110px;
+    max-width: 130px;
+    padding: 7px 10px;
+    font-size: 11px;
+  }
+  
+  .zoom-button {
+    min-width: 35px !important;
+    max-width: 45px !important;
+    padding: 7px 8px !important;
+    font-size: 11px !important;
+  }
+  
+  .zoom-level {
+    min-width: 45px;
+    max-width: 60px;
+    padding: 7px 8px;
+    font-size: 11px;
+  }
+}
+
+/* Small laptop screens (769px to 999px) */
+@media (min-width: 769px) and (max-width: 999px) {
+  .editor-toolbar {
+    gap: 5px;
+    padding: 8px;
+  }
+  
+  .toolbar-button {
+    padding: 6px 8px;
+    font-size: 11px;
+    max-width: 100px;
+  }
+  
+  .toolbar-button[title*="Nitartha Dictionary"],
+  .toolbar-button[title*="Rangjung Yeshe"] {
+    min-width: 90px;
+    max-width: 110px;
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+  
+  .zoom-button {
+    min-width: 30px !important;
+    max-width: 35px !important;
+    padding: 6px 6px !important;
+    font-size: 10px !important;
+  }
+  
+  .zoom-level {
+    padding: 6px 8px;
+    font-size: 10px;
+    min-width: 40px;
+    max-width: 50px;
+  }
+}
+
+/* Very small screens and narrow monitors (600px to 768px) */
+@media (min-width: 600px) and (max-width: 768px) {
+  .editor-toolbar {
+    gap: 4px;
+    padding: 6px;
+    flex-wrap: wrap;
+  }
+  
+  .toolbar-button {
+    padding: 4px 6px;
+    font-size: 11px;
+    min-width: auto;
+  }
+  
+  .toolbar-button[title*="Nitartha Dictionary"],
+  .toolbar-button[title*="Rangjung Yeshe"] {
+    min-width: 80px;
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+  
+  .zoom-button {
+    min-width: 25px !important;
+    padding: 4px 5px !important;
+    font-size: 9px !important;
+  }
+  
+  .zoom-level {
+    padding: 4px 5px;
+    font-size: 9px;
+    min-width: 30px;
+  }
+
+  /* Stack toolbar items in multiple rows if needed */
+  .editor-toolbar {
+    justify-content: space-between;
+  }
+}
+
+/* Mobile screens (768px and below) */
+@media (max-width: 768px) {
+  .App {
+    padding: 10px 10px 10px 270px;
+    gap: 10px;
+  }
+
+  .main-content {
+    padding: 0;
+    width: 100%;
+    max-width: calc(100vw - 290px); /* Account for menu panel */
+    overflow: hidden;
+  }
+
+  .editor-container,
+  .main-content .editor-container {
+    width: 100%;
+    max-width: 100%;
+    height: calc(100vh - 20px);
+    padding: 15px;
+    overflow: hidden;
+  }
+
+  .editor-toolbar,
+  .main-content .editor-toolbar {
+    gap: 3px;
+    padding: 8px;
+    flex-wrap: wrap;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .editor-actions {
+    gap: 8px;
+    padding: 10px;
+  }
+  
+  .editor-save-btn,
+  .editor-load-btn,
+  .editor-clear-btn,
+  .editor-export-btn,
+  .editor-export-text-btn,
+  .editor-import-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+    flex: 1;
+    min-width: 120px;
+  }
+  
+  .editor-toolbar {
+    gap: 5px;
+    padding: 8px;
+  }
+  
+  .toolbar-button {
+    padding: 6px 10px;
+    font-size: 12px;
+    min-width: fit-content;
+    white-space: nowrap;
+  }
+  
+  /* Mobile dictionary buttons */
+  .toolbar-button[title*="Nitartha"],
+  .toolbar-button[title*="Rangjung"] {
+    min-width: 130px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+  
+  /* Mobile zoom controls */
+  .zoom-button {
+    min-width: 35px !important;
+    padding: 6px 8px !important;
+    font-size: 11px !important;
+  }
+  
+  .zoom-level {
+    padding: 6px 8px;
+    font-size: 11px;
+    min-width: 40px;
+  }
+
+  /* Mobile Dzogchen Terms Grid - Horizontal Scrolling */
+  .dzogchen-grid-container {
+    padding: 8px;
+    overflow-x: auto;
+    overflow-y: auto;
+    width: 100%;
+    max-width: calc(100vw - 300px); /* Account for menu panel */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+
+  .dzogchen-grid {
+    min-width: 1030px; /* Total width of all columns */
+    overflow-x: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+
+  .grid-header {
+    display: grid !important;
+    grid-template-columns: 60px 200px 150px 200px 300px 120px; /* Match desktop exactly */
+    min-width: 1030px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #1e40af;
+    border-bottom: 2px solid #333;
+  }
+
+  .grid-content {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .grid-row {
+    display: grid !important;
+    grid-template-columns: 60px 200px 150px 200px 300px 120px; /* Exact match */
+    min-width: 1030px;
+    border-bottom: 1px solid #333;
+  }
+
+  .grid-cell {
+    padding: 8px 6px !important;
+    border-right: 1px solid #333;
+    font-size: 12px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    line-height: 1.4;
+    word-break: normal !important; /* Override desktop word-break */
+    box-sizing: border-box; /* Ensure consistent box model */
+    min-width: 0; /* Allow content to shrink */
+  }
+
+  .grid-cell:last-child {
+    border-right: none;
+  }
+
+  /* Specific column styling for mobile */
+  .grid-cell.tibetan-text {
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: "Noto Sans Tibetan", "Microsoft Himalaya", "Tibetan Machine Uni", serif;
+    word-break: normal !important;
+    min-width: 160px; /* Ensure adequate space for Tibetan text */
+  }
+
+  .grid-cell.wiley-text {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    word-break: normal !important;
+    min-width: 120px;
+  }
+
+  .grid-cell.translation-cell {
+    font-size: 12px;
+    line-height: 1.4;
+    word-break: normal !important;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+    text-align: left;
+    white-space: normal;
+    min-width: 180px; /* Ensure adequate space for translations */
+  }
+
+  .grid-cell.actions-cell {
+    text-align: center;
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .grid-cell button {
+    margin: 1px;
+    padding: 8px 10px;
+    font-size: 12px;
+    min-width: 35px;
+    border-radius: 4px;
+    cursor: pointer;
+    touch-action: manipulation; /* Better touch interaction */
+  }
+
+  /* Mobile edit inputs */
+  .edit-input {
+    width: 100%;
+    padding: 6px;
+    font-size: 12px;
+    box-sizing: border-box;
+    border: 1px solid #555;
+    background-color: #2d2d2d;
+    color: white;
+    border-radius: 4px;
+  }
+
+  /* Header text adjustments for mobile */
+  .grid-header .grid-cell {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 6px;
+    color: white;
+  }
+
+  /* Scrollbar styling for mobile */
+  .dzogchen-grid::-webkit-scrollbar,
+  .dzogchen-grid-container::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+
+  .dzogchen-grid::-webkit-scrollbar-track,
+  .dzogchen-grid-container::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 4px;
+  }
+
+  .dzogchen-grid::-webkit-scrollbar-thumb,
+  .dzogchen-grid-container::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 4px;
+  }
+
+  .dzogchen-grid::-webkit-scrollbar-thumb:hover,
+  .dzogchen-grid-container::-webkit-scrollbar-thumb:hover {
+    background: #777;
+  }
+
+  /* Mobile edit form */
+  .edit-form {
+    display: block !important;
+    background-color: #1a1a1a;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 2px solid #fbbf24;
+  }
+
+  .edit-form label {
+    display: block;
+    width: 100% !important;
+    margin-bottom: 10px;
+    color: #fbbf24;
+    font-weight: bold;
+  }
+
+  .edit-form input,
+  .edit-form textarea {
+    width: 100% !important;
+    margin-top: 5px;
+    padding: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  .edit-form .form-actions {
+    margin-top: 15px;
+    text-align: center;
+  }
+
+  .edit-form button {
+    margin: 5px;
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+}
+
+/* Tibetan Alphabet Styles */
+.tibetan-alphabet-container {
+  padding: 20px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.alphabet-section h3 {
+  text-align: center;
+  color: #fbbf24;
+  font-size: 24px;
+  margin-bottom: 30px;
+  font-family: "Noto Sans Tibetan", "Microsoft Himalaya", "Tibetan Machine Uni", serif;
+}
+
+.alphabet-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.letter-group {
+  background-color: #1f1f1f;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #333;
+}
+
+.letter-group h4 {
+  color: #60a5fa;
+  font-size: 18px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-family: "Noto Sans Tibetan", "Microsoft Himalaya", "Tibetan Machine Uni", serif;
+}
+
+.letters-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.letters-row:last-child {
+  margin-bottom: 0;
+}
+
+.letter-card {
+  background-color: #2d2d2d;
+  border: 2px solid #444;
+  border-radius: 10px;
+  padding: 15px;
+  min-width: 120px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.letter-card:hover {
+  border-color: #fbbf24;
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+  transform: translateY(-2px);
+}
+
+.tibetan-letter {
+  font-size: 36px;
+  color: #fbbf24;
+  font-family: "Noto Sans Tibetan", "Microsoft Himalaya", "Tibetan Machine Uni", serif;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.letter-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.wylie {
+  color: #a78bfa;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.sound {
+  color: #9ca3af;
+  font-size: 12px;
+  font-style: italic;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .tibetan-alphabet-container {
+    padding: 15px;
+  }
+  
+  .letters-row {
+    gap: 10px;
+  }
+  
+  .letter-card {
+    min-width: 100px;
+    padding: 12px;
+  }
+  
+  .tibetan-letter {
+    font-size: 28px;
+  }
+  
+  .alphabet-section h3 {
+    font-size: 20px;
+  }
+  
+  .letter-group h4 {
+    font-size: 16px;
+  }
+}
+
+/* Full Screen Image Modal Styles */
+.fullscreen-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  cursor: pointer;
+}
+
+.fullscreen-modal {
+  background-color: #111111;
+  border: 3px solid #1e40af;
+  border-radius: 12px;
+  width: 95%;
+  height: 95%;
+  max-width: 1200px;
+  max-height: 900px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+  cursor: default;
+}
+
+.fullscreen-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 2px solid #1e40af;
+  background-color: #1f1f1f;
+  border-radius: 9px 9px 0 0;
+  flex-shrink: 0;
+}
+
+.fullscreen-modal-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-button {
+  background: none;
+  border: 2px solid #555;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.info-button:hover {
+  background-color: #1e40af;
+  border-color: #1e40af;
+}
+
+.fullscreen-content-container {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  position: relative;
+}
+
+.fullscreen-image-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  min-height: 0;
+  background-color: #000000;
+  border-radius: 0 0 9px 9px;
+}
+
+/* Master/Deity Information Box Styles */
+.deity-info-box {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 350px;
+  max-height: calc(100% - 40px);
+  background-color: #111111;
+  border: 3px solid #fbbf24;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  z-index: 10;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.deity-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #1f1f1f;
+  border-bottom: 2px solid #fbbf24;
+}
+
+.deity-info-header h3 {
+  margin: 0;
+  color: #fbbf24;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.info-close-button {
+  background: none;
+  border: 2px solid #555;
+  color: #ffffff;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 2px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.info-close-button:hover {
+  background-color: #dc2626;
+  border-color: #dc2626;
+}
+
+.deity-info-content {
+  padding: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.deity-info-content p {
+  margin: 0;
+  color: #e5e7eb;
+  line-height: 1.6;
+  font-size: 14px;
+  text-align: justify;
+}
+
+.deity-info-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.deity-info-content::-webkit-scrollbar-track {
+  background: #1f1f1f;
+  border-radius: 3px;
+}
+
+.deity-info-content::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 3px;
+}
+
+.deity-info-content::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+.fullscreen-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.fullscreen-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #888;
+  font-size: 18px;
+  text-align: center;
+}
+
+.placeholder-content {
+  padding: 40px;
+  background-color: #1f1f1f;
+  border: 2px dashed #555;
+  border-radius: 12px;
+}
+
+/* Responsive design for full screen modal */
+@media (max-width: 768px) {
+  .fullscreen-modal {
+    width: 98%;
+    height: 98%;
+    border-radius: 8px;
+  }
+  
+  .fullscreen-modal-header {
+    padding: 10px 15px;
+    border-radius: 6px 6px 0 0;
+  }
+  
+  .fullscreen-modal-header h2 {
+    font-size: 16px;
+  }
+  
+  .header-controls {
+    gap: 8px;
+  }
+  
+  .info-button,
+  .close-button {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+  
+  .fullscreen-image-container {
+    padding: 10px;
+    border-radius: 0 0 6px 6px;
+  }
+  
+  .placeholder-content {
+    padding: 20px;
+    font-size: 16px;
+  }
+  
+  /* Mobile responsive master/deity info box */
+  .deity-info-box {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    max-height: calc(100vh - 20px);
+    z-index: 20;
+  }
+  
+  .deity-info-header h3 {
+    font-size: 16px;
+  }
+  
+  .deity-info-content {
+    padding: 15px;
+    max-height: calc(100vh - 120px);
+  }
+  
+  .deity-info-content p {
+    font-size: 13px;
+  }
+}
+
+/* Dzogchen Terms Main Content Styles */
+.dzogchen-terms-main-content {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  border: 1px solid #444;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.dzogchen-terms-main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.dzogchen-main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border: 2px solid #333;
+  background-color: #1f1f1f;
+  border-radius: 9px;
+}
+
+.dzogchen-main-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.dzogchen-main-header .close-button {
+  background: none;
+  border: 2px solid #555;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.dzogchen-main-header .close-button:hover {
+  background-color: #dc2626;
+  border-color: #dc2626;
+}
+
+/* Override existing dzogchen-container for main content */
+.dzogchen-terms-main-content .dzogchen-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.dzogchen-terms-main-content .dzogchen-grid-container {
+  flex: 1;
+  overflow: auto;
+  margin-top: 20px;
+}
+
+.dzogchen-terms-main-content .dzogchen-grid {
+  min-width: 100%;
+}
+
+/* Chat Main Content Styles */
+.chat-main-content {
+  width: 100%;
+  max-width: 1200px;
+  height: calc(100vh - 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: #111111;
+  border: 2px solid #333;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.chat-main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #1f1f1f;
+  border: 2px solid #333;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.chat-main-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.chat-header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.clear-chat-button {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  border: 2px solid #333;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.clear-chat-button:hover {
+  background-color: #2a2a2a;
+  border-color: #555;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px #555(220, 38, 38, 0.3);
+}
+
+.clear-chat-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px #555(220, 38, 38, 0.3);
+}
+
+.chat-main-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 0;
+}
+
+.chat-main-content .chat-window {
+  flex: 1;
+  min-height: 0;
+  max-height: 100%;
+  border: 2px solid #333;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  background-color: #1f1f1f;
+  border-radius: 8px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.chat-main-content .chat-window::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-main-content .chat-window::-webkit-scrollbar-track {
+  background: #111111;
+  border-radius: 4px;
+}
+
+.chat-main-content .chat-window::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.chat-main-content .chat-window::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+.chat-main-content .input-area {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 15px;
+  background-color: #1f1f1f;
+  border: 2px solid #333;
+  border-radius: 8px;
+}
+
+.chat-main-content .input-area input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #333;
+  border-radius: 6px;
+  background-color: #111111;
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+}
+
+.chat-main-content .input-area input:focus {
+  border-color: #1e40af;
+}
+
+.chat-main-content .input-area input::placeholder {
+  color: #888888;
+}
+
+.chat-main-content .input-area button {
+  padding: 12px 20px;
+  background-color: #1e40af;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.chat-main-content .input-area button:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+.chat-main-content .input-area button:disabled {
+  background-color: #374151;
+  cursor: not-allowed;
+}
+
+/* Tibetan Alphabet Modal Styles */
+.tibetan-alphabet-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.tibetan-alphabet-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.tibetan-alphabet-content h3 {
+  color: #ffffff;
+  font-size: 18px;
+  margin: 0 0 15px 0;
+  border-bottom: 2px solid #1e40af;
+  padding-bottom: 8px;
+}
+
+.tibetan-basic-letters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 15px;
+  padding: 20px;
+  background-color: #1f1f1f;
+  border: 2px solid #333;
+  border-radius: 8px;
+}
+
+.tibetan-letter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  background-color: #111111;
+  border: 1px solid #444;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.tibetan-letter:hover {
+  background-color: #2a2a2a;
+  border-color: #1e40af;
+}
+
+.tibetan-char {
+  font-size: 32px;
+  font-family: "Noto Sans Tibetan", "Microsoft Himalaya", "Tibetan Machine Uni", "Arial Unicode MS", serif;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+.transliteration {
+  font-size: 12px;
+  color: #888888;
+  font-family: monospace;
+}
+
+.tibetan-terms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  background-color: #1f1f1f;
+  border: 2px solid #333;
+  border-radius: 8px;
+}
+
+.tibetan-term {
+  padding: 15px;
+  background-color: #111111;
+  border: 1px solid #444;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.tibetan-term:hover {
+  background-color: #2a2a2a;
+  border-color: #1e40af;
+}
+
+/* Very narrow screens (under 600px) */
+@media (max-width: 599px) {
+  .App {
+    padding: 5px 5px 5px 260px;
+  }
+
+  .main-content {
+    max-width: calc(100vw - 270px);
+  }
+
+  .editor-container,
+  .main-content .editor-container {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .editor-toolbar,
+  .main-content .editor-toolbar {
+    gap: 2px;
+    padding: 6px;
+    min-height: auto;
+  }
+
+  .toolbar-button {
+    padding: 3px 4px;
+    font-size: 10px;
+    min-width: auto;
+    max-width: 70px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .toolbar-button[title*="Nitartha Dictionary"],
+  .toolbar-button[title*="Rangjung Yeshe"] {
+    min-width: 60px;
+    max-width: 60px;
+    padding: 3px 4px;
+    font-size: 9px;
+  }
+
+  .zoom-button {
+    min-width: 20px !important;
+    max-width: 20px !important;
+    padding: 3px 4px !important;
+    font-size: 8px !important;
+  }
+
+  .zoom-level {
+    padding: 3px 4px;
+    font-size: 8px;
+    min-width: 25px;
+    max-width: 25px;
+  }
+}
+
+/* Add general constraint for all toolbar buttons */
+.toolbar-button {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.tibetan-term .tibetan-script {
+  font-size: 28px;
+  font-family: "Noto Sans Tibetan", "Microsoft Himalaya", "Tibetan Machine Uni", "Arial Unicode MS", serif;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.tibetan-term .wiley {
+  font-size: 14px;
+  color: #fbbf24;
+  font-family: monospace;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.tibetan-term .english {
+  font-size: 16px;
+  color: #1e40af;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.tibetan-term .translation {
+  font-size: 13px;
+  color: #cccccc;
+  line-height: 1.4;
+  text-align: left;
+}
+
+/* Responsive adjustments for main content */
+@media (max-width: 1200px) {
+  .dzogchen-terms-main-content .dzogchen-upload-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+  
+  .dzogchen-terms-main-content .search-container {
+    width: 100%;
+  }
+  
+  .tibetan-basic-letters {
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 10px;
+  }
+  
+  .tibetan-terms-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Responsive design for chat header buttons */
+@media (max-width: 768px) {
+  .chat-header-buttons {
+    gap: 8px;
+  }
+  
+  .clear-chat-button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .chat-main-header {
+    padding: 12px 15px;
+  }
+  
+  .chat-main-header h2 {
+    font-size: 18px;
+  }
+}
