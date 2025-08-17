@@ -420,34 +420,6 @@ const App = () => {
   // Contemporary masters data
   const contemporaryMasters = [
     {
-      id: 7,
-      src: `${process.env.PUBLIC_URL}/ChogyamTrungpaRinpoche.jpg`,
-      alt: 'Chogyam Trungpa',
-      title: 'Chogyam Trungpa',
-      info: 'Chögyam Trungpa Rinpoche (1939–1987), the 11th Trungpa tulku, fled Tibet in 1959, studied at Oxford, and co-founded Scotland’s Samye Ling. After renouncing monastic vows, he moved to North America, founded Naropa University and Shambhala Training, wrote influential books, taught “crazy wisdom,” shaping Western Buddhism.'
-    },
-    {
-      id: 4,
-      src: `${process.env.PUBLIC_URL}/ChagdudRinpoche.jpg`,
-      alt: 'Chagdud Rinpoche',
-      title: 'Chagdud Rinpoche',
-      info: 'Chagdud Tulku Rinpoche (1930–2002) was a Nyingma master and the 14th Chagdud incarnation. He fled Tibet in 1959, aided refugees in India, and moved to the United States in 1979. He founded Chagdud Gonpa Foundation, emphasized Red Tara and Vajrakilaya, established Brazil’s Khadro Ling, and wrote Lord of the Dance.'
-    },
-    {
-      id: 5,
-      src: `${process.env.PUBLIC_URL}/DudjomRinpoche.jpg`,
-      alt: 'Dudjom Rinpoche',
-      title: 'Dudjom Rinpoche',
-      info: 'Dudjom Rinpoche (Jigdral Yeshe Dorje, 1904–1987) was a preeminent Nyingma master, tertön, and scholar. Recognized as Dudjom Lingpa’s reincarnation, he preserved and taught the Dudjom Tersar. After 1959 exile, he taught across India, Nepal, Europe, and North America, serving as Nyingma’s head in exile, and authored foundational histories of Nyingma.'
-    },
-    {
-      id: 6,
-      src: `${process.env.PUBLIC_URL}/HisHolinessPenorRinpoche.jpg`,
-      alt: 'His Holiness Penor Rinpoche',
-      title: 'His Holiness Penor Rinpoche',
-      info: 'His Holiness Penor Rinpoche (1932–2009), the 11th throne holder of the Palyul lineage, was born in Powo, Kham. After fleeing Tibet, he founded Namdroling Monastery in South India. Supreme Head of the Nyingma school from 1993 to 2001, he was renowned for Dzogchen teachings and ordained thousands, passing in 2009.'
-    },
-    {
       id: 1,
       src: `${process.env.PUBLIC_URL}/GyaltrulRinpoche.jpg`,
       alt: 'Gyaltrul Rinpoche',
@@ -467,6 +439,41 @@ const App = () => {
       alt: 'Yangthang Rinpoche',
       title: 'Yangthang Rinpoche',
       info: 'Yangthang Rinpoche (1930–2016) was a highly revered Nyingma Palyul master from Sikkim, recognized as the reincarnation of tertön Dorje Dechen Lingpa of Dhomang Monastery. Imprisoned for twenty-two years after 1959, he was released in 1981, later teaching widely worldwide, preserving Dzogchen transmissions, and inspiring disciples until his passing in 2016.'
+    },
+    {
+      id: 4,
+      src: `${process.env.PUBLIC_URL}/ChagdudRinpoche.jpg`,
+      alt: 'Chagdud Rinpoche',
+      title: 'Chagdud Rinpoche',
+      info: 'Chagdud Tulku Rinpoche (1930–2002) was a Nyingma master and the 14th Chagdud incarnation. He fled Tibet in 1959, aided refugees in India, and moved to the United States in 1979. He founded Chagdud Gonpa Foundation, emphasized Red Tara and Vajrakilaya, established Brazil’s Khadro Ling, and wrote Lord of the Dance.'
+    },
+    {
+      id: 5,
+      src: `${process.env.PUBLIC_URL}/HisHolinessDudjomRinpoche.jpg`,
+      alt: 'His Holiness Dudjom Rinpoche',
+      title: 'His Holiness Dudjom Rinpoche',
+      info: 'His Holiness Dudjom Rinpoche (Jigdral Yeshe Dorje, 1904–1987) was a preeminent Nyingma master, tertön, and scholar. Recognized as Dudjom Lingpa’s reincarnation, he preserved and taught the Dudjom Tersar. After 1959 exile, he taught across India, Nepal, Europe, and North America, serving as Nyingma’s head in exile, and authored foundational histories of Nyingma.'
+    },
+    {
+      id: 6,
+      src: `${process.env.PUBLIC_URL}/HisHolinessPenorRinpoche.jpg`,
+      alt: 'His Holiness Penor Rinpoche',
+      title: 'His Holiness Penor Rinpoche',
+      info: 'His Holiness Penor Rinpoche (1932–2009), the 11th throne holder of the Palyul lineage, was born in Powo, Kham. After fleeing Tibet, he founded Namdroling Monastery in South India. Supreme Head of the Nyingma school from 1993 to 2001, he was renowned for Dzogchen teachings and ordained thousands, passing in 2009.'
+    },
+    {
+      id: 7,
+      src: `${process.env.PUBLIC_URL}/ChogyamTrungpaRinpoche.jpg`,
+      alt: 'Chogyam Trungpa',
+      title: 'Chogyam Trungpa',
+      info: 'Chögyam Trungpa Rinpoche (1939–1987), the 11th Trungpa tulku, fled Tibet in 1959, studied at Oxford, and co-founded Scotland’s Samye Ling. After renouncing monastic vows, he moved to North America, founded Naropa University and Shambhala Training, wrote influential books, taught “crazy wisdom,” shaping Western Buddhism.'
+    },
+    {
+      id: 8,
+      src: `${process.env.PUBLIC_URL}/HisHolinessDilgoKhyentseRinpoche.jpg`,
+      alt: 'His Holiness Dilgo Khyentse Rinpoche',
+      title: 'His Holiness Dilgo Khyentse Rinpoche',
+      info: 'His Holiness Dilgo Khyentse Rinpoche (1910–1991) was a highly revered Nyingma master and scholar. Recognized as the reincarnation of the great tertön Pema Ösel Dongak Lingpa, he played a crucial role in preserving and transmitting the teachings of the Nyingma tradition. He was instrumental in the establishment of numerous monasteries and retreat centers, and his teachings continue to inspire practitioners worldwide.'
     },
   ];
 
