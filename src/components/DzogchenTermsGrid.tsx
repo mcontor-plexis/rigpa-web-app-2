@@ -49,38 +49,7 @@ const DzogchenTermsGrid: React.FC<DzogchenTermsGridProps> = ({ onClose }) => {
     }
   };
 
-  // Handle updating an existing term
-  const handleUpdate = (id: number) => {
-    if (editForm.tibetanScript.trim() && editForm.wileyScript.trim() && editForm.englishTransliteration.trim() && editForm.englishTranslation.trim()) {
-      setTerms(terms.map(term => 
-        term.id === id ? { ...term, ...editForm } : term
-      ));
-      setEditingId(null);
-      setEditForm({ tibetanScript: '', wileyScript: '', englishTransliteration: '', englishTranslation: '' });
-    }
-  };
-
-  // Handle deleting a term - now with persistent storage
-  const handleDelete = (id: number) => {
-    if (window.confirm('Are you sure you want to delete this term? This will permanently remove it from the database.')) {
-      // Add to deleted IDs set
-      const newDeletedIds = new Set(deletedIds);
-      newDeletedIds.add(id);
-      setDeletedIds(newDeletedIds);
-      
-      // Save to localStorage for persistence
-      localStorage.setItem('deletedDzogchenTerms', JSON.stringify(Array.from(newDeletedIds)));
-      
-      // Remove from current terms display
-      setTerms(terms.filter(term => term.id !== id));
-      
-      // If we were editing this term, cancel the edit
-      if (editingId === id) {
-        setEditingId(null);
-        setEditForm({ tibetanScript: '', wileyScript: '', englishTransliteration: '', englishTranslation: '' });
-      }
-    }
-  };
+  // Actions functions removed
 
   // Admin function to restore all deleted terms (optional)
   const handleRestoreAllDeleted = () => {
@@ -326,7 +295,6 @@ const DzogchenTermsGrid: React.FC<DzogchenTermsGridProps> = ({ onClose }) => {
                 <div className="grid-cell header-cell">Wiley Script</div>
                 <div className="grid-cell header-cell">English Transliteration</div>
                 <div className="grid-cell header-cell">English Translation</div>
-                <div className="grid-cell header-cell">Actions</div>
               </div>
               {filteredTerms.length === 0 ? (
                 <div className="no-data">
@@ -374,10 +342,7 @@ const DzogchenTermsGrid: React.FC<DzogchenTermsGridProps> = ({ onClose }) => {
                             className="edit-input"
                           />
                         </div>
-                        <div className="grid-cell actions-cell">
-                          <button onClick={() => handleUpdate(term.id)} className="save-btn">💾</button>
-                          <button onClick={cancelEdit} className="cancel-btn">❌</button>
-                        </div>
+                        {/* No Actions cell in edit mode */}
                       </>
                     ) : (
                       // Display mode
@@ -387,10 +352,6 @@ const DzogchenTermsGrid: React.FC<DzogchenTermsGridProps> = ({ onClose }) => {
                         <div className="grid-cell wiley-text">{term.wileyScript}</div>
                         <div className="grid-cell">{term.englishTransliteration}</div>
                         <div className="grid-cell translation-cell">{term.englishTranslation}</div>
-                        <div className="grid-cell actions-cell">
-                          <button onClick={() => startEdit(term)} className="edit-btn">✏️</button>
-                          <button onClick={() => handleDelete(term.id)} className="delete-btn">🗑️</button>
-                        </div>
                       </>
                     )}
                   </div>
