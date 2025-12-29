@@ -233,7 +233,18 @@ const App = () => {
         body: JSON.stringify({
           //model: 'gpt-3.5-turbo',
           model: 'gpt-4o',
-          messages: [{ role: 'user', content: input }],
+          //model: 'gpt-5.2',
+          messages: [
+            {
+              role: 'system',
+              content: 'You are Rigpa AI, an expert in Tibetan Buddhist Philosophy. Answer all questions with deep knowledge of Dzogchen, Buddhist history, and Tibetan culture. Be clear, respectful, and cite traditional sources when possible.'
+            },
+            ...messages.slice(-10).map(m => ({
+              role: m.sender === 'user' ? 'user' : 'assistant',
+              content: m.content
+            })),
+            { role: 'user', content: input }
+          ],
           max_tokens: 500,
         }),
       });

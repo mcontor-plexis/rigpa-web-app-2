@@ -200,13 +200,6 @@ const DzogchenTermsMainContent: React.FC<DzogchenTermsMainContentProps> = ({ onC
         <div className="dzogchen-upload-section">
           <div style={{ display: 'flex', gap: '15px', alignItems: 'center', flex: 1 }}>
             <button 
-              onClick={() => setShowAddForm(true)} 
-              className="add-term-button"
-              disabled={editingId !== null || showAddForm}
-            >
-              ➕ Add New Term
-            </button>
-            <button 
               onClick={handleExportToExcel} 
               className="export-excel-button"
               disabled={terms.length === 0}
@@ -279,7 +272,6 @@ const DzogchenTermsMainContent: React.FC<DzogchenTermsMainContentProps> = ({ onC
         {/* Add Form */}
         {showAddForm && (
           <div className="edit-form">
-            <h3>Add New Term</h3>
             <div className="form-row">
               <input
                 type="text"
@@ -325,15 +317,10 @@ const DzogchenTermsMainContent: React.FC<DzogchenTermsMainContentProps> = ({ onC
               <div className="grid-cell header-cell">Wiley Script</div>
               <div className="grid-cell header-cell">English Transliteration</div>
               <div className="grid-cell header-cell">English Translation</div>
-              <div className="grid-cell header-cell">Actions</div>
             </div>
             <div className="grid-content">
               {filteredTerms.length === 0 ? (
                 <div className="no-data">
-                  {searchQuery.trim() ? 
-                    `No terms found matching "${searchQuery}". Try a different search term.` :
-                    "No terms available. Click \"Add New Term\" to get started."
-                  }
                 </div>
               ) : (
                 filteredTerms.map((term) => (
@@ -387,10 +374,6 @@ const DzogchenTermsMainContent: React.FC<DzogchenTermsMainContentProps> = ({ onC
                       <div className="grid-cell wiley-text">{term.wileyScript}</div>
                       <div className="grid-cell">{term.englishTransliteration}</div>
                       <div className="grid-cell translation-cell">{term.englishTranslation}</div>
-                      <div className="grid-cell actions-cell">
-                        <button onClick={() => startEdit(term)} className="edit-btn">✏️</button>
-                        <button onClick={() => handleDelete(term.id)} className="delete-btn">🗑️</button>
-                      </div>
                     </>
                   )}
                 </div>
