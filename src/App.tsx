@@ -29,6 +29,7 @@ const App = () => {
   const [editorContent, setEditorContent] = useState('');
   const [editorZoom, setEditorZoom] = useState(100); // Zoom level in percentage
   const [copiedMessageIndex, setCopiedMessageIndex] = useState<number | null>(null);
+  const [showRigpaTooltip, setShowRigpaTooltip] = useState(false);
   const chatWindowRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<HTMLDivElement>(null);
 
@@ -332,6 +333,34 @@ const App = () => {
     }
   };
 
+  const saveChat = () => {
+    if (messages.length === 0) {
+      alert('No messages to save.');
+      return;
+    }
+
+    // Create a formatted text version of the chat
+    const chatText = messages.map((msg, index) => {
+      const sender = msg.sender === 'user' ? 'You' : 'Rigpa AI';
+      return `${sender}:\n${msg.content}\n`;
+    }).join('\n---\n\n');
+
+    // Add timestamp and header
+    const timestamp = new Date().toLocaleString();
+    const fullContent = `Rigpa AI Chat Export\nDate: ${timestamp}\n\n${'='.repeat(50)}\n\n${chatText}`;
+
+    // Create and download the file
+    const blob = new Blob([fullContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `rigpa-chat-${new Date().toISOString().slice(0, 10)}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   useEffect(() => {
     if (chatWindowRef.current) {
       chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
@@ -589,7 +618,7 @@ const App = () => {
         </div>
         <div className="menu-items-container">
           {menuItems.map((menu) => (
-            <div key={menu.id} className="menu-item">
+            <div key={menu.id} className="menu-item" style={{ position: 'relative' }}>
               <button
                 className={`menu-button ${activeMenu === menu.id ? 'active' : ''}`}
                 onClick={() => {
@@ -603,9 +632,25 @@ const App = () => {
                     handleMenuClick(menu.id);
                   }
                 }}
+                onMouseEnter={() => {
+                  if (menu.id === 'chat') {
+                    setShowRigpaTooltip(true);
+                  }
+                }}
+                onMouseLeave={() => {
+                  if (menu.id === 'chat') {
+                    setShowRigpaTooltip(false);
+                  }
+                }}
               >
                 {menu.label}
               </button>
+              {menu.id === 'chat' && showRigpaTooltip && (
+                <div className="rigpa-tooltip">
+                  <strong>Rigpa AI</strong>
+                  <p>An expert in Tibetan Buddhist Philosophy with deep knowledge of Dzogchen, Buddhist history, and Tibetan culture. Ask questions and receive clear, respectful answers citing traditional sources.</p>
+                </div>
+              )}
               {activeMenu === menu.id && menu.subItems.length > 0 && (
                 <div className="submenu">
                   {menu.subItems.map((subItem, index) => (
@@ -1037,6 +1082,9 @@ const App = () => {
             <div className="chat-main-header">
               <h2>Rigpa AI Chat</h2>
               <div className="chat-header-buttons">
+                <button className="clear-chat-button" onClick={saveChat}>
+                  💾 Save Chat
+                </button>
                 <button className="clear-chat-button" onClick={clearChat}>
                   🗑️ Clear Chat
                 </button>
