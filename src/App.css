@@ -129,6 +129,67 @@ html, body {
   color: #ffffff;
 }
 
+/* Rigpa AI Tooltip */
+.rigpa-tooltip {
+  position: absolute;
+  left: 110%;
+  top: 0;
+  background-color: #1e40af;
+  color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+  z-index: 1000;
+  min-width: 280px;
+  max-width: 320px;
+  border: 2px solid #2563eb;
+  animation: tooltipFadeIn 0.2s ease-in;
+}
+
+.rigpa-tooltip::before {
+  content: '';
+  position: absolute;
+  right: 100%;
+  top: 15px;
+  border: 8px solid transparent;
+  border-right-color: #2563eb;
+}
+
+.rigpa-tooltip::after {
+  content: '';
+  position: absolute;
+  right: 100%;
+  top: 17px;
+  border: 6px solid transparent;
+  border-right-color: #1e40af;
+}
+
+.rigpa-tooltip strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.rigpa-tooltip p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #e0e7ff;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .chat-container {
   flex: 1;
   display: flex;
@@ -818,8 +879,8 @@ button:disabled {
   flex-direction: column;
   gap: 5px;
   flex: 1;
-  max-width: 350px;
-  min-width: 250px;
+  max-width: 600px;
+  min-width: 500px;
 }
 
 .search-input {
@@ -1033,7 +1094,7 @@ button:disabled {
 
 .grid-header {
   display: grid;
-  grid-template-columns: 60px 200px 150px 200px 300px 120px; /* Fixed consistent widths */
+  grid-template-columns: 60px 200px 150px 200px 1fr; /* ID, Tibetan, Wiley, Transliteration, Translation */
   background-color: #1e40af;
   position: sticky;
   top: 0;
@@ -1053,7 +1114,7 @@ button:disabled {
 
 .grid-row {
   display: grid;
-  grid-template-columns: 60px 200px 150px 200px 300px 120px; /* Exact match with header */
+  grid-template-columns: 60px 200px 150px 200px 1fr; /* Exact match with header */
   border-bottom: 1px solid #333;
 }
 
@@ -1892,7 +1953,7 @@ button:disabled {
   }
 
   .dzogchen-grid {
-    min-width: 1030px; /* Total width of all columns */
+    min-width: 910px; /* Total width of all 5 columns */
     overflow-x: auto;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
@@ -1902,8 +1963,8 @@ button:disabled {
 
   .grid-header {
     display: grid !important;
-    grid-template-columns: 60px 200px 150px 200px 300px 120px; /* Match desktop exactly */
-    min-width: 1030px;
+    grid-template-columns: 60px 200px 150px 200px 1fr; /* Match desktop exactly - 5 columns */
+    min-width: 910px;
     position: sticky;
     top: 0;
     z-index: 10;
@@ -1918,8 +1979,8 @@ button:disabled {
 
   .grid-row {
     display: grid !important;
-    grid-template-columns: 60px 200px 150px 200px 300px 120px; /* Exact match */
-    min-width: 1030px;
+    grid-template-columns: 60px 200px 150px 200px 1fr; /* Exact match - 5 columns */
+    min-width: 910px;
     border-bottom: 1px solid #333;
   }
 
