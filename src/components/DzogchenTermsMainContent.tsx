@@ -217,30 +217,32 @@ const DzogchenTermsMainContent: React.FC<DzogchenTermsMainContentProps> = ({ onC
               </button>
             )}
             <div className="search-container">
-              <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+              <div style={{ position: 'relative', display: 'flex', alignItems: 'center', width: '100%' }}>
                 <input
                   type="text"
                   placeholder="Search terms... (ID, Tibetan, Wiley, Transliteration, Translation)"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="search-input"
-                  style={{ paddingRight: searchQuery.trim() ? '35px' : '12px' }}
+                  style={{ paddingRight: searchQuery.trim() ? '35px' : '12px', width: '100%' }}
                 />
                 {searchQuery.trim() && (
                   <button
                     onClick={() => setSearchQuery('')}
                     style={{
                       position: 'absolute',
-                      right: '8px',
+                      right: '12px',
                       background: 'none',
                       border: 'none',
                       color: '#9ca3af',
                       cursor: 'pointer',
                       fontSize: '16px',
-                      padding: '2px',
+                      padding: '4px',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center'
+                      justifyContent: 'center',
+                      width: '20px',
+                      height: '20px'
                     }}
                     title="Clear search"
                   >
