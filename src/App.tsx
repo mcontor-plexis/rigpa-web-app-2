@@ -30,8 +30,10 @@ const App = () => {
   const [editorZoom, setEditorZoom] = useState(100); // Zoom level in percentage
   const [copiedMessageIndex, setCopiedMessageIndex] = useState<number | null>(null);
   const [showRigpaTooltip, setShowRigpaTooltip] = useState(false);
+  const [tooltipPosition, setTooltipPosition] = useState({ top: 0 });
   const chatWindowRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<HTMLDivElement>(null);
+  const chatButtonRef = useRef<HTMLButtonElement>(null);
 
   // Fix editor direction on content change
   useEffect(() => {
@@ -238,7 +240,7 @@ const App = () => {
           messages: [
             {
               role: 'system',
-              content: 'You are Rigpa AI, an expert in Tibetan Buddhist Philosophy. Answer all questions with deep knowledge of Dzogchen, Buddhist history, and Tibetan culture. Be clear, respectful, and cite traditional sources when possible.'
+              content: 'You are Rigpa AI, an expert in Tibetan Language and Buddhist Philosophy. Answer all questions with deep knowledge of Dzogchen, Buddhist history, and Tibetan culture. Be clear, respectful, and cite traditional sources when possible. Where ever possible insert the Tibetan term with the English transliteration along with the Tibetan script for any Tibetan terms referenced.'
             },
             ...messages.slice(-10).map(m => ({
               role: m.sender === 'user' ? 'user' : 'assistant',
@@ -620,6 +622,7 @@ const App = () => {
           {menuItems.map((menu) => (
             <div key={menu.id} className="menu-item" style={{ position: 'relative' }}>
               <button
+                ref={menu.id === 'chat' ? chatButtonRef : null}
                 className={`menu-button ${activeMenu === menu.id ? 'active' : ''}`}
                 onClick={() => {
                   if (menu.id === 'chat') {
@@ -633,7 +636,9 @@ const App = () => {
                   }
                 }}
                 onMouseEnter={() => {
-                  if (menu.id === 'chat') {
+                  if (menu.id === 'chat' && chatButtonRef.current) {
+                    const rect = chatButtonRef.current.getBoundingClientRect();
+                    setTooltipPosition({ top: rect.top });
                     setShowRigpaTooltip(true);
                   }
                 }}
@@ -645,12 +650,6 @@ const App = () => {
               >
                 {menu.label}
               </button>
-              {menu.id === 'chat' && showRigpaTooltip && (
-                <div className="rigpa-tooltip">
-                  <strong>Rigpa AI</strong>
-                  <p>An expert in Tibetan Buddhist Philosophy with deep knowledge of Dzogchen, Buddhist history, and Tibetan culture. Ask questions and receive clear, respectful answers citing traditional sources.</p>
-                </div>
-              )}
               {activeMenu === menu.id && menu.subItems.length > 0 && (
                 <div className="submenu">
                   {menu.subItems.map((subItem, index) => (
@@ -1706,6 +1705,14 @@ const App = () => {
               </div>
             )}
           </div>
+        </div>
+      )}
+
+      {/* Rigpa AI Tooltip - Rendered at root level to appear above all modals */}
+      {showRigpaTooltip && (
+        <div className="rigpa-tooltip" style={{ top: `${tooltipPosition.top}px` }}>
+          <strong>Rigpa AI</strong>
+          <p>An expert in Tibetan Buddhist Philosophy with deep knowledge of Dzogchen, Buddhist history, and Tibetan culture. Ask questions and receive clear, respectful answers citing traditional sources.</p>
         </div>
       )}
     </div>
