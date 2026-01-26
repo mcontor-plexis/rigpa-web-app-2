@@ -131,19 +131,19 @@ html, body {
 
 /* Rigpa AI Tooltip */
 .rigpa-tooltip {
-  position: absolute;
-  left: 110%;
-  top: 0;
+  position: fixed;
+  left: 270px;
   background-color: #1e40af;
   color: #ffffff;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
-  z-index: 1000;
+  z-index: 9999;
   min-width: 280px;
   max-width: 320px;
   border: 2px solid #2563eb;
   animation: tooltipFadeIn 0.2s ease-in;
+  pointer-events: none;
 }
 
 .rigpa-tooltip::before {
