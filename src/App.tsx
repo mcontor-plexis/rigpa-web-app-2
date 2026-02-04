@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import './App.css';
 import DzogchenTermsMainContent from './components/DzogchenTermsMainContent';
+import KnowledgeBaseManager from './components/KnowledgeBaseManager';
+import { ragService } from './services/ragService';
+import { dzogchenTermsData } from './components/DzogchenTermsData';
 
 type Message = {
   sender: 'user' | 'assistant';
@@ -31,6 +34,9 @@ const App = () => {
   const [copiedMessageIndex, setCopiedMessageIndex] = useState<number | null>(null);
   const [showRigpaTooltip, setShowRigpaTooltip] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0 });
+  const [showKnowledgeBaseManager, setShowKnowledgeBaseManager] = useState(false);
+  const [ragEnabled, setRagEnabled] = useState(true);
+  const [ragInitialized, setRagInitialized] = useState(false);
   const chatWindowRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<HTMLDivElement>(null);
   const chatButtonRef = useRef<HTMLButtonElement>(null);
@@ -72,6 +78,22 @@ const App = () => {
       setEditorContent(saved);
     }
   }, []);
+
+  // Initialize RAG service on startup
+  useEffect(() => {
+    const initRAG = async () => {
+      if (hasApiKey && !ragInitialized) {
+        try {
+          await ragService.initializeKnowledgeBase(dzogchenTermsData);
+          setRagInitialized(true);
+          console.log('RAG service initialized successfully');
+        } catch (error) {
+          console.error('Failed to initialize RAG service:', error);
+        }
+      }
+    };
+    initRAG();
+  }, [hasApiKey, ragInitialized]);
 
   // Load saved chat messages on startup
   useEffect(() => {
@@ -227,6 +249,19 @@ const App = () => {
     setInput('');
 
     try {
+      // Base system prompt
+      const baseSystemPrompt = 'You are Rigpa AI, an expert in Tibetan Language and Buddhist Philosophy. Answer all questions with deep knowledge of Dzogchen, Buddhist history, and Tibetan culture. Be clear, respectful, and cite traditional sources when possible. Where ever possible insert the Tibetan term with the English transliteration along with the Tibetan script for any Tibetan terms referenced.';
+      
+      // Get enhanced prompt with RAG context if enabled and initialized
+      let systemPrompt = baseSystemPrompt;
+      if (ragEnabled && ragInitialized) {
+        try {
+          systemPrompt = await ragService.getEnhancedPrompt(input, baseSystemPrompt);
+        } catch (error) {
+          console.error('RAG retrieval error, using base prompt:', error);
+        }
+      }
+
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -240,7 +275,7 @@ const App = () => {
           messages: [
             {
               role: 'system',
-              content: 'You are Rigpa AI, an expert in Tibetan Language and Buddhist Philosophy. Answer all questions with deep knowledge of Dzogchen, Buddhist history, and Tibetan culture. Be clear, respectful, and cite traditional sources when possible. Where ever possible insert the Tibetan term with the English transliteration along with the Tibetan script for any Tibetan terms referenced.'
+              content: systemPrompt
             },
             ...messages.slice(-10).map(m => ({
               role: m.sender === 'user' ? 'user' : 'assistant',
@@ -1081,6 +1116,24 @@ const App = () => {
             <div className="chat-main-header">
               <h2>Rigpa AI Chat</h2>
               <div className="chat-header-buttons">
+                <button 
+                  className="kb-manager-button" 
+                  onClick={() => setShowKnowledgeBaseManager(true)}
+                  title="Manage AI Knowledge Base"
+                >
+                  🧠 Knowledge Base
+                </button>
+                <label className="rag-toggle" title={`RAG is ${ragEnabled ? 'enabled' : 'disabled'}`}>
+                  <input 
+                    type="checkbox" 
+                    checked={ragEnabled} 
+                    onChange={(e) => setRagEnabled(e.target.checked)}
+                  />
+                  <span className="toggle-label">
+                    {ragEnabled ? '🔍 RAG On' : '🔍 RAG Off'}
+                  </span>
+                  {ragInitialized && ragEnabled && <span className="rag-status">✓</span>}
+                </label>
                 <button className="clear-chat-button" onClick={saveChat}>
                   💾 Save Chat
                 </button>
@@ -1714,6 +1767,11 @@ const App = () => {
           <strong>Rigpa AI</strong>
           <p>An expert in Tibetan Buddhist Philosophy with deep knowledge of Dzogchen, Buddhist history, and Tibetan culture. Ask questions and receive clear, respectful answers citing traditional sources.</p>
         </div>
+      )}
+
+      {/* Knowledge Base Manager Modal */}
+      {showKnowledgeBaseManager && (
+        <KnowledgeBaseManager onClose={() => setShowKnowledgeBaseManager(false)} />
       )}
     </div>
   );
