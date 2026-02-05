@@ -6,6 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { ragService, KnowledgeDocument } from '../services/ragService';
 import { dzogchenTermsData } from './DzogchenTermsData';
+import * as dictionaryService from '../services/dictionaryImportService';
 
 interface KnowledgeBaseManagerProps {
   onClose: () => void;
@@ -24,9 +25,18 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
   const [highContrast, setHighContrast] = useState(true);
   const [showImport, setShowImport] = useState(false);
   const [importText, setImportText] = useState('');
+  const [showDictionaryImport, setShowDictionaryImport] = useState(false);
+  const [dictionaryImportMode, setDictionaryImportMode] = useState<'common' | 'custom' | 'category' | 'url'>('common');
+  const [customTerms, setCustomTerms] = useState('');
+  const [categoryName, setCategoryName] = useState('Tibetan_Dictionary');
+  const [importLimit, setImportLimit] = useState(50);
+  const [importUrls, setImportUrls] = useState('');
+  const [importProgress, setImportProgress] = useState<{ current: number; total: number } | null>(null);
+  const [dictionaryStats, setDictionaryStats] = useState<any>(null);
 
   useEffect(() => {
     updateStats();
+    loadDictionaryStats();
   }, []);
 
   const updateStats = () => {
@@ -162,6 +172,76 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
     }
   };
 
+  const loadDictionaryStats = async () => {
+    const stats = await dictionaryService.getDictionaryStats();
+    setDictionaryStats(stats);
+  };
+
+  const handleDictionaryImport = async () => {
+    console.log('=== handleDictionaryImport called ===');
+    console.log('Mode:', dictionaryImportMode);
+    console.log('Category:', categoryName);
+    console.log('Limit:', importLimit);
+    
+    setIsLoading(true);
+    setImportProgress({ current: 0, total: 0 });
+    
+    try {
+      let documents: KnowledgeDocument[] = [];
+      
+      if (dictionaryImportMode === 'common') {
+        // Import common Dzogchen terms
+        documents = await dictionaryService.importCommonDzogchenTerms(
+          (current, total) => setImportProgress({ current, total })
+        );
+      } else if (dictionaryImportMode === 'custom') {
+        // Import custom term list
+        if (!customTerms.trim()) {
+          alert('Please enter Wylie terms to import (one per line)');
+          return;
+        }
+        documents = await dictionaryService.importFromTermList(
+          customTerms,
+          (current, total) => setImportProgress({ current, total })
+        );
+      } else if (dictionaryImportMode === 'category') {
+        // Import by category
+        documents = await dictionaryService.importByCategory(
+          categoryName,
+          importLimit,
+          (current, total) => setImportProgress({ current, total })
+        );
+      } else if (dictionaryImportMode === 'url') {
+        // Import from URLs
+        if (!importUrls.trim()) {
+          alert('Please enter URL(s) to import (one per line)');
+          return;
+        }
+        documents = await dictionaryService.importFromUrlList(
+          importUrls,
+          (current, total) => setImportProgress({ current, total })
+        );
+      }
+      
+      if (documents.length > 0) {
+        await ragService.addDocuments(documents);
+        updateStats();
+        alert(`Successfully imported ${documents.length} dictionary entries!`);
+        setShowDictionaryImport(false);
+        setCustomTerms('');
+      } else {
+        alert('No dictionary entries found to import.');
+      }
+      
+    } catch (error) {
+      console.error('Error importing from dictionary:', error);
+      alert('Error importing from dictionary. Check console for details.');
+    } finally {
+      setIsLoading(false);
+      setImportProgress(null);
+    }
+  };
+
   return (
     <div className={`knowledge-base-manager ${highContrast ? 'high-contrast' : ''}`}>
       <div className="modal-header">
@@ -252,6 +332,174 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
             >
               {isLoading ? 'Adding...' : 'Add Text to Knowledge Base'}
             </button>
+          </section>
+        )}
+
+        {/* Dictionary Import Section */}
+        {isInitialized && (
+          <section className="kb-section dictionary-import">
+            <h3>📚 Import from Tibetan Dictionaries</h3>
+            <p>Import dictionary entries from Rangjung Yeshe Wiki and other sources.</p>
+            
+            {dictionaryStats && (
+              <div className="dictionary-stats">
+                <span>📖 {dictionaryStats.sitename}: {dictionaryStats.articles.toLocaleString()} articles</span>
+              </div>
+            )}
+            
+            <button 
+              onClick={() => setShowDictionaryImport(!showDictionaryImport)}
+              className="kb-button secondary"
+              disabled={isLoading}
+            >
+              {showDictionaryImport ? '🔽 Hide Dictionary Import' : '📥 Import from Dictionary'}
+            </button>
+
+            {showDictionaryImport && (
+              <div className="dictionary-import-panel">
+                <div className="import-mode-selector">
+                  <label className="mode-option">
+                    <input 
+                      type="radio" 
+                      name="importMode" 
+                      value="common"
+                      checked={dictionaryImportMode === 'common'}
+                      onChange={() => setDictionaryImportMode('common')}
+                    />
+                    <span>Import 30 Common Dzogchen Terms</span>
+                  </label>
+
+                  <label className="mode-option">
+                    <input 
+                      type="radio" 
+                      name="importMode" 
+                      value="custom"
+                      checked={dictionaryImportMode === 'custom'}
+                      onChange={() => setDictionaryImportMode('custom')}
+                    />
+                    <span>Import Custom Term List</span>
+                  </label>
+
+                  <label className="mode-option">
+                    <input 
+                      type="radio" 
+                      name="importMode" 
+                      value="category"
+                      checked={dictionaryImportMode === 'category'}
+                      onChange={() => setDictionaryImportMode('category')}
+                    />
+                    <span>Import by Category</span>
+                  </label>
+
+                  <label className="mode-option">
+                    <input 
+                      type="radio" 
+                      name="importMode" 
+                      value="url"
+                      checked={dictionaryImportMode === 'url'}
+                      onChange={() => setDictionaryImportMode('url')}
+                    />
+                    <span>Import by URL</span>
+                  </label>
+                </div>
+
+                {dictionaryImportMode === 'custom' && (
+                  <div className="custom-terms-input">
+                    <label>Enter Wylie terms (one per line):</label>
+                    <textarea
+                      value={customTerms}
+                      onChange={(e) => setCustomTerms(e.target.value)}
+                      placeholder="rig pa&#10;gzhi&#10;ma rig pa&#10;ye shes&#10;..."
+                      rows={8}
+                      className="kb-textarea"
+                    />
+                    <p className="hint-text">💡 Enter Wylie transliteration (e.g., "rig pa" for རིག་པ)</p>
+                  </div>
+                )}
+
+                {dictionaryImportMode === 'category' && (
+                  <div className="category-input">
+                    <label>Category name:</label>
+                    <input
+                      type="text"
+                      value={categoryName}
+                      onChange={(e) => setCategoryName(e.target.value)}
+                      placeholder="e.g., Tibetan_Dictionary"
+                      className="kb-input"
+                    />
+                    <label>Limit:</label>
+                    <input
+                      type="number"
+                      value={importLimit}
+                      onChange={(e) => setImportLimit(parseInt(e.target.value) || 50)}
+                      min="1"
+                      max="500"
+                      className="kb-input"
+                      style={{ width: '100px' }}
+                    />
+                    <p className="hint-text">💡 Common categories: Tibetan_Dictionary, Terms, Buddhist_Masters</p>
+                  </div>
+                )}
+
+                {dictionaryImportMode === 'url' && (
+                  <div className="custom-terms-input">
+                    <label>Enter Rangjung Yeshe Wiki URLs (one per line):</label>
+                    <textarea
+                      value={importUrls}
+                      onChange={(e) => setImportUrls(e.target.value)}
+                      placeholder="https://rywiki.tsadra.org/index.php/Jigme_Lingpa&#10;https://rywiki.tsadra.org/index.php/rig_pa&#10;https://rywiki.tsadra.org/index.php/Longchenpa"
+                      rows={8}
+                      className="kb-textarea"
+                    />
+                    <p className="hint-text">💡 Paste URLs from rywiki.tsadra.org (e.g., page for Jigme Lingpa, masters, terms, etc.)</p>
+                  </div>
+                )}
+
+                {importProgress && (
+                  <div className="import-progress">
+                    <div className="progress-bar">
+                      <div 
+                        className="progress-fill" 
+                        style={{ width: `${(importProgress.current / importProgress.total) * 100}%` }}
+                      />
+                    </div>
+                    <span className="progress-text">
+                      Importing {importProgress.current} of {importProgress.total}...
+                    </span>
+                  </div>
+                )}
+
+                <div className="dictionary-import-actions">
+                  <button 
+                    onClick={handleDictionaryImport}
+                    disabled={isLoading || (dictionaryImportMode === 'custom' && !customTerms.trim())}
+                    className="kb-button primary"
+                  >
+                    {isLoading ? 'Importing...' : 'Start Import'}
+                  </button>
+                  <button 
+                    onClick={() => { setShowDictionaryImport(false); setCustomTerms(''); }}
+                    className="kb-button"
+                    style={{ background: '#666', color: 'white' }}
+                    disabled={isLoading}
+                  >
+                    Cancel
+                  </button>
+                </div>
+
+                <div className="dictionary-info">
+                  <h4>📖 Supported Sources:</h4>
+                  <ul>
+                    <li><strong>Rangjung Yeshe Wiki</strong> (rywiki.tsadra.org) - 74,441+ entries</li>
+                    <li><strong>Nitartha Digital Library</strong> (nitarthadigitallibrary.org) - Coming soon</li>
+                  </ul>
+                  <p className="info-note">
+                    ℹ️ Imported entries are added as "definition" type documents with source attribution.
+                    They will be embedded and searchable via RAG queries.
+                  </p>
+                </div>
+              </div>
+            )}
           </section>
         )}
 
@@ -984,6 +1232,208 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
           .test-search-input {
             flex-direction: column;
           }
+        }
+
+        /* Dictionary Import Styles */
+        .dictionary-import {
+          background: linear-gradient(135deg, #f9f6f2 0%, #f0e9dc 100%);
+        }
+
+        .knowledge-base-manager.high-contrast .dictionary-import {
+          background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        .dictionary-stats {
+          margin-bottom: 15px;
+          padding: 10px;
+          background: rgba(139, 69, 19, 0.1);
+          border-radius: 6px;
+          font-size: 14px;
+          font-weight: 500;
+          color: #8b4513;
+        }
+
+        .knowledge-base-manager.high-contrast .dictionary-stats {
+          background: rgba(204, 204, 204, 0.1);
+          color: #CCCCCC;
+        }
+
+        .dictionary-import-panel {
+          margin-top: 15px;
+          padding: 20px;
+          background: white;
+          border: 2px solid #333;
+          border-radius: 8px;
+        }
+
+        .knowledge-base-manager.high-contrast .dictionary-import-panel {
+          background: #0a0a0a;
+          border-color: #999;
+        }
+
+        .import-mode-selector {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-bottom: 20px;
+        }
+
+        .mode-option {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 12px;
+          background: #f9f6f2;
+          border: 2px solid #333;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .mode-option:hover {
+          background: #f0e9dc;
+          border-color: #555;
+        }
+
+        .mode-option input[type="radio"] {
+          cursor: pointer;
+        }
+
+        .mode-option span {
+          font-size: 15px;
+          font-weight: 500;
+        }
+
+        .knowledge-base-manager.high-contrast .mode-option {
+          background: #1a1a1a;
+          border-color: #999;
+          color: #FFFFFF;
+        }
+
+        .knowledge-base-manager.high-contrast .mode-option:hover {
+          background: #2a2a2a;
+        }
+
+        .custom-terms-input,
+        .category-input {
+          margin-bottom: 20px;
+        }
+
+        .custom-terms-input label,
+        .category-input label {
+          display: block;
+          margin-bottom: 8px;
+          font-weight: 600;
+          color: #8b4513;
+        }
+
+        .knowledge-base-manager.high-contrast .custom-terms-input label,
+        .knowledge-base-manager.high-contrast .category-input label {
+          color: #CCCCCC;
+        }
+
+        .hint-text {
+          font-size: 12px;
+          color: #666;
+          margin-top: 5px;
+          font-style: italic;
+        }
+
+        .knowledge-base-manager.high-contrast .hint-text {
+          color: #999;
+        }
+
+        .import-progress {
+          margin: 20px 0;
+          padding: 15px;
+          background: #f0f0f0;
+          border-radius: 6px;
+        }
+
+        .knowledge-base-manager.high-contrast .import-progress {
+          background: #2a2a2a;
+        }
+
+        .progress-bar {
+          width: 100%;
+          height: 24px;
+          background: #e0e0e0;
+          border-radius: 12px;
+          overflow: hidden;
+          margin-bottom: 8px;
+        }
+
+        .knowledge-base-manager.high-contrast .progress-bar {
+          background: #1a1a1a;
+        }
+
+        .progress-fill {
+          height: 100%;
+          background: linear-gradient(90deg, #2d7a2d 0%, #4caf50 100%);
+          transition: width 0.3s ease;
+          border-radius: 12px;
+        }
+
+        .progress-text {
+          display: block;
+          text-align: center;
+          font-size: 13px;
+          font-weight: 500;
+          color: #666;
+        }
+
+        .knowledge-base-manager.high-contrast .progress-text {
+          color: #CCCCCC;
+        }
+
+        .dictionary-import-actions {
+          display: flex;
+          gap: 10px;
+          margin-bottom: 20px;
+        }
+
+        .dictionary-info {
+          margin-top: 20px;
+          padding: 15px;
+          background: #f9f9f9;
+          border: 1px solid #333;
+          border-radius: 6px;
+        }
+
+        .knowledge-base-manager.high-contrast .dictionary-info {
+          background: #1a1a1a;
+          border-color: #666;
+        }
+
+        .dictionary-info h4 {
+          margin: 0 0 10px 0;
+          color: #8b4513;
+          font-size: 15px;
+        }
+
+        .knowledge-base-manager.high-contrast .dictionary-info h4 {
+          color: #CCCCCC;
+        }
+
+        .dictionary-info ul {
+          margin: 10px 0;
+          padding-left: 20px;
+        }
+
+        .dictionary-info li {
+          margin: 5px 0;
+          line-height: 1.6;
+        }
+
+        .info-note {
+          margin-top: 10px;
+          font-size: 12px;
+          color: #666;
+          font-style: italic;
+        }
+
+        .knowledge-base-manager.high-contrast .info-note {
+          color: #999;
         }
       `}</style>
     </div>

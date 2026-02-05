@@ -14,6 +14,10 @@ export interface KnowledgeDocument {
     tibetanScript?: string;
     wileyScript?: string;
     transliteration?: string;
+    url?: string;
+    title?: string;
+    tibetanTerm?: string;
+    category?: string;
   };
   embedding?: number[];
 }
