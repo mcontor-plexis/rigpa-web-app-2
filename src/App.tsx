@@ -283,7 +283,7 @@ const App = () => {
             })),
             { role: 'user', content: input }
           ],
-          max_tokens: 500,
+          max_tokens: 4000,
         }),
       });
 

@@ -21,7 +21,7 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
   const [showAllDocuments, setShowAllDocuments] = useState(false);
   const [allDocuments, setAllDocuments] = useState<KnowledgeDocument[]>([]);
   const [filterType, setFilterType] = useState<'all' | 'term' | 'text' | 'definition'>('all');
-  const [highContrast, setHighContrast] = useState(false);
+  const [highContrast, setHighContrast] = useState(true);
   const [showImport, setShowImport] = useState(false);
   const [importText, setImportText] = useState('');
 
@@ -454,36 +454,36 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
         }
 
         .knowledge-base-manager.high-contrast .modal-header {
-          border-bottom-color: #FFFF00;
+          border-bottom-color: #999;
         }
 
         .knowledge-base-manager.high-contrast .modal-header h2 {
-          color: #FFFF00;
+          color: #CCCCCC;
         }
 
         .knowledge-base-manager.high-contrast .kb-section {
           background: #1a1a1a;
-          border-color: #FFFF00;
+          border-color: #666;
           color: #FFFFFF;
         }
 
         .knowledge-base-manager.high-contrast .kb-section h3 {
-          color: #FFFF00;
+          color: #CCCCCC;
         }
 
         .knowledge-base-manager.high-contrast .kb-button {
-          border: 2px solid #FFFF00;
+          border: 2px solid #999;
           font-weight: bold;
         }
 
         .knowledge-base-manager.high-contrast .kb-button.primary {
-          background: #FFFF00;
+          background: #CCCCCC;
           color: #000000;
         }
 
         .knowledge-base-manager.high-contrast .kb-button.primary:hover:not(:disabled) {
-          background: #FFD700;
-          border-color: #FFD700;
+          background: #AAAAAA;
+          border-color: #AAAAAA;
         }
 
         .knowledge-base-manager.high-contrast .kb-button.secondary {
@@ -512,11 +512,11 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
         .knowledge-base-manager.high-contrast .kb-input {
           background: #000000;
           color: #FFFFFF;
-          border: 2px solid #FFFF00;
+          border: 2px solid #999;
         }
 
         .knowledge-base-manager.high-contrast .stat-value {
-          color: #FFFF00;
+          color: #CCCCCC;
         }
 
         .knowledge-base-manager.high-contrast .stat-value.active {
@@ -530,7 +530,7 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
         .knowledge-base-manager.high-contrast .search-result-item,
         .knowledge-base-manager.high-contrast .document-item {
           background: #1a1a1a;
-          border-color: #FFFF00;
+          border-color: #666;
           color: #FFFFFF;
         }
 
@@ -541,12 +541,12 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
 
         .knowledge-base-manager.high-contrast .filter-btn {
           background: #000000;
-          border-color: #FFFF00;
+          border-color: #999;
           color: #FFFFFF;
         }
 
         .knowledge-base-manager.high-contrast .filter-btn.active {
-          background: #FFFF00;
+          background: #CCCCCC;
           color: #000000;
         }
 
@@ -566,7 +566,7 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
           align-items: center;
           margin-bottom: 30px;
           padding-bottom: 15px;
-          border-bottom: 2px solid #8b4513;
+          border-bottom: 2px solid #333;
         }
 
         .modal-header h2 {
@@ -586,7 +586,7 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
           gap: 8px;
           padding: 8px 12px;
           background: #f9f6f2;
-          border: 2px solid #d4af37;
+          border: 2px solid #333;
           border-radius: 6px;
           cursor: pointer;
           transition: all 0.2s;
@@ -598,7 +598,7 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
 
         .knowledge-base-manager.high-contrast .contrast-toggle {
           background: #1a1a1a;
-          border-color: #FFFF00;
+          border-color: #999;
         }
 
         .contrast-toggle input[type="checkbox"] {
@@ -614,7 +614,7 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
         }
 
         .knowledge-base-manager.high-contrast .toggle-label-text {
-          color: #FFFF00;
+          color: #CCCCCC;
         }
 
         .close-button {
@@ -641,7 +641,7 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
           padding: 20px;
           border-radius: 8px;
           margin-bottom: 20px;
-          border: 1px solid #d4af37;
+          border: 1px solid #333;
         }
 
         .kb-section h3 {
@@ -727,7 +727,7 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
         .kb-textarea {
           width: 100%;
           padding: 12px;
-          border: 2px solid #d4af37;
+          border: 2px solid #333;
           border-radius: 6px;
           font-family: inherit;
           font-size: 14px;
@@ -738,7 +738,7 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
         .kb-input {
           flex: 1;
           padding: 12px;
-          border: 2px solid #d4af37;
+          border: 2px solid #333;
           border-radius: 6px;
           font-size: 14px;
         }
@@ -766,7 +766,7 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
 
         .knowledge-base-manager.high-contrast .info-message {
           background: #2a2a2a;
-          color: #FFFF00;
+          color: #CCCCCC;
         }
 
         .backup-buttons {
@@ -781,12 +781,12 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
           padding: 15px;
           background: #f9f9f9;
           border-radius: 6px;
-          border: 1px solid #d4af37;
+          border: 1px solid #333;
         }
 
         .knowledge-base-manager.high-contrast .import-section {
           background: #0a0a0a;
-          border-color: #FFFF00;
+          border-color: #999;
         }
 
         .import-buttons {
@@ -809,7 +809,7 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
           padding: 15px;
           border-radius: 6px;
           margin-bottom: 15px;
-          border: 1px solid #d4af37;
+          border: 1px solid #333;
         }
 
         .result-header {
@@ -877,7 +877,7 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
 
         .filter-btn {
           padding: 8px 16px;
-          border: 2px solid #d4af37;
+          border: 2px solid #333;
           border-radius: 6px;
           background: white;
           cursor: pointer;
@@ -890,7 +890,7 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
         }
 
         .filter-btn.active {
-          background: #d4af37;
+          background: #555;
           color: white;
           font-weight: bold;
         }
@@ -907,7 +907,7 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
           background: white;
           padding: 12px;
           border-radius: 6px;
-          border: 1px solid #d4af37;
+          border: 1px solid #333;
         }
 
         .doc-header {
@@ -924,7 +924,7 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
         }
 
         .doc-type {
-          background: #d4af37;
+          background: #555;
           color: white;
           padding: 2px 8px;
           border-radius: 4px;

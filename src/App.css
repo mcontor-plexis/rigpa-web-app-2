@@ -2637,7 +2637,7 @@ button:disabled {
 .kb-manager-button {
   background-color: #1f1f1f;
   color: #ffffff;
-  border: 2px solid #d4af37;
+  border: 2px solid #333;
   border-radius: 6px;
   padding: 10px 16px;
   font-size: 14px;
@@ -2651,9 +2651,9 @@ button:disabled {
 
 .kb-manager-button:hover {
   background-color: #2a2a2a;
-  border-color: #b8962f;
+  border-color: #555;
   transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 2px 4px rgba(85, 85, 85, 0.3);
 }
 
 .rag-toggle {
