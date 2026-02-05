@@ -18,6 +18,12 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
   const [customText, setCustomText] = useState('');
   const [testQuery, setTestQuery] = useState('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [showAllDocuments, setShowAllDocuments] = useState(false);
+  const [allDocuments, setAllDocuments] = useState<KnowledgeDocument[]>([]);
+  const [filterType, setFilterType] = useState<'all' | 'term' | 'text' | 'definition'>('all');
+  const [highContrast, setHighContrast] = useState(false);
+  const [showImport, setShowImport] = useState(false);
+  const [importText, setImportText] = useState('');
 
   useEffect(() => {
     updateStats();
@@ -95,15 +101,84 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
       ragService.clear();
       updateStats();
       setSearchResults([]);
+      setAllDocuments([]);
       alert('Knowledge base cleared.');
     }
   };
 
+  const handleViewDocuments = () => {
+    const docs = ragService.getAllDocuments();
+    setAllDocuments(docs);
+    setShowAllDocuments(true);
+  };
+
+  const handleFilterChange = (type: 'all' | 'term' | 'text' | 'definition') => {
+    setFilterType(type);
+    if (type === 'all') {
+      setAllDocuments(ragService.getAllDocuments());
+    } else {
+      setAllDocuments(ragService.getDocumentsByType(type));
+    }
+  };
+
+  const handleDeleteDocument = (id: string) => {
+    if (window.confirm('Delete this document from the knowledge base?')) {
+      const success = ragService.removeDocument(id);
+      if (success) {
+        handleViewDocuments(); // Refresh the list
+        updateStats();
+      }
+    }
+  };
+
+  const handleExport = () => {
+    const json = ragService.exportCustomTexts();
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `rigpa-custom-texts-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImport = async () => {
+    if (!importText.trim()) {
+      alert('Please paste JSON data to import.');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const count = await ragService.importCustomTexts(importText);
+      updateStats();
+      setImportText('');
+      setShowImport(false);
+      alert(`Successfully imported ${count} custom texts!`);
+    } catch (error) {
+      alert('Error importing: Invalid JSON format');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="knowledge-base-manager">
+    <div className={`knowledge-base-manager ${highContrast ? 'high-contrast' : ''}`}>
       <div className="modal-header">
         <h2>🧠 AI Agent Knowledge Base Manager</h2>
-        <button onClick={onClose} className="close-button">×</button>
+        <div className="header-controls">
+          <label className="contrast-toggle" title="Toggle high contrast mode">
+            <input 
+              type="checkbox" 
+              checked={highContrast} 
+              onChange={(e) => setHighContrast(e.target.checked)}
+            />
+            <span className="toggle-label-text">
+              {highContrast ? '🔆 High Contrast' : '🔅 Normal'}
+            </span>
+          </label>
+          <button onClick={onClose} className="close-button">×</button>
+        </div>
       </div>
 
       <div className="kb-content">
@@ -125,7 +200,12 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
               <span className="stat-label">With Embeddings:</span>
               <span className="stat-value">{stats.withEmbeddings}</span>
             </div>
+            <div className="stat-item">
+              <span className="stat-label">Persistent Storage:</span>
+              <span className="stat-value active">💾 Enabled</span>
+            </div>
           </div>
+          <p className="info-message">💡 Custom texts are automatically saved to browser localStorage and will persist across sessions.</p>
         </section>
 
         {/* Initialize Section */}
@@ -140,7 +220,16 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
             {isLoading ? 'Initializing...' : isInitialized ? 'Already Initialized' : 'Initialize Now'}
           </button>
           {isInitialized && (
-            <p className="success-message">✓ Knowledge base is ready for RAG queries!</p>
+            <>
+              <p className="success-message">✓ Knowledge base is ready for RAG queries!</p>
+              <button 
+                onClick={handleViewDocuments}
+                className="kb-button secondary"
+                style={{ marginTop: '10px' }}
+              >
+                📋 View All Documents
+              </button>
+            </>
           )}
         </section>
 
@@ -213,6 +302,56 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
           </section>
         )}
 
+        {/* Export/Import Section */}
+        {isInitialized && ragService.getDocumentsByType('text').length > 0 && (
+          <section className="kb-section">
+            <h3>📦 Backup & Restore</h3>
+            <p>Export your custom texts as JSON or import previously saved data.</p>
+            <div className="backup-buttons">
+              <button 
+                onClick={handleExport}
+                className="kb-button secondary"
+              >
+                📥 Export Custom Texts
+              </button>
+              <button 
+                onClick={() => setShowImport(!showImport)}
+                className="kb-button secondary"
+              >
+                📤 Import Custom Texts
+              </button>
+            </div>
+            
+            {showImport && (
+              <div className="import-section">
+                <textarea
+                  value={importText}
+                  onChange={(e) => setImportText(e.target.value)}
+                  placeholder="Paste JSON data here..."
+                  rows={6}
+                  className="kb-textarea"
+                />
+                <div className="import-buttons">
+                  <button 
+                    onClick={handleImport}
+                    disabled={isLoading || !importText.trim()}
+                    className="kb-button primary"
+                  >
+                    {isLoading ? 'Importing...' : 'Import Now'}
+                  </button>
+                  <button 
+                    onClick={() => { setShowImport(false); setImportText(''); }}
+                    className="kb-button"
+                    style={{ background: '#666', color: 'white' }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
+          </section>
+        )}
+
         {/* Clear Section */}
         {isInitialized && (
           <section className="kb-section danger-zone">
@@ -225,6 +364,72 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
             >
               Clear Knowledge Base
             </button>
+          </section>
+        )}
+
+        {/* View All Documents Modal */}
+        {showAllDocuments && (
+          <section className="kb-section documents-viewer">
+            <div className="documents-header">
+              <h3>📋 Knowledge Base Documents ({allDocuments.length})</h3>
+              <button onClick={() => setShowAllDocuments(false)} className="close-small">×</button>
+            </div>
+            
+            <div className="filter-buttons">
+              <button 
+                onClick={() => handleFilterChange('all')}
+                className={`filter-btn ${filterType === 'all' ? 'active' : ''}`}
+              >
+                All ({ragService.getAllDocuments().length})
+              </button>
+              <button 
+                onClick={() => handleFilterChange('term')}
+                className={`filter-btn ${filterType === 'term' ? 'active' : ''}`}
+              >
+                Terms ({ragService.getDocumentsByType('term').length})
+              </button>
+              <button 
+                onClick={() => handleFilterChange('text')}
+                className={`filter-btn ${filterType === 'text' ? 'active' : ''}`}
+              >
+                Custom Texts ({ragService.getDocumentsByType('text').length})
+              </button>
+            </div>
+
+            <div className="documents-list">
+              {allDocuments.map((doc, idx) => (
+                <div key={doc.id} className="document-item">
+                  <div className="doc-header">
+                    <span className="doc-number">#{idx + 1}</span>
+                    <span className="doc-type">{doc.metadata.type}</span>
+                    <span className="doc-id">{doc.id}</span>
+                    {doc.metadata.type !== 'term' && (
+                      <button 
+                        onClick={() => handleDeleteDocument(doc.id)}
+                        className="delete-doc-btn"
+                        title="Delete this document"
+                      >
+                        🗑️
+                      </button>
+                    )}
+                  </div>
+                  <div className="doc-content">
+                    {doc.content}
+                  </div>
+                  <div className="doc-meta">
+                    {doc.metadata.tibetanScript && (
+                      <span>Tibetan: {doc.metadata.tibetanScript}</span>
+                    )}
+                    {doc.metadata.source && (
+                      <span>Source: {doc.metadata.source}</span>
+                    )}
+                    {doc.embedding && (
+                      <span className="has-embedding">✓ Embedded</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
           </section>
         )}
       </div>
@@ -242,6 +447,119 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
           padding: 20px;
         }
 
+        /* High Contrast Mode */
+        .knowledge-base-manager.high-contrast {
+          background: #000000;
+          color: #FFFFFF;
+        }
+
+        .knowledge-base-manager.high-contrast .modal-header {
+          border-bottom-color: #FFFF00;
+        }
+
+        .knowledge-base-manager.high-contrast .modal-header h2 {
+          color: #FFFF00;
+        }
+
+        .knowledge-base-manager.high-contrast .kb-section {
+          background: #1a1a1a;
+          border-color: #FFFF00;
+          color: #FFFFFF;
+        }
+
+        .knowledge-base-manager.high-contrast .kb-section h3 {
+          color: #FFFF00;
+        }
+
+        .knowledge-base-manager.high-contrast .kb-button {
+          border: 2px solid #FFFF00;
+          font-weight: bold;
+        }
+
+        .knowledge-base-manager.high-contrast .kb-button.primary {
+          background: #FFFF00;
+          color: #000000;
+        }
+
+        .knowledge-base-manager.high-contrast .kb-button.primary:hover:not(:disabled) {
+          background: #FFD700;
+          border-color: #FFD700;
+        }
+
+        .knowledge-base-manager.high-contrast .kb-button.secondary {
+          background: #0066FF;
+          color: #FFFFFF;
+          border-color: #0066FF;
+        }
+
+        .knowledge-base-manager.high-contrast .kb-button.secondary:hover:not(:disabled) {
+          background: #0052CC;
+          border-color: #0052CC;
+        }
+
+        .knowledge-base-manager.high-contrast .kb-button.danger {
+          background: #FF0000;
+          color: #FFFFFF;
+          border-color: #FF0000;
+        }
+
+        .knowledge-base-manager.high-contrast .kb-button.danger:hover:not(:disabled) {
+          background: #CC0000;
+          border-color: #CC0000;
+        }
+
+        .knowledge-base-manager.high-contrast .kb-textarea,
+        .knowledge-base-manager.high-contrast .kb-input {
+          background: #000000;
+          color: #FFFFFF;
+          border: 2px solid #FFFF00;
+        }
+
+        .knowledge-base-manager.high-contrast .stat-value {
+          color: #FFFF00;
+        }
+
+        .knowledge-base-manager.high-contrast .stat-value.active {
+          color: #00FF00;
+        }
+
+        .knowledge-base-manager.high-contrast .success-message {
+          color: #00FF00;
+        }
+
+        .knowledge-base-manager.high-contrast .search-result-item,
+        .knowledge-base-manager.high-contrast .document-item {
+          background: #1a1a1a;
+          border-color: #FFFF00;
+          color: #FFFFFF;
+        }
+
+        .knowledge-base-manager.high-contrast .result-content,
+        .knowledge-base-manager.high-contrast .doc-content {
+          color: #FFFFFF;
+        }
+
+        .knowledge-base-manager.high-contrast .filter-btn {
+          background: #000000;
+          border-color: #FFFF00;
+          color: #FFFFFF;
+        }
+
+        .knowledge-base-manager.high-contrast .filter-btn.active {
+          background: #FFFF00;
+          color: #000000;
+        }
+
+        .knowledge-base-manager.high-contrast .doc-type {
+          background: #0066FF;
+          color: #FFFFFF;
+        }
+
+        .knowledge-base-manager.high-contrast .danger-zone {
+          border-color: #FF0000;
+          background: #1a0000;
+        }
+
         .modal-header {
           display: flex;
           justify-content: space-between;
@@ -254,6 +572,49 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
         .modal-header h2 {
           color: #8b4513;
           margin: 0;
+        }
+
+        .header-controls {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+        }
+
+        .contrast-toggle {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 8px 12px;
+          background: #f9f6f2;
+          border: 2px solid #d4af37;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .contrast-toggle:hover {
+          background: #f0e9dc;
+        }
+
+        .knowledge-base-manager.high-contrast .contrast-toggle {
+          background: #1a1a1a;
+          border-color: #FFFF00;
+        }
+
+        .contrast-toggle input[type="checkbox"] {
+          margin: 0;
+          cursor: pointer;
+        }
+
+        .toggle-label-text {
+          font-size: 14px;
+          font-weight: 500;
+          color: #8b4513;
+          user-select: none;
+        }
+
+        .knowledge-base-manager.high-contrast .toggle-label-text {
+          color: #FFFF00;
         }
 
         .close-button {
@@ -394,6 +755,46 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
           margin-top: 10px;
         }
 
+        .info-message {
+          color: #666;
+          font-size: 13px;
+          margin-top: 10px;
+          padding: 10px;
+          background: #f0f0f0;
+          border-radius: 4px;
+        }
+
+        .knowledge-base-manager.high-contrast .info-message {
+          background: #2a2a2a;
+          color: #FFFF00;
+        }
+
+        .backup-buttons {
+          display: flex;
+          gap: 10px;
+          margin-bottom: 15px;
+          flex-wrap: wrap;
+        }
+
+        .import-section {
+          margin-top: 15px;
+          padding: 15px;
+          background: #f9f9f9;
+          border-radius: 6px;
+          border: 1px solid #d4af37;
+        }
+
+        .knowledge-base-manager.high-contrast .import-section {
+          background: #0a0a0a;
+          border-color: #FFFF00;
+        }
+
+        .import-buttons {
+          display: flex;
+          gap: 10px;
+          margin-top: 10px;
+        }
+
         .search-results {
           margin-top: 20px;
         }
@@ -443,6 +844,131 @@ export const KnowledgeBaseManager: React.FC<KnowledgeBaseManagerProps> = ({ onCl
         .danger-zone {
           border-color: #dc3545;
           background: #fff5f5;
+        }
+
+        .documents-viewer {
+          max-height: 600px;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .documents-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 15px;
+        }
+
+        .close-small {
+          background: none;
+          border: none;
+          font-size: 24px;
+          cursor: pointer;
+          color: #8b4513;
+        }
+
+        .filter-buttons {
+          display: flex;
+          gap: 10px;
+          margin-bottom: 15px;
+          flex-wrap: wrap;
+        }
+
+        .filter-btn {
+          padding: 8px 16px;
+          border: 2px solid #d4af37;
+          border-radius: 6px;
+          background: white;
+          cursor: pointer;
+          font-size: 14px;
+          transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+          background: #f9f6f2;
+        }
+
+        .filter-btn.active {
+          background: #d4af37;
+          color: white;
+          font-weight: bold;
+        }
+
+        .documents-list {
+          overflow-y: auto;
+          max-height: 400px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .document-item {
+          background: white;
+          padding: 12px;
+          border-radius: 6px;
+          border: 1px solid #d4af37;
+        }
+
+        .doc-header {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 8px;
+          font-size: 12px;
+        }
+
+        .doc-number {
+          font-weight: bold;
+          color: #8b4513;
+        }
+
+        .doc-type {
+          background: #d4af37;
+          color: white;
+          padding: 2px 8px;
+          border-radius: 4px;
+          font-weight: 500;
+        }
+
+        .doc-id {
+          color: #999;
+          font-style: italic;
+          flex: 1;
+        }
+
+        .delete-doc-btn {
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 16px;
+          padding: 4px;
+          opacity: 0.6;
+          transition: opacity 0.2s;
+        }
+
+        .delete-doc-btn:hover {
+          opacity: 1;
+        }
+
+        .doc-content {
+          margin-bottom: 8px;
+          line-height: 1.5;
+          color: #333;
+          word-wrap: break-word;
+        }
+
+        .doc-meta {
+          font-size: 11px;
+          color: #666;
+          display: flex;
+          gap: 15px;
+          flex-wrap: wrap;
+        }
+
+        .has-embedding {
+          color: #2d7a2d;
+          font-weight: 500;
         }
 
         @media (max-width: 768px) {

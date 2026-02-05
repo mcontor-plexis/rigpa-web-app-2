@@ -27,10 +27,55 @@ class RAGService {
   private knowledgeBase: KnowledgeDocument[] = [];
   private apiKey: string | undefined;
   private isInitialized = false;
+  private readonly STORAGE_KEY = 'rigpa-kb-custom-texts';
 
   constructor() {
     // Access environment variable safely in React
     this.apiKey = (process as any).env?.REACT_APP_OPENAI_API_KEY;
+  }
+
+  /**
+   * Save custom texts to localStorage
+   */
+  private saveCustomTexts(): void {
+    try {
+      const customTexts = this.knowledgeBase.filter(doc => 
+        doc.metadata.type === 'text' && doc.metadata.source === 'user-added'
+      );
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(customTexts));
+      console.log(`Saved ${customTexts.length} custom texts to localStorage`);
+    } catch (error) {
+      console.error('Error saving custom texts to localStorage:', error);
+    }
+  }
+
+  /**
+   * Load custom texts from localStorage
+   */
+  private loadCustomTexts(): KnowledgeDocument[] {
+    try {
+      const saved = localStorage.getItem(this.STORAGE_KEY);
+      if (saved) {
+        const customTexts = JSON.parse(saved) as KnowledgeDocument[];
+        console.log(`Loaded ${customTexts.length} custom texts from localStorage`);
+        return customTexts;
+      }
+    } catch (error) {
+      console.error('Error loading custom texts from localStorage:', error);
+    }
+    return [];
+  }
+
+  /**
+   * Clear custom texts from localStorage
+   */
+  private clearCustomTexts(): void {
+    try {
+      localStorage.removeItem(this.STORAGE_KEY);
+      console.log('Cleared custom texts from localStorage');
+    } catch (error) {
+      console.error('Error clearing custom texts from localStorage:', error);
+    }
   }
 
   /**
@@ -61,13 +106,16 @@ class RAGService {
       }
     }));
 
-    this.knowledgeBase = [...termDocuments, ...textDocuments];
+    // Load saved custom texts from localStorage
+    const savedCustomTexts = this.loadCustomTexts();
+    
+    this.knowledgeBase = [...termDocuments, ...textDocuments, ...savedCustomTexts];
 
     // Generate embeddings for all documents
     await this.generateEmbeddings();
     
     this.isInitialized = true;
-    console.log(`Knowledge base initialized with ${this.knowledgeBase.length} documents`);
+    console.log(`Knowledge base initialized with ${this.knowledgeBase.length} documents (including ${savedCustomTexts.length} saved custom texts)`);
   }
 
   /**
@@ -266,6 +314,34 @@ Use the above knowledge to inform your response. When referencing Tibetan terms 
   }
 
   /**
+   * Get all documents in the knowledge base
+   */
+  getAllDocuments(): KnowledgeDocument[] {
+    return [...this.knowledgeBase]; // Return a copy to prevent external modification
+  }
+
+  /**
+   * Get documents by type
+   */
+  getDocumentsByType(type: 'term' | 'text' | 'definition'): KnowledgeDocument[] {
+    return this.knowledgeBase.filter(doc => doc.metadata.type === type);
+  }
+
+  /**
+   * Remove a document by ID
+   */
+  removeDocument(id: string): boolean {
+    const index = this.knowledgeBase.findIndex(doc => doc.id === id);
+    if (index !== -1) {
+      this.knowledgeBase.splice(index, 1);
+      // Save updated custom texts to localStorage
+      this.saveCustomTexts();
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Add new documents to the knowledge base
    */
   async addDocuments(documents: KnowledgeDocument[]): Promise<void> {
@@ -299,6 +375,9 @@ Use the above knowledge to inform your response. When referencing Tibetan terms 
         console.error('Error adding documents:', error);
       }
     }
+    
+    // Save custom texts to localStorage
+    this.saveCustomTexts();
   }
 
   /**
@@ -307,6 +386,32 @@ Use the above knowledge to inform your response. When referencing Tibetan terms 
   clear(): void {
     this.knowledgeBase = [];
     this.isInitialized = false;
+    // Clear custom texts from localStorage
+    this.clearCustomTexts();
+  }
+
+  /**
+   * Export custom texts as JSON
+   */
+  exportCustomTexts(): string {
+    const customTexts = this.knowledgeBase.filter(doc => 
+      doc.metadata.type === 'text' && doc.metadata.source === 'user-added'
+    );
+    return JSON.stringify(customTexts, null, 2);
+  }
+
+  /**
+   * Import custom texts from JSON
+   */
+  async importCustomTexts(jsonString: string): Promise<number> {
+    try {
+      const documents = JSON.parse(jsonString) as KnowledgeDocument[];
+      await this.addDocuments(documents);
+      return documents.length;
+    } catch (error) {
+      console.error('Error importing custom texts:', error);
+      throw new Error('Invalid JSON format');
+    }
   }
 }
 
