@@ -12,6 +12,12 @@ type Message = {
 };
 
 const App = () => {
+  // Helper function to get the correct public URL for images
+  const getPublicUrl = (filename: string) => {
+    const publicUrl = process.env.PUBLIC_URL || '';
+    return `${publicUrl}/${filename}`;
+  };
+
   // Contemporary Masters modal and info state
   const [showContemporaryMastersModal, setShowContemporaryMastersModal] = useState(false);
   const [showContemporaryInfo, setShowContemporaryInfo] = useState<number | null>(null);
@@ -424,70 +430,70 @@ const App = () => {
   const deityImages = [
     { 
       id: 1, 
-      src: `${process.env.PUBLIC_URL}/DorjeDrolo.jpg`, 
+      src: getPublicUrl('DorjeDrolo.jpg'), 
       alt: 'Deity 1', 
       title: 'Dorje Drolo',
       description: 'Dorje Drolo is a wrathful manifestation of Guru Rinpoche (Padmasambhava). This fierce form represents the power to overcome obstacles and negative forces on the spiritual path. Often depicted riding a pregnant tigress, Dorje Drolo embodies the transformative energy needed to cut through illusion and establish the dharma in difficult circumstances.'
     },
     { 
       id: 2, 
-      src: `${process.env.PUBLIC_URL}/Manjushri.jpg`, 
+      src: getPublicUrl('Manjushri.jpg'), 
       alt: 'Deity 2', 
       title: 'Manjushri',
       description: 'Manjushri is the Bodhisattva of Wisdom and represents the perfection of transcendent knowledge. Often depicted holding a flaming sword that cuts through ignorance and a lotus bearing the Perfection of Wisdom sutra, Manjushri embodies the sharp clarity of awakened mind that sees through all conceptual limitations to ultimate truth.'
     },
     { 
       id: 3, 
-      src: `${process.env.PUBLIC_URL}/Padmasambava.jpg`, 
+      src: getPublicUrl('Padmasambava.jpg'), 
       alt: 'Deity 3', 
       title: 'Padmasambhava',
       description: 'Padmasambhava, also known as Guru Rinpoche, is the "Lotus-Born" master who brought Buddhism to Tibet in the 8th century. Revered as the Second Buddha, he established the Dharma in Tibet and hid countless treasure teachings (terma) to be discovered in future times. He represents the perfect union of wisdom and compassion.'
     },
     { 
       id: 4, 
-      src: `${process.env.PUBLIC_URL}/Troma.jpg`, 
+      src: getPublicUrl('Troma.jpg'), 
       alt: 'Deity 4', 
       title: 'Troma Nagmo',
       description: 'Troma Nagmo is a wrathful dakini and protector deity in the Dzogchen tradition. Known as the "Black Wrathful Mother," she represents the fierce compassion that destroys ego-grasping and obstacles to enlightenment. Her practice is considered especially powerful for cutting through the subtlest mental obscurations and revealing the nature of mind.'
     },
     { 
       id: 5, 
-      src: `${process.env.PUBLIC_URL}/Vajrakilaya.jpg`, 
+      src: getPublicUrl('Vajrakilaya.jpg'), 
       alt: 'Deity 5', 
       title: 'Vajrakilaya',
       description: 'Vajrakilaya (Dorje Phurba) is a wrathful deity representing the enlightened activity of all Buddhas. Depicted with three faces and six arms holding ritual daggers (phurbas), Vajrakilaya embodies the power to eliminate obstacles, both outer and inner, that prevent spiritual realization. This practice is central to removing impediments on the path to enlightenment.'
     },
     { 
       id: 6, 
-      src: `${process.env.PUBLIC_URL}/Vajrayogini.jpg`, 
+      src: getPublicUrl('Vajrayogini.jpg'), 
       alt: 'Deity 6', 
       title: 'Vajrayogini',
       description: 'Vajrayogini is a female Buddha representing the union of wisdom and bliss. Often depicted as a dancing red figure holding a curved knife and skull cup, she embodies the transformative power of tantric practice. Vajrayogini represents the wisdom that directly perceives emptiness and the blissful energy that arises from this realization.'
     },
     { 
       id: 7, 
-      src: `${process.env.PUBLIC_URL}/VajrasattvaYabYum.jpg`, 
+      src: getPublicUrl('VajrasattvaYabYum.jpg'), 
       alt: 'Deity 7', 
       title: 'Vajrasattva Yab-Yum',
       description: 'Vajrasattva in union (Yab-Yum) represents the perfect integration of wisdom and compassion, method and wisdom. Vajrasattva is the deity of purification, whose practice cleanses negative karma and obscurations. In union form, this represents the inseparable nature of clarity and emptiness, the fundamental ground of being in Dzogchen.'
     },
     { 
       id: 8, 
-      src: `${process.env.PUBLIC_URL}/PadmasambavaYabYum.jpg`, 
+      src: getPublicUrl('PadmasambavaYabYum.jpg'), 
       alt: 'Deity 8', 
       title: 'Padmasambhava Yab-Yum',
       description: 'Padmasambhava in union with his consort represents the perfect balance of masculine and feminine principles, skillful means and wisdom. This form symbolizes the complete realization where all dualities are transcended and the practitioner embodies the perfect unity of awareness and emptiness that characterizes the Dzogchen view.'
     },
     { 
       id: 9, 
-      src: `${process.env.PUBLIC_URL}/KuntunzangpoYabYum.jpg`, 
+      src: getPublicUrl('KuntunzangpoYabYum.jpg'), 
       alt: 'Deity 9', 
       title: 'Samantabhadra Yab-Yum',
       description: 'Samantabhadra (Kuntuzangpo) in union represents the primordial Buddha, the dharmakaya aspect of enlightenment. In Dzogchen, this figure symbolizes the original purity and spontaneous presence of the nature of mind. The union aspect represents the inseparable unity of awareness and emptiness, the fundamental ground from which all phenomena arise and dissolve.'
     },
     { 
       id: 10, 
-      src: `${process.env.PUBLIC_URL}/PadmasambavaRainbowBody.jpg`, 
+      src: getPublicUrl('PadmasambavaRainbowBody.jpg'), 
       alt: 'Deity 10', 
       title: 'Padmasambhava Rainbow Body',
       description: 'Padmasambhava manifesting the rainbow body represents the ultimate achievement in Dzogchen practice - the dissolution of the physical body into pure light at the time of death. This rainbow light body symbolizes the complete realization of the nature of mind and the perfect integration of wisdom and compassion beyond all conceptual limitations.'
@@ -498,56 +504,56 @@ const App = () => {
   const contemporaryMasters = [
     {
       id: 1,
-      src: `${process.env.PUBLIC_URL}/GyaltrulRinpoche.jpg`,
+      src: getPublicUrl('GyaltrulRinpoche.jpg'),
       alt: 'Gyaltrul Rinpoche',
       title: 'Gyaltrul Rinpoche',
       info: 'Gyaltrul Rinpoche (1925–2023), a senior Nyingma Palyul master, was recognized as the tulku Sampa Künkyap. After fleeing Tibet in 1959 and years in India, he moved to the U.S., founding Tashi Choling and Orgyen Dorje Den, serving Dudjom Rinpoche’s lineage, teaching Dzogchen, and authoring Meditation, Transformation, and Dream Yoga.'
     },
     {
       id: 2,
-      src: `${process.env.PUBLIC_URL}/ChatrulRinpoche.jpg`,
+      src: getPublicUrl('ChatrulRinpoche.jpg'),
       alt: 'Chatrul Rinpoche',
       title: 'Chatrul Rinpoche',
       info: 'Chatral Rinpoche (Chatral Sangye Dorje, 1913–2015) was a renowned Nyingma Dzogchen master and reclusive yogi, a lineage holder of Longchen Nyingtik and Dudjom Tersar. Born in Kham, he lived mainly in Nepal and India, advocated strict vegetarianism and life release, taught widely yet avoided institutions, and passed away in Pharping.'
     },
     {
       id: 3,
-      src: `${process.env.PUBLIC_URL}/YangthangRinpoche.jpg`,
+      src: getPublicUrl('YangthangRinpoche.jpg'),
       alt: 'Yangthang Rinpoche',
       title: 'Yangthang Rinpoche',
       info: 'Yangthang Rinpoche (1930–2016) was a highly revered Nyingma Palyul master from Sikkim, recognized as the reincarnation of tertön Dorje Dechen Lingpa of Dhomang Monastery. Imprisoned for twenty-two years after 1959, he was released in 1981, later teaching widely worldwide, preserving Dzogchen transmissions, and inspiring disciples until his passing in 2016.'
     },
     {
       id: 4,
-      src: `${process.env.PUBLIC_URL}/ChagdudRinpoche.jpg`,
+      src: getPublicUrl('ChagdudRinpoche.jpg'),
       alt: 'Chagdud Rinpoche',
       title: 'Chagdud Rinpoche',
       info: 'Chagdud Tulku Rinpoche (1930–2002) was a Nyingma master and the 14th Chagdud incarnation. He fled Tibet in 1959, aided refugees in India, and moved to the United States in 1979. He founded Chagdud Gonpa Foundation, emphasized Red Tara and Vajrakilaya, established Brazil’s Khadro Ling, and wrote Lord of the Dance.'
     },
     {
       id: 5,
-      src: `${process.env.PUBLIC_URL}/HisHolinessDudjomRinpoche.jpg`,
+      src: getPublicUrl('HisHolinessDudjomRinpoche.jpg'),
       alt: 'His Holiness Dudjom Rinpoche',
       title: 'His Holiness Dudjom Rinpoche',
       info: 'His Holiness Dudjom Rinpoche (Jigdral Yeshe Dorje, 1904–1987) was a preeminent Nyingma master, tertön, and scholar. Recognized as Dudjom Lingpa’s reincarnation, he preserved and taught the Dudjom Tersar. After 1959 exile, he taught across India, Nepal, Europe, and North America, serving as Nyingma’s head in exile, and authored foundational histories of Nyingma.'
     },
     {
       id: 6,
-      src: `${process.env.PUBLIC_URL}/HisHolinessPenorRinpoche.jpg`,
+      src: getPublicUrl('HisHolinessPenorRinpoche.jpg'),
       alt: 'His Holiness Penor Rinpoche',
       title: 'His Holiness Penor Rinpoche',
       info: 'His Holiness Penor Rinpoche (1932–2009), the 11th throne holder of the Palyul lineage, was born in Powo, Kham. After fleeing Tibet, he founded Namdroling Monastery in South India. Supreme Head of the Nyingma school from 1993 to 2001, he was renowned for Dzogchen teachings and ordained thousands, passing in 2009.'
     },
     {
       id: 7,
-      src: `${process.env.PUBLIC_URL}/ChogyamTrungpaRinpoche.jpg`,
+      src: getPublicUrl('ChogyamTrungpaRinpoche.jpg'),
       alt: 'Chogyam Trungpa',
       title: 'Chogyam Trungpa',
       info: 'Chögyam Trungpa Rinpoche (1939–1987), the 11th Trungpa tulku, fled Tibet in 1959, studied at Oxford, and co-founded Scotland’s Samye Ling. After renouncing monastic vows, he moved to North America, founded Naropa University and Shambhala Training, wrote influential books, taught “crazy wisdom,” shaping Western Buddhism.'
     },
     {
       id: 8,
-      src: `${process.env.PUBLIC_URL}/HisHolinessDilgoKhyentseRinpoche.jpg`,
+      src: getPublicUrl('HisHolinessDilgoKhyentseRinpoche.jpg'),
       alt: 'His Holiness Dilgo Khyentse Rinpoche',
       title: 'His Holiness Dilgo Khyentse Rinpoche',
       info: 'His Holiness Dilgo Khyentse Rinpoche (1910–1991) was a highly revered Nyingma master and scholar. Recognized as the reincarnation of the great tertön Pema Ösel Dongak Lingpa, he played a crucial role in preserving and transmitting the teachings of the Nyingma tradition. He was instrumental in the establishment of numerous monasteries and retreat centers, and his teachings continue to inspire practitioners worldwide.'
@@ -558,42 +564,42 @@ const App = () => {
   const lineageMasters = [
     { 
       id: 1, 
-      src: `${process.env.PUBLIC_URL}/Longchenpa.jpeg`, 
+      src: getPublicUrl('Longchenpa.jpeg'), 
       alt: 'Master 1', 
       title: 'Longchenpa',
       description: 'Longchen Rabjam (1308-1364) was one of the greatest scholars and realized masters of the Nyingma tradition. Known as "The Great Vast Expanse," he systematized and clarified the Dzogchen teachings in his profound works including the Seven Treasuries. His writings present the most complete and accessible exposition of the Great Perfection, emphasizing the natural state of primordial awareness.'
     },
     { 
       id: 2, 
-      src: `${process.env.PUBLIC_URL}/DudjomLingpa.jpg`, 
+      src: getPublicUrl('DudjomLingpa.jpg'), 
       alt: 'Master 2', 
       title: 'Dudjom Lingpa',
       description: 'Dudjom Lingpa (1835-1904) was a great tertön (treasure revealer) and master of the Nyingma tradition. He revealed numerous important terma teachings and established retreat centers where practitioners could engage in intensive Dzogchen practice. His lineage continues today through various emanations and heart disciples who maintain his pure transmission of the Great Perfection.'
     },
     { 
       id: 3, 
-      src: `${process.env.PUBLIC_URL}/TertonMigyorDorje.jpg`, 
+      src: getPublicUrl('TertonMigyorDorje.jpg'), 
       alt: 'Master 3', 
       title: 'Tertön Migyur Dorje',
       description: 'Chokgyur Dechen Lingpa, also known as Tertön Migyur Dorje (1829-1870), was one of the greatest treasure revealers of the 19th century. He discovered numerous important terma cycles including profound Dzogchen teachings. His revelations bridge the ancient wisdom of Padmasambhava with the needs of modern practitioners, providing clear instructions for realization.'
     },
     { 
       id: 4, 
-      src: `${process.env.PUBLIC_URL}/RigdzinKunzangSherab.jpg`, 
+      src: getPublicUrl('RigdzinKunzangSherab.jpg'), 
       alt: 'Master 4', 
       title: 'Rigdzin Kunzang Sherab',
       description: 'Rigdzin Kunzang Sherab was a realized master in the tradition of the Great Perfection, known for his profound realization and clear exposition of Dzogchen teachings. Masters like him represent the unbroken lineage of wisdom transmission that maintains the purity and power of these ancient instructions for awakening to our true nature.'
     },
     { 
       id: 5, 
-      src: `${process.env.PUBLIC_URL}/YesheSogyal.jpg`, 
+      src: getPublicUrl('YesheSogyal.jpg'), 
       alt: 'Master 5', 
       title: 'Yeshe Tsogyal',
       description: 'Yeshe Tsogyal (also known as Khandro Yeshe Tsogyal) was the principal consort and spiritual partner of Guru Rinpoche. She was instrumental in receiving, preserving, and hiding many of the treasure teachings. As a fully realized dakini, she represents the wisdom aspect of enlightenment and is revered as the "Mother of all Buddhas" in the Nyingma tradition.'
     },
     {
       id: 6,
-      src: `${process.env.PUBLIC_URL}/JigmeLingpa.jpg`,
+      src: getPublicUrl('JigmeLingpa.jpg'),
       alt: 'Master 6',
       title: 'Jigme Lingpa',
       description: 'Jigme Lingpa (1730–1798) was one of the most important tertöns and masters of the Nyingma school. He revealed the Longchen Nyingthig cycle of teachings, which became the heart-essence of Dzogchen practice for countless practitioners. His life and writings embody the union of scholarship, realization, and compassionate activity.'
@@ -601,7 +607,7 @@ const App = () => {
     ,
     {
       id: 7,
-      src: `${process.env.PUBLIC_URL}/Mandarava.jpg`,
+      src: getPublicUrl('Mandarava.jpg'),
       alt: 'Master 7',
       title: 'Mandarava',
       description: 'Mandarava was a renowned Indian princess and realized consort of Guru Padmasambhava. She attained the rainbow body and is revered as a wisdom dakini, embodying the qualities of realization, devotion, and the transmission of profound teachings. Her life story inspires practitioners to pursue the path of enlightenment with courage and compassion.'
@@ -609,7 +615,7 @@ const App = () => {
     ,
     {
       id: 8,
-      src: `${process.env.PUBLIC_URL}/Saraha.jpg`,
+      src: getPublicUrl('Saraha.jpg'),
       alt: 'Master 8',
       title: 'Saraha',
       description: 'Saraha was one of the earliest and most celebrated Indian Mahasiddhas, renowned for his realization of the nature of mind and his poetic songs of awakening. His teachings on spontaneous presence and direct experience laid the foundation for many later Dzogchen and Mahamudra traditions. Saraha’s life exemplifies the power of realization beyond conventional boundaries.'
@@ -617,7 +623,7 @@ const App = () => {
     ,
     {
       id: 9,
-      src: `${process.env.PUBLIC_URL}/MachigLabdron.jpg`,
+      src: getPublicUrl('MachigLabdron.jpg'),
       alt: 'Master 9',
       title: 'Machig Labdrön',
       description: 'Machig Labdrön (1055–1149) was a renowned Tibetan yogini and the founder of the Chöd practice. Her teachings emphasize cutting through ego-clinging and fear, and her life is celebrated for its profound realization, compassion, and the transmission of unique methods for direct liberation. Machig Labdrön is revered as a wisdom dakini and a model of spiritual courage.'
@@ -625,7 +631,7 @@ const App = () => {
     ,
     {
       id: 10,
-      src: `${process.env.PUBLIC_URL}/GarabDorje.jpg`,
+      src: getPublicUrl('GarabDorje.jpg'),
       alt: 'Master 10',
       title: 'Garab Dorje',
       description: 'Garab Dorje (Prahevajra) is regarded as the first human teacher of Dzogchen, the Great Perfection. He received the direct transmission of the Dzogchen teachings and passed them on to his disciple Manjushrimitra. Garab Dorje’s legacy is the foundational Dzogchen instructions, emphasizing direct introduction to the nature of mind and the path of spontaneous presence.'
@@ -637,7 +643,7 @@ const App = () => {
       <div className="menu-panel">
         <div className="picture-box">
           <img 
-            src={`${process.env.PUBLIC_URL}/Hung.png`} 
+            src={getPublicUrl('Hung.png')} 
             alt="Profile Picture" 
             onError={(e) => {
               e.currentTarget.style.display = 'none';
