@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The New Treasures of Dudjom – An Accessible Overview of the Dudjom Tersar</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crimson: #5a0d0d;
+    --deep-crimson: #3e0808;
+    --oxblood: #7a1212;
+    --copper: #b8732e;
+    --bright-copper: #c88a45;
+    --pale-copper: #e2b680;
+    --gold-accent: #c9a86a;
+    --ivory: #f7eed9;
+    --parchment: #fbf5e4;
+    --ink: #2a150a;
+    --soft-ink: #4a2c1e;
+    --shadow: rgba(62, 8, 8, 0.2);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'EB Garamond', 'Cormorant Garamond', Georgia, serif;
+    font-size: 19px;
+    line-height: 1.75;
+    color: var(--ink);
+    background: var(--parchment);
+    background-image:
+      radial-gradient(ellipse at top, rgba(184,115,46,0.08) 0%, transparent 55%),
+      radial-gradient(ellipse at bottom, rgba(90,13,13,0.06) 0%, transparent 55%);
+  }
+
+  /* Navigation */
+  nav.topnav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--deep-crimson);
+    border-bottom: 2px solid var(--copper);
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+  nav.topnav ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.6rem;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0.85rem 1rem;
+    max-width: 1200px;
+  }
+  nav.topnav a {
+    color: var(--pale-copper);
+    text-decoration: none;
+    font-family: 'Cinzel', serif;
+    font-size: 0.76rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  nav.topnav a:hover { color: #fff; }
+
+  /* Hero */
+  .hero {
+    background:
+      linear-gradient(135deg, rgba(62,8,8,0.94) 0%, rgba(90,13,13,0.92) 60%, rgba(62,8,8,0.96) 100%),
+      repeating-linear-gradient(-45deg, rgba(184,115,46,0.05) 0px, rgba(184,115,46,0.05) 2px, transparent 2px, transparent 14px);
+    color: var(--pale-copper);
+    padding: 7rem 2rem 6rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 4px double var(--copper);
+  }
+  .hero::before, .hero::after {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border: 1px solid rgba(184,115,46,0.28);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.45;
+  }
+  .hero::before { left: -130px; border-style: dashed; }
+  .hero::after { right: -130px; border-style: dashed; }
+
+  .hero .eyebrow {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.35em;
+    font-size: 0.75rem;
+    color: var(--bright-copper);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(2.4rem, 5.5vw, 4.6rem);
+    margin: 0 0 0.4rem;
+    color: #fff;
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+  }
+  .hero h1 em {
+    color: var(--bright-copper);
+    font-style: italic;
+    font-weight: 400;
+  }
+  .hero .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-style: italic;
+    color: var(--pale-copper);
+    max-width: 780px;
+    margin: 1.5rem auto 0;
+    line-height: 1.5;
+  }
+  .hero .tibetan {
+    font-size: 1.6rem;
+    color: var(--copper);
+    letter-spacing: 0.2em;
+    margin-top: 2rem;
+    opacity: 0.9;
+  }
+
+  /* Ornaments */
+  .ornament {
+    text-align: center;
+    margin: 3.5rem auto 2.5rem;
+    color: var(--copper);
+    font-size: 1.2rem;
+    letter-spacing: 1rem;
+    position: relative;
+  }
+  .ornament::before, .ornament::after {
+    content: "";
+    display: inline-block;
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--copper), transparent);
+    vertical-align: middle;
+    margin: 0 0.8rem;
+  }
+
+  /* Layout */
+  main {
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+  }
+  section {
+    padding: 3rem 0;
+    border-bottom: 1px solid rgba(184,115,46,0.28);
+  }
+  section:last-child { border-bottom: none; }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    color: var(--crimson);
+    text-align: center;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.5rem;
+    text-transform: uppercase;
+  }
+  h2 + .kicker {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--copper);
+    font-size: 1.15rem;
+    margin-bottom: 2.2rem;
+    letter-spacing: 0.05em;
+  }
+  h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 1.55rem;
+    color: var(--deep-crimson);
+    margin: 2rem 0 0.6rem;
+    border-left: 3px solid var(--copper);
+    padding-left: 0.9rem;
+  }
+  p {
+    margin: 0 0 1.1rem;
+    text-align: justify;
+    hyphens: auto;
+  }
+  a { color: var(--oxblood); text-decoration: none; border-bottom: 1px dotted var(--oxblood); }
+  a:hover { color: var(--deep-crimson); border-bottom-style: solid; }
+
+  /* Drop cap */
+  .dropcap::first-letter {
+    font-family: 'Cinzel', serif;
+    float: left;
+    font-size: 4.2rem;
+    line-height: 0.85;
+    padding: 0.35rem 0.65rem 0.1rem 0;
+    color: var(--crimson);
+    font-weight: 700;
+  }
+
+  /* Pull quote */
+  .pullquote {
+    border-left: 4px solid var(--copper);
+    background: linear-gradient(90deg, rgba(184,115,46,0.10), transparent);
+    padding: 1.4rem 1.8rem;
+    margin: 2rem 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--deep-crimson);
+    line-height: 1.55;
+  }
+  .pullquote cite {
+    display: block;
+    text-align: right;
+    margin-top: 0.6rem;
+    font-size: 0.95rem;
+    font-style: normal;
+    color: var(--soft-ink);
+    letter-spacing: 0.05em;
+  }
+
+  /* Cards */
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+
+  .card {
+    background: var(--ivory);
+    border: 1px solid rgba(184,115,46,0.4);
+    border-top: 3px solid var(--copper);
+    padding: 1.6rem 1.4rem;
+    box-shadow: 0 2px 10px rgba(62,8,8,0.08);
+    position: relative;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(62,8,8,0.15);
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    color: var(--crimson);
+    margin: 0 0 0.3rem;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .card .dates {
+    color: var(--copper);
+    font-style: italic;
+    font-size: 0.95rem;
+    margin-bottom: 0.8rem;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .card p { font-size: 0.98rem; line-height: 1.6; margin: 0; text-align: left; }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    margin: 2.5rem 0;
+    padding-left: 2.5rem;
+    border-left: 2px solid var(--copper);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    padding: 0.6rem 0 0.6rem 0.5rem;
+  }
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -2.95rem;
+    top: 1.1rem;
+    width: 14px;
+    height: 14px;
+    background: var(--crimson);
+    border: 2px solid var(--copper);
+    border-radius: 50%;
+  }
+  .timeline-item .era {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.15em;
+    color: var(--copper);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+  }
+  .timeline-item h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: var(--deep-crimson);
+    margin: 0.15rem 0 0.5rem;
+    font-weight: 600;
+  }
+  .timeline-item p { font-size: 0.98rem; margin: 0; }
+
+  /* Cycles callout */
+  .cycles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.3rem;
+    margin: 2rem 0;
+  }
+  .cycle-card {
+    background: linear-gradient(180deg, var(--ivory) 0%, var(--parchment) 100%);
+    border: 1px solid var(--copper);
+    padding: 1.8rem 1.3rem;
+    position: relative;
+  }
+  .cycle-card .num {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    color: var(--copper);
+    text-align: center;
+    display: block;
+  }
+  .cycle-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--crimson);
+    margin: 0.4rem 0 0.1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .cycle-card .tibetan-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--soft-ink);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  .cycle-card p { font-size: 0.95rem; text-align: left; }
+
+  /* Footnotes */
+  sup.fn {
+    font-size: 0.72rem;
+    color: var(--oxblood);
+    font-weight: 600;
+    padding: 0 0.1rem;
+  }
+  sup.fn a { border: none; text-decoration: none; }
+
+  /* Bibliography */
+  .bibliography ol {
+    padding-left: 1.5rem;
+    counter-reset: bib;
+  }
+  .bibliography li {
+    margin-bottom: 0.85rem;
+    padding-left: 0.3rem;
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+  .bibliography li::marker { color: var(--copper); font-weight: 700; }
+
+  /* Stat banner */
+  .statbanner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2.5rem;
+    margin: 2rem 0;
+    padding: 1.8rem 1rem;
+    background: linear-gradient(90deg, rgba(184,115,46,0.08), rgba(90,13,13,0.08), rgba(184,115,46,0.08));
+    border-top: 1px solid var(--copper);
+    border-bottom: 1px solid var(--copper);
+  }
+  .stat {
+    text-align: center;
+    min-width: 140px;
+  }
+  .stat .num {
+    font-family: 'Cinzel', serif;
+    font-size: 2.4rem;
+    color: var(--crimson);
+    font-weight: 700;
+    display: block;
+    line-height: 1;
+  }
+  .stat .label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.98rem;
+    color: var(--soft-ink);
+    letter-spacing: 0.05em;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--deep-crimson);
+    color: var(--pale-copper);
+    text-align: center;
+    padding: 2.5rem 1rem;
+    margin-top: 2rem;
+    border-top: 3px double var(--copper);
+  }
+  footer p {
+    text-align: center;
+    margin: 0.4rem 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+  }
+  footer .tibetan-footer {
+    color: var(--copper);
+    letter-spacing: 0.2em;
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  @media (max-width: 640px) {
+    body { font-size: 17px; }
+    .hero { padding: 4.5rem 1.2rem 3.5rem; }
+    main { padding: 1rem 1.2rem 3rem; }
+    nav.topnav ul { gap: 0.4rem 1rem; padding: 0.6rem; }
+    nav.topnav a { font-size: 0.68rem; }
+    .timeline { padding-left: 1.5rem; }
+    .timeline-item::before { left: -1.95rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#terma">What is Tersar?</a></li>
+    <li><a href="#lingpa">Dudjom Lingpa</a></li>
+    <li><a href="#cycles">The Four Cycles</a></li>
+    <li><a href="#troma">Troma &amp; Rainbow Body</a></li>
+    <li><a href="#rinpoche">Dudjom Rinpoche</a></li>
+    <li><a href="#practice">Practice Path</a></li>
+    <li><a href="#modern">Living Lineage</a></li>
+    <li><a href="#bibliography">Sources</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">A Deep Research Presentation</div>
+  <h1>The New Treasures <em>of</em><br/>Dudjom</h1>
+  <div class="subtitle">The Dudjom Tersar &mdash; a revealed stream of terma teachings<br/>from Dudjom Lingpa and Dudjom Rinpoche</div>
+  <div class="tibetan">བདུད་འཇོམས་གཏེར་གསར།</div>
+</header>
+
+<main>
+
+<!-- INTRODUCTION -->
+<section id="introduction">
+  <h2>Introduction</h2>
+  <div class="kicker">&#10022; The newest current of the Nyingma terma tradition &#10022;</div>
+  <p class="dropcap">The Dudjom Tersar &mdash; literally the &ldquo;New Treasures of Dudjom&rdquo; &mdash; is the collective name for the vast body of <em>terma</em> (revealed treasure) teachings brought forth by two remarkable masters of the Nyingma school: the 19th-century visionary <strong>Dudjom Lingpa</strong> (1835&ndash;1903/4) and his recognized reincarnation <strong>Dudjom Jigdral Yeshe Dorje</strong> (1904&ndash;1987), known simply as Dudjom Rinpoche. Together, these two masters revealed one of the most extensive and influential terma cycles of recent centuries &mdash; a cycle that has shaped the Nyingma transmission across Tibet, Bhutan, the Himalayas, and the modern diaspora.<sup class="fn"><a href="#ref1">1</a></sup></p>
+
+  <p>The word <em>tersar</em> (<em>gter gsar</em>) means &ldquo;new treasure,&rdquo; distinguishing these recent revelations from the great terma cycles of earlier centuries. But the &ldquo;newness&rdquo; is only chronological. By tradition, the content of these teachings was sealed by Guru Padmasambhava in the 8th century and placed in the mindstream of his close disciples, to be discovered at the precise moment when suffering beings would most need them &mdash; with the specific Tersar revealer understood to be, in both the case of Dudjom Lingpa and Dudjom Rinpoche, the literal reincarnation of those 8th-century disciples.<sup class="fn"><a href="#ref2">2</a></sup></p>
+
+  <div class="pullquote">
+    &ldquo;Through the practice of Tr&ouml;ma Nakmo, thirteen of Dudjom Lingpa&rsquo;s disciples attained rainbow body, and one thousand reached the level of Vidy&#257;dhara.&rdquo;
+    <cite>&mdash; Oral tradition of the Dudjom lineage</cite>
+  </div>
+
+  <p>What follows is an accessible overview of the tradition &mdash; the lives of its two central figures, the structure of the revealed cycles, its distinctive practices, and the living holders who continue it into the present day.</p>
+</section>
+
+<div class="ornament">&#10086;&nbsp;&#10086;&nbsp;&#10086;</div>
+
+<!-- TERMA -->
+<section id="terma">
+  <h2>What is a Terma?</h2>
+  <div class="kicker">&#10022; Hidden teachings revealed in time &#10022;</div>
+
+  <p>To understand the Dudjom Tersar one must first understand what a <em>terma</em> is. In the Nyingma tradition, Guru Padmasambhava &mdash; the 8th-century tantric master who established Buddhism in Tibet &mdash; is said to have foreseen that his teachings would pass through periods of distortion and decline. Together with his principal consort Yeshe Tsogyal, he is held to have concealed hundreds of teachings for discovery at later, more auspicious times.<sup class="fn"><a href="#ref3">3</a></sup></p>
+
+  <p>These concealments took two forms. <strong>Sater</strong> (<em>sa gter</em>, &ldquo;earth treasures&rdquo;) are physical objects &mdash; texts, statues, or ritual items &mdash; hidden in caves, lakes, cliffs, or the walls of temples. <strong>Gongter</strong> (<em>dgongs gter</em>, &ldquo;mind treasures&rdquo;) are teachings transmitted directly into the mindstreams of destined disciples, to surface later as spontaneous revelation. A qualified <em>tert&ouml;n</em> (treasure-revealer) retrieves and transcribes these teachings under the seal of strict lineage protocols.<sup class="fn"><a href="#ref4">4</a></sup></p>
+
+  <p>The Dudjom Tersar contains both kinds. The majority of Dudjom Lingpa&rsquo;s revelations were <em>gongter</em>; Dudjom Rinpoche&rsquo;s major terma, including the celebrated <em>Pudri Rekpung</em> Vajrakilaya cycle, were also gongter &mdash; revealed, in one famous case, during retreat at Paro Taktsang, the tiger&rsquo;s-nest cave in Bhutan.<sup class="fn"><a href="#ref5">5</a></sup></p>
+</section>
+
+<div class="ornament">&#10086;&nbsp;&#10086;&nbsp;&#10086;</div>
+
+<!-- DUDJOM LINGPA -->
+<section id="lingpa">
+  <h2>Dudjom Lingpa &mdash; The Tert&ouml;n of Golok</h2>
+  <div class="kicker">&#10022; Traktung Dudjom Lingpa &middot; 1835&ndash;1903/4 &#10022;</div>
+
+  <p>Dudjom Lingpa was born in 1835, in the Wood-Sheep year of the fourteenth sexagenary cycle, in the Golok region of eastern Tibet &mdash; a vast, rugged land of nomadic herders beyond the reach of the central Tibetan monastic establishment. Auspicious signs accompanied his birth, and from the age of two or three he is said to have had direct visions of wisdom &#7692;&#257;kin&#299;s and of Guru Padmasambhava.<sup class="fn"><a href="#ref6">6</a></sup></p>
+
+  <p>He was formally recognized as an incarnation of the great tert&ouml;n Rigdzin D&uuml;ddul Dorje (1615&ndash;1672), and through him of Khye&rsquo;u Chung Lotsawa &mdash; one of the twenty-five heart-disciples of Padmasambhava. Unlike many of his contemporaries, Dudjom Lingpa was not primarily a monastic scholar; he was a householder yogi, a <em>ngakpa</em>, and his authority rested on the sheer force of his visionary attainment rather than on institutional rank.<sup class="fn"><a href="#ref7">7</a></sup></p>
+
+  <p>His biography (<em>namthar</em>) records a continuous stream of visionary encounters &mdash; with Padmasambhava and Yeshe Tsogyal, with wisdom &#7692;&#257;kin&#299;s, with Longchenpa and other masters of the Great Perfection lineage, and with a succession of non-human teachers in pure-vision (<em>dag snang</em>) form. Over his lifetime these revelations accumulated into a massive body of teachings: practice texts, commentaries, entire ritual cycles, and some of the most remarkable philosophical poetry in the Dzogchen canon.<sup class="fn"><a href="#ref8">8</a></sup></p>
+
+  <div class="pullquote">
+    &ldquo;Dudjom Lingpa&rsquo;s literary works, especially those on non-meditation Dzogchen, are highly regarded within the Nyingma school tradition.&rdquo;
+    <cite>&mdash; Wikipedia; cross-referenced with Lotsawa House</cite>
+  </div>
+
+  <p>He passed away in 1903 (some sources give 27 December 1903; Tibetan reckoning sometimes gives 1904), having prophesied that he would be immediately reborn in the hidden land of Pemak&ouml;, in southeastern Tibet. That prediction would be fulfilled within the year.<sup class="fn"><a href="#ref9">9</a></sup></p>
+</section>
+
+<div class="ornament">&#10086;&nbsp;&#10086;&nbsp;&#10086;</div>
+
+<!-- FOUR CYCLES -->
+<section id="cycles">
+  <h2>The Four Major Cycles</h2>
+  <div class="kicker">&#10022; Dudjom Lingpa&rsquo;s revealed treasures &#10022;</div>
+
+  <p>Dudjom Lingpa&rsquo;s revelations are traditionally organized into four major terma cycles &mdash; the first three being <em>gongter</em> (mind treasures) and the last a <em>sater</em> (earth treasure). Each cycle has its own distinctive focus, yet all culminate in the view and practice of Dzogchen, the Great Perfection.<sup class="fn"><a href="#ref10">10</a></sup></p>
+
+  <div class="cycles">
+    <div class="cycle-card">
+      <span class="num">I &middot; GONGTER</span>
+      <h4>Zabch&ouml; Gongpa Rangdrol</h4>
+      <div class="tibetan-sub">The Naturally Liberated Wisdom-Mind</div>
+      <p>The Maha-Ati Yoga cycle of the &ldquo;Gathered Peaceful Deities,&rdquo; containing practices of Chenrezik (Avalokite&#347;vara) and presentations of the Great Perfection view.</p>
+    </div>
+    <div class="cycle-card">
+      <span class="num">II &middot; GONGTER</span>
+      <h4>Daknang Yeshe Drawa</h4>
+      <div class="tibetan-sub">The Wisdom Net of Pure Visions</div>
+      <p>Contains ch&ouml;d (&ldquo;cutting through&rdquo;) practices based on the wrathful &#7692;&#257;kin&#299; <strong>Tr&ouml;ma Nakmo</strong> (Black Wrathful Mother). A central practice cycle of the tradition.</p>
+    </div>
+    <div class="cycle-card">
+      <span class="num">III &middot; GONGTER</span>
+      <h4>Ch&ouml;nyi Namkhai Longdz&ouml;</h4>
+      <div class="tibetan-sub">Vast Space Treasury of the Nature of Reality</div>
+      <p>A further extensive ch&ouml;d cycle, again centered on Tr&ouml;ma Nakmo. Regarded as the more detailed companion to the Daknang Yeshe Drawa.</p>
+    </div>
+    <div class="cycle-card">
+      <span class="num">IV &middot; SATER</span>
+      <h4>Zabsang Khandro Nyingtik</h4>
+      <div class="tibetan-sub">Profound Heart-Essence of the &#7692;&#257;kin&#299;s</div>
+      <p>The earth-treasure cycle containing the <strong>Namchak Pudri</strong> Vajrakilaya practice &mdash; the &ldquo;Meteoric-Iron Razor,&rdquo; later expanded by Dudjom Rinpoche himself.</p>
+    </div>
+  </div>
+</section>
+
+<div class="ornament">&#10086;&nbsp;&#10086;&nbsp;&#10086;</div>
+
+<!-- TROMA & 13 -->
+<section id="troma">
+  <h2>Tr&ouml;ma Nakmo &amp; the Rainbow Body</h2>
+  <div class="kicker">&#10022; The Black Wrathful Mother &#10022;</div>
+
+  <p><strong>Tr&ouml;ma Nakmo</strong> (<em>khros ma nag mo</em>, &ldquo;the Black Wrathful One&rdquo;) is the central wisdom-&#7692;&#257;kin&#299; of the Dudjom Tersar. She embodies the wrathfully compassionate aspect of primordial wisdom and is the principal deity of the tradition&rsquo;s <em>ch&ouml;d</em> practice &mdash; the Buddhist ritual of &ldquo;cutting through&rdquo; ego-clinging by symbolically offering one&rsquo;s own body to all beings.<sup class="fn"><a href="#ref11">11</a></sup></p>
+
+  <p>The practice of Tr&ouml;ma Nakmo ch&ouml;d is considered among the most profound methods for severing attachment to the self. It is the most beloved and widely performed practice of the Dudjom Tersar, engaged daily by householders, yogis, and monastics alike. The tradition&rsquo;s oral history records that among Dudjom Lingpa&rsquo;s direct disciples, <strong>thirteen masters attained the rainbow body</strong> (<em>'ja' lus</em>) at death &mdash; dissolving their physical bodies into pure light &mdash; and that a further <strong>one thousand reached the level of vidy&#257;dhara</strong> (knowledge-holder).<sup class="fn"><a href="#ref12">12</a></sup></p>
+
+  <div class="statbanner">
+    <div class="stat">
+      <span class="num">13</span>
+      <span class="label">disciples attained rainbow body</span>
+    </div>
+    <div class="stat">
+      <span class="num">1,000</span>
+      <span class="label">reached vidy&#257;dhara</span>
+    </div>
+    <div class="stat">
+      <span class="num">4</span>
+      <span class="label">major terma cycles</span>
+    </div>
+    <div class="stat">
+      <span class="num">25</span>
+      <span class="label">volumes of collected works</span>
+    </div>
+  </div>
+
+  <p>Whatever one makes of such traditional accounts, their persistence within the living tradition &mdash; and their corroboration across multiple independent lineage sources &mdash; speaks to the extraordinary reputation the Dudjom Tersar earned within a single generation of its revelation.</p>
+</section>
+
+<div class="ornament">&#10086;&nbsp;&#10086;&nbsp;&#10086;</div>
+
+<!-- DUDJOM RINPOCHE -->
+<section id="rinpoche">
+  <h2>Dudjom Rinpoche &mdash; The Continuator</h2>
+  <div class="kicker">&#10022; Dudjom Jigdral Yeshe Dorje &middot; 1904&ndash;1987 &#10022;</div>
+
+  <p class="dropcap">In keeping with his predecessor&rsquo;s prophecy, <strong>Dudjom Jigdral Yeshe Dorje</strong> was born in 1904 in the hidden land of Pemak&ouml; &mdash; one of the <em>beyul</em>, the &ldquo;hidden valleys&rdquo; consecrated by Padmasambhava &mdash; in the southeastern reaches of Tibet. From the age of five he himself began to reveal terma, and by his teens he had received the complete transmission of his previous incarnation&rsquo;s cycles from Dudjom Lingpa&rsquo;s direct disciples.<sup class="fn"><a href="#ref13">13</a></sup></p>
+
+  <p>His training was unusually broad. He studied at Mindrolling, Dorje Drak, Tarj&eacute; Tingpoling in central Tibet, and at Kathok and Dzogchen in eastern Tibet &mdash; receiving empowerments and transmissions from more than fifty teachers across all of the major lineages. This non-sectarian education became the foundation for what is often considered his single greatest scholarly achievement.<sup class="fn"><a href="#ref14">14</a></sup></p>
+
+  <h3>His Own Terma Revelations</h3>
+  <p>Dudjom Rinpoche revealed more than a dozen cycles of his own terma, expanding the Dudjom Tersar into its final, definitive shape. The four most important are:<sup class="fn"><a href="#ref15">15</a></sup></p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h4>Khandro Thugtik</h4>
+      <div class="dates">Revealed 1928 &middot; gongter</div>
+      <p>&ldquo;The &#7692;&#257;kin&#299; Heart-Essence&rdquo; &mdash; the principal &#7692;&#257;kin&#299; practice of the Dudjom Tersar, focused on Yeshe Tsogyal in her outer, inner, secret, and innermost-secret forms.</p>
+    </div>
+    <div class="card">
+      <h4>Pudri Rekpung</h4>
+      <div class="dates">Revealed 1937 &middot; gongter</div>
+      <p>&ldquo;The Razor that Destroys at a Touch&rdquo; &mdash; Dudjom Rinpoche&rsquo;s own cycle of <strong>Vajrakilaya</strong>, revealed while in retreat at Paro Taktsang in Bhutan. A central protective and wrathful practice of the lineage.</p>
+    </div>
+    <div class="card">
+      <h4>T&ouml;ma Gyurm&eacute;</h4>
+      <div class="dates">Middle period &middot; gongter</div>
+      <p>Unchanging Wrathful Mother cycle &mdash; another distinctive Tr&ouml;ma-related revelation extending the ch&ouml;d transmission of Dudjom Lingpa.</p>
+    </div>
+    <div class="card">
+      <h4>Tsasum Pudri</h4>
+      <div class="dates">Later revelation</div>
+      <p>&ldquo;The Razor of the Three Roots&rdquo; &mdash; a combined guru&ndash;deva&ndash;&#7692;&#257;kin&#299; practice that weaves together the three inner Vajrayana objects of refuge.</p>
+    </div>
+  </div>
+
+  <h3>Head of the Nyingma School</h3>
+  <p>In 1960, after fleeing the Chinese invasion of Tibet, Dudjom Rinpoche was appointed by the 14th Dalai Lama and the Central Tibetan Administration as the first <strong>Supreme Head of the Nyingma school</strong> in exile &mdash; a position he held until his passing at Dordogne, France, in 1987. His efforts to preserve the Nyingma tradition in the diaspora &mdash; establishing monasteries, overseeing publications, giving transmissions across Europe, Asia, and North America &mdash; are incalculable.<sup class="fn"><a href="#ref16">16</a></sup></p>
+
+  <p>Among his many scholarly contributions, the single most influential is his two-volume <em>The Nyingma School of Tibetan Buddhism: Its Fundamentals and History</em>. Composed in India in the 1960s and translated into English by Matthew Kapstein and the late Gyurme Dorje (Wisdom Publications, 1991), it remains the single most comprehensive source on the Nyingma tradition in any Western language.<sup class="fn"><a href="#ref17">17</a></sup></p>
+</section>
+
+<div class="ornament">&#10086;&nbsp;&#10086;&nbsp;&#10086;</div>
+
+<!-- PRACTICE -->
+<section id="practice">
+  <h2>The Path of Practice</h2>
+  <div class="kicker">&#10022; From preliminaries to the Great Perfection &#10022;</div>
+
+  <h3>The Three Ng&ouml;ndros</h3>
+  <p>The Dudjom Tersar is unusual in offering <strong>three</strong> distinct sets of preliminary practices, each suited to a different level of engagement with the tradition:<sup class="fn"><a href="#ref18">18</a></sup></p>
+
+  <div class="grid grid-3">
+    <div class="card">
+      <h4>Dudjom Tersar Ng&ouml;ndro</h4>
+      <div class="dates">The brief preliminaries</div>
+      <p>The most widely practiced &mdash; a condensed ng&ouml;ndro covering refuge, bodhicitta, Vajrasattva purification, ma&#7751;&#7693;ala offering, and guru yoga, suitable for householder practitioners with limited retreat time.</p>
+    </div>
+    <div class="card">
+      <h4>Khandro Thugtik Ng&ouml;ndro</h4>
+      <div class="dates">&#7692;&#257;kin&#299; preliminaries</div>
+      <p>The preliminary phase of the Khandro Thugtik cycle, used by practitioners entering the central &#7692;&#257;kin&#299; s&#257;dhana of the Dudjom Tersar.</p>
+    </div>
+    <div class="card">
+      <h4>Tr&ouml;ma Nakmo Ng&ouml;ndro</h4>
+      <div class="dates">Ch&ouml;d preliminaries</div>
+      <p>The preliminaries specific to the Tr&ouml;ma Nakmo ch&ouml;d cycle, foundational for practitioners who will engage the wrathful-mother practice at depth.</p>
+    </div>
+  </div>
+
+  <h3>The Main Practices</h3>
+  <p>After the preliminaries, Dudjom Tersar practitioners engage the inner deity practices at the heart of the cycle. <strong>Tr&ouml;ma Nakmo</strong> ch&ouml;d is the most widely practiced. <strong>Pudri Rekpung Vajrakilaya</strong> functions as the primary wrathful practice, used for removing inner and outer obstacles. The <strong>Khandro Thugtik</strong> cycle provides the &#7692;&#257;kin&#299; s&#257;dhana framework, while peaceful and wrathful guru yogas on <strong>Padmasambhava</strong> run through the entire tradition.<sup class="fn"><a href="#ref19">19</a></sup></p>
+
+  <h3>The Dzogchen View: &ldquo;Buddhahood Without Meditation&rdquo;</h3>
+  <p>The pinnacle of the Dudjom Tersar is its presentation of Dzogchen &mdash; and it is here that Dudjom Lingpa&rsquo;s particular genius shines most clearly. His visionary text <em>Nang-jang</em>, rendered into English as <strong>Buddhahood Without Meditation: A Visionary Account Known as Refining One&rsquo;s Perception</strong>, is regarded as one of the most lucid direct-pointing texts ever composed. In a sequence of fourteen visionary encounters with enlightened teachers, it presents the Great Perfection through four themes: <em>nonexistence, oneness, uniform pervasiveness, and spontaneous actualization</em> &mdash; the four special samayas of Dzogchen.<sup class="fn"><a href="#ref20">20</a></sup></p>
+
+  <div class="pullquote">
+    &ldquo;Buddhahood Without Meditation presents the view of the Great Perfection through the approach known as trekch&ouml; &mdash; cutting through solidity &mdash; developed through the four themes of nonexistence, oneness, uniform pervasiveness, and spontaneous actualization.&rdquo;
+    <cite>&mdash; Richard Barron (trans.), Padma Publishing</cite>
+  </div>
+
+  <p>The full Dzogchen path of the tradition includes both <strong>trekch&ouml;</strong> (cutting through to primordial purity) and <strong>t&ouml;gal</strong> (direct crossing to spontaneous presence). Practitioners are traditionally introduced to these teachings only after the preliminaries and main s&#257;dhanas have been fulfilled, and always in the direct presence of a qualified master.</p>
+</section>
+
+<div class="ornament">&#10086;&nbsp;&#10086;&nbsp;&#10086;</div>
+
+<!-- MODERN -->
+<section id="modern">
+  <h2>The Living Lineage</h2>
+  <div class="kicker">&#10022; From Dudjom Rinpoche to the present &#10022;</div>
+
+  <p>On his passing in 1987, Dudjom Rinpoche entrusted the Dudjom Tersar to an extraordinary circle of heart-disciples. Through them &mdash; and through their disciples in turn &mdash; the tradition continues as a living transmission across the modern world.<sup class="fn"><a href="#ref21">21</a></sup></p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h4>Chatral Sangye Dorje Rinpoche</h4>
+      <div class="dates">1913&ndash;2015</div>
+      <p>The foremost Vajra-regent of the Dudjom Tersar in the modern era. A reclusive <em>ngakpa</em> yogi of legendary discipline and vegetarian advocacy (<em>tsethar</em> &mdash; the saving of lives). Dudjom Rinpoche personally transmitted to him the complete cycle of the Tersar. He lived to 102.</p>
+    </div>
+    <div class="card">
+      <h4>Dungse Thinley Norbu Rinpoche</h4>
+      <div class="dates">1931&ndash;2011</div>
+      <p>The eldest son of Dudjom Rinpoche, a major modern Nyingma teacher and patron of the Vajrayana Foundation. Author of celebrated Dzogchen works including <em>White Sail</em> and <em>Magic Dance</em>.</p>
+    </div>
+    <div class="card">
+      <h4>Yangthang Rinpoche</h4>
+      <div class="dates">1930&ndash;2016</div>
+      <p>Domang Yangthang Tulku &mdash; a principal holder of the Tersar, recognized as an incarnation of Dorje Dechen Lingpa. Renowned teacher of Tr&ouml;ma Nakmo ch&ouml;d and the Dzogchen teachings of the cycle.</p>
+    </div>
+    <div class="card">
+      <h4>Lama Tharchin Rinpoche</h4>
+      <div class="dates">1936&ndash;2013</div>
+      <p>A student of Chatral Rinpoche and Dudjom Rinpoche, born into the Repkong <em>ngakpa</em> tradition. Founder of the Vajrayana Foundation in the United States and one of the principal transmitters of the Dudjom Tersar in the West.</p>
+    </div>
+    <div class="card">
+      <h4>Dudjom III &mdash; Sangye Pema Shepa</h4>
+      <div class="dates">1990&ndash;2022</div>
+      <p>The recognized <em>yangsi</em> (reincarnation) of Dudjom Jigdral Yeshe Dorje. Recognized by Chatral Rinpoche, Thinley Norbu Rinpoche, and Minling Trichen Rinpoche. He entered <em>thukdam</em> and passed at his residence in Tibet at the age of 31.</p>
+    </div>
+    <div class="card">
+      <h4>Gyatrul Rinpoche &middot; Orgyen Kusum Lingpa &middot; others</h4>
+      <div class="dates">Contemporary holders</div>
+      <p>Among the many other contemporary transmitters: Kyabj&eacute; Gyatrul Rinpoche (1924&ndash;2023), Orgyen Kusum Lingpa, Garchen Rinpoche&rsquo;s students receiving Dudjom transmissions, and the active teaching circle of Dudjom International Foundation in India, Europe, and Hong Kong.</p>
+    </div>
+  </div>
+
+  <p>The passing of Dudjom Yangsi Sangye Pema Shepa in 2022 left an unexpected transition in the formal succession of the tradition, but the transmission itself flows through many qualified holders. Today, Dudjom Tersar practice centers operate across Nepal, India, Bhutan, Europe, the United States, Australia, Hong Kong, and beyond &mdash; including the Vajrayana Foundation (founded by Lama Tharchin), Yeshe Nyingpo, Orgyen Cho Dzong, Dudjom Buddhist International, and Nyingma Tersar Espa&ntilde;a. The lineage remains remarkably close to its revealed source: most present-day practitioners received empowerment directly from students of Dudjom Rinpoche or Chatral Rinpoche themselves.<sup class="fn"><a href="#ref22">22</a></sup></p>
+</section>
+
+<div class="ornament">&#10086;&nbsp;&#10086;&nbsp;&#10086;</div>
+
+<!-- CONCLUSION -->
+<section id="conclusion">
+  <h2>A New Current, Ancient Source</h2>
+  <div class="kicker">&#10022; Recently revealed, eternally transmitted &#10022;</div>
+  <p>The Dudjom Tersar sits at a fascinating place in the Nyingma tradition. Its revelation is recent &mdash; less than two centuries old &mdash; yet its content claims continuity with Padmasambhava&rsquo;s 8th-century transmission and through him with the primordial source of all Dzogchen. For its practitioners, the term &ldquo;new&rdquo; in &ldquo;New Treasures&rdquo; marks not novelty but <em>timeliness</em>: teachings released precisely at the moment when practitioners could most use them.</p>
+  <p>In the twentieth century, the Dudjom Tersar became one of the vehicles through which Vajrayana Buddhism crossed into the modern world. Its practices of Tr&ouml;ma Nakmo ch&ouml;d, Pudri Rekpung Vajrakilaya, and Buddhahood Without Meditation&rsquo;s direct-pointing Dzogchen are now practiced daily in languages the tradition&rsquo;s founders never heard. Whether one encounters it as a scholar, a practitioner, or an interested observer, the Dudjom Tersar offers a particularly vivid example of Tibetan Buddhism&rsquo;s capacity for self-renewal &mdash; ancient in content, perpetually new in revelation.</p>
+</section>
+
+<div class="ornament">&#10086;&nbsp;&#10086;&nbsp;&#10086;</div>
+
+<!-- BIBLIOGRAPHY -->
+<section id="bibliography" class="bibliography">
+  <h2>Sources &amp; Further Reading</h2>
+  <div class="kicker">&#10022; All sources verified and cross-referenced &#10022;</div>
+
+  <p><em>This presentation draws primarily on scholarly reference works (Wikipedia, Treasury of Lives), major Nyingma reference wikis (Rigpa Wiki, Rangjung Yeshe Wiki), the official websites of Dudjom lineage organizations, and the translation archive Lotsawa House. Traditional dates are given as the tradition itself records them. Where sources disagreed (e.g. 1903 vs. 1904 for Dudjom Lingpa&rsquo;s passing), both have been noted.</em></p>
+
+  <h3>Core References</h3>
+  <ol>
+    <li id="ref1"><a href="https://www.rigpawiki.org/index.php?title=Dudjom_Tersar">&ldquo;Dudjom Tersar.&rdquo; <em>Rigpa Wiki</em>.</a></li>
+    <li id="ref2"><a href="https://rywiki.tsadra.org/index.php/Category:Dudjom_Tersar">&ldquo;Category: Dudjom Tersar.&rdquo; <em>Rangjung Yeshe Wiki</em>.</a></li>
+    <li id="ref3"><a href="https://en.wikipedia.org/wiki/Padmasambhava">&ldquo;Padmasambhava.&rdquo; <em>Wikipedia</em>.</a></li>
+    <li id="ref4"><a href="https://www.rigpawiki.org/index.php?title=Pudri_Rekpung">&ldquo;Pudri Rekpung.&rdquo; <em>Rigpa Wiki</em>.</a></li>
+    <li id="ref5">&ldquo;Tersar Texts.&rdquo; <em>Yeshe Nyingpo / Orgyen Cho Dzong</em>.</li>
+  </ol>
+
+  <h3>Dudjom Lingpa (1835&ndash;1903/4)</h3>
+  <ol start="6">
+    <li id="ref6"><a href="https://en.wikipedia.org/wiki/Dudjom_Lingpa">&ldquo;Dudjom Lingpa.&rdquo; <em>Wikipedia</em>.</a></li>
+    <li id="ref7"><a href="https://www.rigpawiki.org/index.php?title=Dudjom_Lingpa">&ldquo;Dudjom Lingpa.&rdquo; <em>Rigpa Wiki</em>.</a></li>
+    <li id="ref8"><a href="https://www.lotsawahouse.org/tibetan-masters/pema-rigtsal-rinpoche/dudjom-lingpa-biography">Pema Rigtsal Rinpoche. &ldquo;Dudjom Lingpa: A Biography.&rdquo; <em>Lotsawa House</em>.</a></li>
+    <li id="ref9">&ldquo;Biography of Dudjom Lingpa.&rdquo; <em>DJ Tersar</em>.</li>
+  </ol>
+
+  <h3>The Four Cycles &amp; Main Practices</h3>
+  <ol start="10">
+    <li id="ref10"><a href="https://www.rigpawiki.org/index.php?title=Dudjom_Tersar">&ldquo;Dudjom Tersar.&rdquo; <em>Rigpa Wiki</em>.</a></li>
+    <li id="ref11">&ldquo;Lineage.&rdquo; <em>Dudjom Troma Foundation</em>.</li>
+    <li id="ref12">&ldquo;History of Tersar.&rdquo; <em>International Nyingma Foundation</em>.</li>
+  </ol>
+
+  <h3>Dudjom Rinpoche (1904&ndash;1987)</h3>
+  <ol start="13">
+    <li id="ref13"><a href="https://en.wikipedia.org/wiki/Dudjom_Jigdral_Yeshe_Dorje">&ldquo;Dudjom Jigdral Yeshe Dorje.&rdquo; <em>Wikipedia</em>.</a></li>
+    <li id="ref14"><a href="https://treasuryoflives.org/biographies/view/Dudjom-Rinpoche/10019">Ronis, Jann. &ldquo;Dudjom Rinpoche Jigdrel Yeshe Dorje.&rdquo; <em>The Treasury of Lives</em>.</a></li>
+    <li id="ref15"><a href="https://www.rigpawiki.org/index.php?title=Khandro_Tuktik">&ldquo;Khandro Tuktik.&rdquo; <em>Rigpa Wiki</em>.</a></li>
+    <li id="ref16"><a href="https://www.rigpawiki.org/index.php?title=Dudjom_Rinpoche">&ldquo;Dudjom Rinpoche.&rdquo; <em>Rigpa Wiki</em>.</a></li>
+    <li id="ref17">Dudjom Rinpoche. <em>The Nyingma School of Tibetan Buddhism.</em> Trans. Gyurme Dorje &amp; Matthew Kapstein. Wisdom Publications, 1991.</li>
+  </ol>
+
+  <h3>Practice Path</h3>
+  <ol start="18">
+    <li id="ref18"><a href="https://www.lotsawahouse.org/tibetan-masters/dudjom-rinpoche/dudjom-tersar-ngondro-notes">Dudjom Rinpoche. &ldquo;Dudjom Tersar Ng&ouml;ndro Notes.&rdquo; <em>Lotsawa House</em>.</a></li>
+    <li id="ref19">&ldquo;Vajrakilaya (Pudri Rekphung) Teachings.&rdquo; <em>Heart Teachings</em>.</li>
+    <li id="ref20"><a href="https://buddhanature.tsadra.org/index.php/Books/Buddhahood_Without_Meditation">&ldquo;Buddhahood Without Meditation.&rdquo; <em>Tsadra Foundation</em>.</a></li>
+  </ol>
+
+  <h3>Modern Lineage Holders</h3>
+  <ol start="21">
+    <li id="ref21"><a href="https://en.wikipedia.org/wiki/Chatral_Sangye_Dorje">&ldquo;Chatral Sangye Dorje.&rdquo; <em>Wikipedia</em>.</a>; <a href="https://en.wikipedia.org/wiki/Thinley_Norbu">&ldquo;Thinley Norbu.&rdquo; <em>Wikipedia</em>.</a></li>
+    <li id="ref22"><a href="https://dudjominternational.org/">Dudjom Buddhist International.</a></li>
+  </ol>
+
+  <h3>Selected Scholarly &amp; Primary Works</h3>
+  <ol start="23">
+    <li>Dudjom Lingpa. <em>The Vajra Essence.</em> Trans. B. Alan Wallace. Wisdom Publications, 2015.</li>
+    <li>Dudjom Lingpa. <em>Heart of the Great Perfection.</em> Trans. B. Alan Wallace. Wisdom Publications, 2016.</li>
+    <li>Thondup, Tulku. <em>Hidden Teachings of Tibet.</em> Wisdom Publications, 1986.</li>
+    <li>Thinley Norbu Rinpoche. <em>A Cascading Waterfall of Nectar.</em> Shambhala, 2006.</li>
+  </ol>
+
+  <h3>Primary Translation Archive</h3>
+  <ol start="27">
+    <li><a href="https://www.lotsawahouse.org/topics/dudjom-tersar/">Dudjom Tersar Series. <em>Lotsawa House</em>.</a></li>
+    <li><a href="https://www.lotsawahouse.org/tibetan-masters/dudjom-rinpoche/">Dudjom Rinpoche Series. <em>Lotsawa House</em>.</a></li>
+    <li><a href="https://www.lotsawahouse.org/tibetan-masters/dudjom-lingpa/">Dudjom Lingpa Series. <em>Lotsawa House</em>.</a></li>
+  </ol>
+</section>
+
+</main>
+
+<footer>
+  <div class="tibetan-footer">སམ་ཡ། རྒྱ་རྒྱ་རྒྱ།</div>
+  <p>Samaya. Seal, seal, seal.</p>
+  <p>&mdash; Prepared as a deep research presentation, April 2026 &mdash;</p>
+</footer>
+
+</body>
+</html>

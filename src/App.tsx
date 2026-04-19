@@ -30,6 +30,10 @@ const App = () => {
   const [showGalleryModal, setShowGalleryModal] = useState(false);
   const [showLineageMastersModal, setShowLineageMastersModal] = useState(false);
   const [showTibetanAlphabetModal, setShowTibetanAlphabetModal] = useState(false);
+  const [showLongchenNyingthigModal, setShowLongchenNyingthigModal] = useState(false);
+  const [showDudjomTersarModal, setShowDudjomTersarModal] = useState(false);
+  const [showNamchoModal, setShowNamchoModal] = useState(false);
+  const [showKhandroNyingthigModal, setShowKhandroNyingthigModal] = useState(false);
   const [showFullScreenImage, setShowFullScreenImage] = useState(false);
   const [fullScreenImageSrc, setFullScreenImageSrc] = useState('');
   const [fullScreenImageTitle, setFullScreenImageTitle] = useState('');
@@ -172,6 +176,14 @@ const App = () => {
       setShowContemporaryMastersModal(true);
     } else if (parentLabel === 'Tibetan Grammer' && subItem === 'Tibetan Alphabet') {
       setShowTibetanAlphabetModal(true);
+    } else if (parentLabel === 'Dzogchen Lineages' && subItem === 'Longchen Nyingthig') {
+      setShowLongchenNyingthigModal(true);
+    } else if (parentLabel === 'Dzogchen Lineages' && subItem === 'Dudjom Tersar') {
+      setShowDudjomTersarModal(true);
+    } else if (parentLabel === 'Dzogchen Lineages' && subItem === 'Namchö') {
+      setShowNamchoModal(true);
+    } else if (parentLabel === 'Dzogchen Lineages' && subItem === 'Khandro Nyingthig') {
+      setShowKhandroNyingthigModal(true);
     }
   };
 
@@ -179,6 +191,10 @@ const App = () => {
     setShowGalleryModal(false);
     setShowLineageMastersModal(false);
     setShowTibetanAlphabetModal(false);
+    setShowLongchenNyingthigModal(false);
+    setShowDudjomTersarModal(false);
+    setShowNamchoModal(false);
+    setShowKhandroNyingthigModal(false);
   };
 
   const handleEditorInput = () => {
@@ -417,6 +433,11 @@ const App = () => {
       id: 'dictionary',
       label: 'Tibetan Grammer',
       subItems: ['Tibetan Alphabet']
+    },
+    {
+      id: 'lineages',
+      label: 'Dzogchen Lineages',
+      subItems: ['Longchen Nyingthig', 'Dudjom Tersar', 'Namchö', 'Khandro Nyingthig']
     },
     {
       id: 'gallery',
@@ -1763,6 +1784,74 @@ const App = () => {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Longchen Nyingthig Lineage Modal */}
+      {showLongchenNyingthigModal && (
+        <div className="gallery-modal-overlay" onClick={closeAllModals}>
+          <div className="gallery-modal" style={{ width: '90vw', maxWidth: '1100px', height: '88vh', display: 'flex', flexDirection: 'column' }} onClick={(e) => e.stopPropagation()}>
+            <div className="gallery-modal-header">
+              <h2>Longchen Nyingthig Lineage</h2>
+              <button className="close-button" onClick={closeAllModals}>×</button>
+            </div>
+            <iframe
+              src={getPublicUrl('longchen-nyingthig-dzogchen.html')}
+              title="Longchen Nyingthig — Heart Essence of the Vast Expanse"
+              style={{ flex: 1, border: 'none', width: '100%', borderRadius: '0 0 8px 8px' }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Dudjom Tersar Modal */}
+      {showDudjomTersarModal && (
+        <div className="gallery-modal-overlay" onClick={closeAllModals}>
+          <div className="gallery-modal" style={{ width: '90vw', maxWidth: '1100px', height: '88vh', display: 'flex', flexDirection: 'column' }} onClick={(e) => e.stopPropagation()}>
+            <div className="gallery-modal-header">
+              <h2>Dudjom Tersar</h2>
+              <button className="close-button" onClick={closeAllModals}>×</button>
+            </div>
+            <iframe
+              src={getPublicUrl('dudjom-tersar.html')}
+              title="Dudjom Tersar — The New Treasures of Dudjom"
+              style={{ flex: 1, border: 'none', width: '100%', borderRadius: '0 0 8px 8px' }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Namchö Sky Dharma Modal */}
+      {showNamchoModal && (
+        <div className="gallery-modal-overlay" onClick={closeAllModals}>
+          <div className="gallery-modal" style={{ width: '90vw', maxWidth: '1100px', height: '88vh', display: 'flex', flexDirection: 'column' }} onClick={(e) => e.stopPropagation()}>
+            <div className="gallery-modal-header">
+              <h2>Namchö — The Sky Dharma</h2>
+              <button className="close-button" onClick={closeAllModals}>×</button>
+            </div>
+            <iframe
+              src={getPublicUrl('namcho-sky-dharma.html')}
+              title="Namchö — The Sky Dharma"
+              style={{ flex: 1, border: 'none', width: '100%', borderRadius: '0 0 8px 8px' }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Khandro Nyingthig Modal */}
+      {showKhandroNyingthigModal && (
+        <div className="gallery-modal-overlay" onClick={closeAllModals}>
+          <div className="gallery-modal" style={{ width: '90vw', maxWidth: '1100px', height: '88vh', display: 'flex', flexDirection: 'column' }} onClick={(e) => e.stopPropagation()}>
+            <div className="gallery-modal-header">
+              <h2>Khandro Nyingthig</h2>
+              <button className="close-button" onClick={closeAllModals}>×</button>
+            </div>
+            <iframe
+              src={getPublicUrl('khandro-nyingthig.html')}
+              title="Khandro Nyingthig — Heart Essence of the Dakinis"
+              style={{ flex: 1, border: 'none', width: '100%', borderRadius: '0 0 8px 8px' }}
+            />
           </div>
         </div>
       )}
