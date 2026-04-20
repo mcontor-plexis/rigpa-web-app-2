@@ -34,6 +34,7 @@ const App = () => {
   const [showDudjomTersarModal, setShowDudjomTersarModal] = useState(false);
   const [showNamchoModal, setShowNamchoModal] = useState(false);
   const [showKhandroNyingthigModal, setShowKhandroNyingthigModal] = useState(false);
+  const [showNyingthigYabshiModal, setShowNyingthigYabshiModal] = useState(false);
   const [showFullScreenImage, setShowFullScreenImage] = useState(false);
   const [fullScreenImageSrc, setFullScreenImageSrc] = useState('');
   const [fullScreenImageTitle, setFullScreenImageTitle] = useState('');
@@ -184,6 +185,8 @@ const App = () => {
       setShowNamchoModal(true);
     } else if (parentLabel === 'Dzogchen Lineages' && subItem === 'Khandro Nyingthig') {
       setShowKhandroNyingthigModal(true);
+    } else if (parentLabel === 'Dzogchen Lineages' && subItem === 'Nyingthig Yabshi') {
+      setShowNyingthigYabshiModal(true);
     }
   };
 
@@ -195,6 +198,7 @@ const App = () => {
     setShowDudjomTersarModal(false);
     setShowNamchoModal(false);
     setShowKhandroNyingthigModal(false);
+    setShowNyingthigYabshiModal(false);
   };
 
   const handleEditorInput = () => {
@@ -437,7 +441,7 @@ const App = () => {
     {
       id: 'lineages',
       label: 'Dzogchen Lineages',
-      subItems: ['Longchen Nyingthig', 'Dudjom Tersar', 'Namchö', 'Khandro Nyingthig']
+      subItems: ['Longchen Nyingthig', 'Dudjom Tersar', 'Namchö', 'Khandro Nyingthig', 'Nyingthig Yabshi']
     },
     {
       id: 'gallery',
@@ -1850,6 +1854,23 @@ const App = () => {
             <iframe
               src={getPublicUrl('khandro-nyingthig.html')}
               title="Khandro Nyingthig — Heart Essence of the Dakinis"
+              style={{ flex: 1, border: 'none', width: '100%', borderRadius: '0 0 8px 8px' }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Nyingthig Yabshi Modal */}
+      {showNyingthigYabshiModal && (
+        <div className="gallery-modal-overlay" onClick={closeAllModals}>
+          <div className="gallery-modal" style={{ width: '90vw', maxWidth: '1100px', height: '88vh', display: 'flex', flexDirection: 'column' }} onClick={(e) => e.stopPropagation()}>
+            <div className="gallery-modal-header">
+              <h2>Nyingthig Yabshi — The Fourfold Heart Essence</h2>
+              <button className="close-button" onClick={closeAllModals}>×</button>
+            </div>
+            <iframe
+              src={getPublicUrl('nyingthig-yabshi.html')}
+              title="Nyingthig Yabshi — The Fourfold Heart Essence"
               style={{ flex: 1, border: 'none', width: '100%', borderRadius: '0 0 8px 8px' }}
             />
           </div>
