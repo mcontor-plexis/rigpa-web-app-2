@@ -21,8 +21,13 @@ const App = () => {
   // Contemporary Masters modal and info state
   const [showContemporaryMastersModal, setShowContemporaryMastersModal] = useState(false);
   const [showContemporaryInfo, setShowContemporaryInfo] = useState<number | null>(null);
-  // Check if API key is available
-  const hasApiKey = Boolean(process.env.REACT_APP_OPENAI_API_KEY);
+  const [userApiKey, setUserApiKey] = useState<string>('');
+  const [showApiKeyModal, setShowApiKeyModal] = useState(false);
+  const [showApiKeySettings, setShowApiKeySettings] = useState(false);
+  const [apiKeyInput, setApiKeyInput] = useState('');
+  const [showApiKeyText, setShowApiKeyText] = useState(false);
+  const effectiveApiKey = userApiKey || process.env.REACT_APP_OPENAI_API_KEY || '';
+  const hasApiKey = Boolean(effectiveApiKey);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -89,6 +94,25 @@ const App = () => {
       setEditorContent(saved);
     }
   }, []);
+
+  // Load user API key from localStorage on startup
+  useEffect(() => {
+    const storedKey = localStorage.getItem('openai-api-key');
+    if (storedKey) {
+      setUserApiKey(storedKey);
+      ragService.setApiKey(storedKey);
+    } else if (!process.env.REACT_APP_OPENAI_API_KEY) {
+      setShowApiKeyModal(true);
+    }
+  }, []);
+
+  // Update ragService and reset RAG when user key changes
+  useEffect(() => {
+    if (userApiKey) {
+      ragService.setApiKey(userApiKey);
+      setRagInitialized(false);
+    }
+  }, [userApiKey]);
 
   // Initialize RAG service on startup
   useEffect(() => {
@@ -260,9 +284,9 @@ const App = () => {
 
     // Check if API key is available
     if (!hasApiKey) {
-      const errorMessage: Message = { 
-        sender: 'assistant', 
-        content: 'OpenAI API functionality is currently disabled for this public demo. To enable AI chat, please set up your own OpenAI API key in the environment variables.' 
+      const errorMessage: Message = {
+        sender: 'assistant',
+        content: 'No API key configured. Click **🔑 API Key** in the chat header to add your OpenAI API key.'
       };
       setMessages(prev => [...prev, { sender: 'user', content: input }, errorMessage]);
       setInput('');
@@ -292,7 +316,7 @@ const App = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+          'Authorization': `Bearer ${effectiveApiKey}`,
         },
         body: JSON.stringify({
           //model: 'gpt-3.5-turbo',
@@ -393,6 +417,30 @@ const App = () => {
       setMessages([]);
       setCopiedMessageIndex(null);
       localStorage.removeItem('chatMessages');
+    }
+  };
+
+  const saveApiKey = () => {
+    const trimmed = apiKeyInput.trim();
+    if (!trimmed.startsWith('sk-')) {
+      alert('Please enter a valid OpenAI API key (starts with sk-)');
+      return;
+    }
+    localStorage.setItem('openai-api-key', trimmed);
+    setUserApiKey(trimmed);
+    setApiKeyInput('');
+    setShowApiKeyModal(false);
+    setShowApiKeySettings(false);
+  };
+
+  const clearApiKey = () => {
+    if (window.confirm('Remove your API key? AI chat will be disabled until a new key is entered.')) {
+      localStorage.removeItem('openai-api-key');
+      setUserApiKey('');
+      ragService.setApiKey('');
+      setRagInitialized(false);
+      setShowApiKeySettings(false);
+      setShowApiKeyModal(true);
     }
   };
 
@@ -1147,8 +1195,15 @@ const App = () => {
             <div className="chat-main-header">
               <h2>Rigpa AI Chat</h2>
               <div className="chat-header-buttons">
-                <button 
-                  className="kb-manager-button" 
+                <button
+                  className="kb-manager-button api-key-button"
+                  onClick={() => setShowApiKeySettings(true)}
+                  title={hasApiKey ? 'API Key configured — click to update' : 'No API key — click to add'}
+                >
+                  🔑 API Key{!hasApiKey && <span className="api-key-warning"> !</span>}
+                </button>
+                <button
+                  className="kb-manager-button"
                   onClick={() => setShowKnowledgeBaseManager(true)}
                   title="Manage AI Knowledge Base"
                 >
@@ -1202,16 +1257,25 @@ const App = () => {
                   </div>
                 )}
               </div>
+              {!hasApiKey && (
+                <div className="api-key-banner">
+                  No API key configured.{' '}
+                  <button className="api-key-banner-link" onClick={() => setShowApiKeySettings(true)}>
+                    Add your OpenAI API key
+                  </button>{' '}
+                  to enable AI chat.
+                </div>
+              )}
               <div className="input-area">
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-                  placeholder="Type your message..."
-                  disabled={loading}
+                  placeholder={hasApiKey ? 'Type your message...' : 'Add an API key to enable AI chat'}
+                  disabled={loading || !hasApiKey}
                 />
-                <button onClick={sendMessage} disabled={loading || !input.trim()}>
+                <button onClick={sendMessage} disabled={loading || !input.trim() || !hasApiKey}>
                   Send
                 </button>
               </div>
@@ -1873,6 +1937,86 @@ const App = () => {
               title="Nyingthig Yabshi — The Fourfold Heart Essence"
               style={{ flex: 1, border: 'none', width: '100%', borderRadius: '0 0 8px 8px' }}
             />
+          </div>
+        </div>
+      )}
+
+      {/* API Key Entry Modal */}
+      {showApiKeyModal && (
+        <div className="gallery-modal-overlay">
+          <div className="api-key-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="api-key-modal-header">
+              <h2>🔑 OpenAI API Key Required</h2>
+            </div>
+            <div className="api-key-modal-body">
+              <p>To use Rigpa AI chat, enter your OpenAI API key. It is stored only in your browser and sent directly to OpenAI — never to any other server.</p>
+              <p className="api-key-hint">
+                Don't have a key?{' '}
+                <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">
+                  Get one at platform.openai.com
+                </a>
+              </p>
+              <div className="api-key-input-row">
+                <input
+                  type={showApiKeyText ? 'text' : 'password'}
+                  value={apiKeyInput}
+                  onChange={(e) => setApiKeyInput(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && saveApiKey()}
+                  placeholder="sk-proj-..."
+                  className="api-key-input"
+                  autoFocus
+                />
+                <button className="api-key-toggle" onClick={() => setShowApiKeyText(!showApiKeyText)} title="Show/hide key">
+                  {showApiKeyText ? '🙈' : '👁️'}
+                </button>
+              </div>
+              <button className="api-key-save-btn" onClick={saveApiKey}>
+                Save Key
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* API Key Settings Modal */}
+      {showApiKeySettings && (
+        <div className="gallery-modal-overlay" onClick={() => setShowApiKeySettings(false)}>
+          <div className="api-key-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="api-key-modal-header">
+              <h2>🔑 API Key Settings</h2>
+              <button className="close-button" onClick={() => setShowApiKeySettings(false)}>×</button>
+            </div>
+            <div className="api-key-modal-body">
+              {userApiKey ? (
+                <div className="api-key-current">
+                  <span className="api-key-label">Current key:</span>
+                  <span className="api-key-masked">{userApiKey.slice(0, 8)}••••••••••••{userApiKey.slice(-4)}</span>
+                </div>
+              ) : (
+                <p className="api-key-hint">No user key stored. Using environment key.</p>
+              )}
+              <p>Update your OpenAI API key:</p>
+              <div className="api-key-input-row">
+                <input
+                  type={showApiKeyText ? 'text' : 'password'}
+                  value={apiKeyInput}
+                  onChange={(e) => setApiKeyInput(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && saveApiKey()}
+                  placeholder="sk-proj-..."
+                  className="api-key-input"
+                  autoFocus
+                />
+                <button className="api-key-toggle" onClick={() => setShowApiKeyText(!showApiKeyText)} title="Show/hide key">
+                  {showApiKeyText ? '🙈' : '👁️'}
+                </button>
+              </div>
+              <div className="api-key-actions">
+                <button className="api-key-save-btn" onClick={saveApiKey}>Save Key</button>
+                {userApiKey && (
+                  <button className="api-key-clear-btn" onClick={clearApiKey}>Clear Key</button>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       )}

@@ -38,6 +38,10 @@ class RAGService {
     this.apiKey = (process as any).env?.REACT_APP_OPENAI_API_KEY;
   }
 
+  setApiKey(key: string): void {
+    this.apiKey = key || undefined;
+  }
+
   /**
    * Save custom texts to localStorage
    */

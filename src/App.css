@@ -3027,3 +3027,192 @@ button:disabled {
     font-size: 18px;
   }
 }
+
+/* ===== API KEY MODAL ===== */
+.api-key-modal {
+  background: #1a1a1a;
+  border: 1px solid #444;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.api-key-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #333;
+}
+
+.api-key-modal-header h2 {
+  font-size: 20px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.api-key-modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.api-key-modal-body p {
+  color: #cccccc;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.api-key-hint {
+  color: #888 !important;
+  font-size: 13px !important;
+}
+
+.api-key-hint a {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+.api-key-hint a:hover {
+  color: #93c5fd;
+}
+
+.api-key-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.api-key-input {
+  flex: 1;
+  background: #0a0a0a;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 10px 14px;
+  color: #ffffff;
+  font-size: 14px;
+  font-family: monospace;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.api-key-input:focus {
+  border-color: #1e40af;
+}
+
+.api-key-input::placeholder {
+  color: #555;
+}
+
+.api-key-toggle {
+  background: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.api-key-toggle:hover {
+  background: #333;
+}
+
+.api-key-save-btn {
+  background: #1e40af;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 11px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.api-key-save-btn:hover {
+  background: #2563eb;
+}
+
+.api-key-clear-btn {
+  background: #7f1d1d;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 11px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.api-key-clear-btn:hover {
+  background: #991b1b;
+}
+
+.api-key-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.api-key-current {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 10px 14px;
+}
+
+.api-key-label {
+  color: #888;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.api-key-masked {
+  color: #60a5fa;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+/* API Key button in chat header */
+.api-key-button {
+  position: relative;
+}
+
+.api-key-warning {
+  color: #f87171;
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+/* No-key banner above chat input */
+.api-key-banner {
+  background: #1c1917;
+  border: 1px solid #7f1d1d;
+  border-radius: 6px;
+  padding: 10px 16px;
+  color: #fca5a5;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.api-key-banner-link {
+  background: none;
+  border: none;
+  color: #60a5fa;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.api-key-banner-link:hover {
+  color: #93c5fd;
+}
