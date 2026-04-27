@@ -40,6 +40,7 @@ const App = () => {
   const [showNamchoModal, setShowNamchoModal] = useState(false);
   const [showKhandroNyingthigModal, setShowKhandroNyingthigModal] = useState(false);
   const [showNyingthigYabshiModal, setShowNyingthigYabshiModal] = useState(false);
+  const [showTermaTraditionModal, setShowTermaTraditionModal] = useState(false);
   const [showFullScreenImage, setShowFullScreenImage] = useState(false);
   const [fullScreenImageSrc, setFullScreenImageSrc] = useState('');
   const [fullScreenImageTitle, setFullScreenImageTitle] = useState('');
@@ -221,6 +222,7 @@ const App = () => {
     setShowNamchoModal(false);
     setShowKhandroNyingthigModal(false);
     setShowNyingthigYabshiModal(false);
+    setShowTermaTraditionModal(false);
   };
 
   const handleEditorInput = () => {
@@ -488,6 +490,7 @@ const App = () => {
       label: 'Tibetan Grammer',
       subItems: ['Tibetan Alphabet']
     },
+    { id: 'terma-tradition', label: 'Terma Tradition', subItems: [] },
     {
       id: 'lineages',
       label: 'Dzogchen Lineages',
@@ -751,6 +754,8 @@ const App = () => {
                     setActiveMenu('help');
                   } else if (menu.id === 'dzogchen-terms') {
                     setActiveMenu('dzogchen-terms');
+                  } else if (menu.id === 'terma-tradition') {
+                    setShowTermaTraditionModal(true);
                   } else {
                     handleMenuClick(menu.id);
                   }
@@ -1941,6 +1946,22 @@ const App = () => {
             <iframe
               src={getPublicUrl('nyingthig-yabshi.html')}
               title="Nyingthig Yabshi — The Fourfold Heart Essence"
+              style={{ flex: 1, border: 'none', width: '100%', borderRadius: '0 0 8px 8px' }}
+            />
+          </div>
+        </div>
+      )}
+
+      {showTermaTraditionModal && (
+        <div className="gallery-modal-overlay" onClick={closeAllModals}>
+          <div className="gallery-modal" style={{ width: '90vw', maxWidth: '1100px', height: '88vh', display: 'flex', flexDirection: 'column' }} onClick={(e) => e.stopPropagation()}>
+            <div className="gallery-modal-header">
+              <h2>Terma Tradition — The Treasure Teaching Lineage</h2>
+              <button className="close-button" onClick={closeAllModals}>×</button>
+            </div>
+            <iframe
+              src={getPublicUrl('padmasambhava-terma-tradition.html')}
+              title="Terma Tradition — The Treasure Teaching Lineage"
               style={{ flex: 1, border: 'none', width: '100%', borderRadius: '0 0 8px 8px' }}
             />
           </div>
