@@ -101,8 +101,6 @@ const App = () => {
     if (storedKey) {
       setUserApiKey(storedKey);
       ragService.setApiKey(storedKey);
-    } else if (!process.env.REACT_APP_OPENAI_API_KEY) {
-      setShowApiKeyModal(true);
     }
   }, []);
 
@@ -426,11 +424,15 @@ const App = () => {
       alert('Please enter a valid OpenAI API key (starts with sk-)');
       return;
     }
+    const isFirstKey = !userApiKey;
     localStorage.setItem('openai-api-key', trimmed);
     setUserApiKey(trimmed);
     setApiKeyInput('');
     setShowApiKeyModal(false);
     setShowApiKeySettings(false);
+    if (isFirstKey) {
+      setActiveMenu('chat');
+    }
   };
 
   const clearApiKey = () => {
@@ -740,7 +742,11 @@ const App = () => {
                 className={`menu-button ${activeMenu === menu.id ? 'active' : ''}`}
                 onClick={() => {
                   if (menu.id === 'chat') {
-                    setActiveMenu('chat');
+                    if (!hasApiKey) {
+                      setShowApiKeyModal(true);
+                    } else {
+                      setActiveMenu('chat');
+                    }
                   } else if (menu.id === 'help') {
                     setActiveMenu('help');
                   } else if (menu.id === 'dzogchen-terms') {
@@ -1943,10 +1949,11 @@ const App = () => {
 
       {/* API Key Entry Modal */}
       {showApiKeyModal && (
-        <div className="gallery-modal-overlay">
+        <div className="gallery-modal-overlay" onClick={() => setShowApiKeyModal(false)}>
           <div className="api-key-modal" onClick={(e) => e.stopPropagation()}>
             <div className="api-key-modal-header">
               <h2>🔑 OpenAI API Key Required</h2>
+              <button className="close-button" onClick={() => setShowApiKeyModal(false)}>×</button>
             </div>
             <div className="api-key-modal-body">
               <p>To use Rigpa AI chat, enter your OpenAI API key. It is stored only in your browser and sent directly to OpenAI — never to any other server.</p>
@@ -1958,12 +1965,13 @@ const App = () => {
               </p>
               <div className="api-key-input-row">
                 <input
-                  type={showApiKeyText ? 'text' : 'password'}
+                  type="text"
                   value={apiKeyInput}
                   onChange={(e) => setApiKeyInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && saveApiKey()}
                   placeholder="sk-proj-..."
-                  className="api-key-input"
+                  className={`api-key-input${showApiKeyText ? '' : ' api-key-input-masked'}`}
+                  autoComplete="off"
                   autoFocus
                 />
                 <button className="api-key-toggle" onClick={() => setShowApiKeyText(!showApiKeyText)} title="Show/hide key">
@@ -1998,12 +2006,13 @@ const App = () => {
               <p>Update your OpenAI API key:</p>
               <div className="api-key-input-row">
                 <input
-                  type={showApiKeyText ? 'text' : 'password'}
+                  type="text"
                   value={apiKeyInput}
                   onChange={(e) => setApiKeyInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && saveApiKey()}
                   placeholder="sk-proj-..."
-                  className="api-key-input"
+                  className={`api-key-input${showApiKeyText ? '' : ' api-key-input-masked'}`}
+                  autoComplete="off"
                   autoFocus
                 />
                 <button className="api-key-toggle" onClick={() => setShowApiKeyText(!showApiKeyText)} title="Show/hide key">

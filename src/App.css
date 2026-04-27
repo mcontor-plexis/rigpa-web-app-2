@@ -3216,3 +3216,8 @@ button:disabled {
 .api-key-banner-link:hover {
   color: #93c5fd;
 }
+
+/* Mask API key input without using type="password" (avoids browser password save prompt) */
+.api-key-input-masked {
+  -webkit-text-security: disc;
+}

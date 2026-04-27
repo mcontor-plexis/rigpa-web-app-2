@@ -2,6 +2,14 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Git Rules
+
+**Never run `git commit` or `git push` without explicit user authorization.**
+- Make all code changes freely, but stop before committing.
+- Only commit when the user says something like "commit", "let's commit", or "commit and push".
+- Only push when the user explicitly asks to push.
+- When ready to commit, show the user what files will be staged and ask for confirmation first.
+
 ## Commands
 
 ```bash
@@ -15,12 +23,20 @@ npm run deploy     # Build + deploy to GitHub Pages
 
 ## Environment Setup
 
-Create a `.env` file in the project root (see `.env.example`):
-```
-REACT_APP_OPENAI_API_KEY=sk-proj-...
-```
+No `.env` file is required. The app uses a user-supplied API key stored in `localStorage` under the key `openai-api-key`.
 
-The app checks for this key at startup. Without it, RAG embeddings fail silently and AI chat falls back to keyword search.
+**API key flow:**
+- Clicking **Rigpa AI** with no key stored opens a modal prompting the user to enter their OpenAI API key
+- The key is saved to `localStorage` and used for all OpenAI calls (chat completions + embeddings)
+- The 🔑 **API Key** button in the chat header allows updating or clearing the stored key
+- A `.env` file with `REACT_APP_OPENAI_API_KEY` still works as a fallback (takes priority over localStorage) but is no longer required
+
+**Key state in App.tsx:**
+```
+effectiveApiKey = userApiKey || process.env.REACT_APP_OPENAI_API_KEY || ''
+hasApiKey = Boolean(effectiveApiKey)
+```
+`ragService.setApiKey()` must be called whenever the key changes so RAG embeddings use the correct key.
 
 ## Architecture Overview
 
@@ -65,7 +81,7 @@ Two API endpoints called directly from the browser (no backend server):
 - **Chat**: `https://api.openai.com/v1/chat/completions` — model `gpt-4o`, max 4000 tokens
 - **Embeddings**: `https://api.openai.com/v1/embeddings` — model `text-embedding-3-small`, batched at 100 docs/request
 
-The API key is exposed client-side via `REACT_APP_OPENAI_API_KEY`. This is intentional for a demo/personal-use app; do not add a backend auth layer unless specifically requested.
+The API key is supplied by the user via an in-app modal and stored in `localStorage`. It is passed client-side directly to OpenAI — there is no backend. Do not add a backend auth layer unless specifically requested.
 
 ### RAG System
 
