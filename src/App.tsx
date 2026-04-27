@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import './App.css';
 import DzogchenTermsMainContent from './components/DzogchenTermsMainContent';
+import KnowledgeBaseManager from './components/KnowledgeBaseManager';
+import { ragService } from './services/ragService';
+import { dzogchenTermsData } from './components/DzogchenTermsData';
 
 type Message = {
   sender: 'user' | 'assistant';
@@ -9,11 +12,22 @@ type Message = {
 };
 
 const App = () => {
+  // Helper function to get the correct public URL for images
+  const getPublicUrl = (filename: string) => {
+    const publicUrl = process.env.PUBLIC_URL || '';
+    return `${publicUrl}/${filename}`;
+  };
+
   // Contemporary Masters modal and info state
   const [showContemporaryMastersModal, setShowContemporaryMastersModal] = useState(false);
   const [showContemporaryInfo, setShowContemporaryInfo] = useState<number | null>(null);
-  // Check if API key is available
-  const hasApiKey = Boolean(process.env.REACT_APP_OPENAI_API_KEY);
+  const [userApiKey, setUserApiKey] = useState<string>('');
+  const [showApiKeyModal, setShowApiKeyModal] = useState(false);
+  const [showApiKeySettings, setShowApiKeySettings] = useState(false);
+  const [apiKeyInput, setApiKeyInput] = useState('');
+  const [showApiKeyText, setShowApiKeyText] = useState(false);
+  const effectiveApiKey = userApiKey || process.env.REACT_APP_OPENAI_API_KEY || '';
+  const hasApiKey = Boolean(effectiveApiKey);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,6 +35,12 @@ const App = () => {
   const [showGalleryModal, setShowGalleryModal] = useState(false);
   const [showLineageMastersModal, setShowLineageMastersModal] = useState(false);
   const [showTibetanAlphabetModal, setShowTibetanAlphabetModal] = useState(false);
+  const [showLongchenNyingthigModal, setShowLongchenNyingthigModal] = useState(false);
+  const [showDudjomTersarModal, setShowDudjomTersarModal] = useState(false);
+  const [showNamchoModal, setShowNamchoModal] = useState(false);
+  const [showKhandroNyingthigModal, setShowKhandroNyingthigModal] = useState(false);
+  const [showNyingthigYabshiModal, setShowNyingthigYabshiModal] = useState(false);
+  const [showTermaTraditionModal, setShowTermaTraditionModal] = useState(false);
   const [showFullScreenImage, setShowFullScreenImage] = useState(false);
   const [fullScreenImageSrc, setFullScreenImageSrc] = useState('');
   const [fullScreenImageTitle, setFullScreenImageTitle] = useState('');
@@ -31,6 +51,9 @@ const App = () => {
   const [copiedMessageIndex, setCopiedMessageIndex] = useState<number | null>(null);
   const [showRigpaTooltip, setShowRigpaTooltip] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0 });
+  const [showKnowledgeBaseManager, setShowKnowledgeBaseManager] = useState(false);
+  const [ragEnabled, setRagEnabled] = useState(true);
+  const [ragInitialized, setRagInitialized] = useState(false);
   const chatWindowRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<HTMLDivElement>(null);
   const chatButtonRef = useRef<HTMLButtonElement>(null);
@@ -72,6 +95,39 @@ const App = () => {
       setEditorContent(saved);
     }
   }, []);
+
+  // Load user API key from localStorage on startup
+  useEffect(() => {
+    const storedKey = localStorage.getItem('openai-api-key');
+    if (storedKey) {
+      setUserApiKey(storedKey);
+      ragService.setApiKey(storedKey);
+    }
+  }, []);
+
+  // Update ragService and reset RAG when user key changes
+  useEffect(() => {
+    if (userApiKey) {
+      ragService.setApiKey(userApiKey);
+      setRagInitialized(false);
+    }
+  }, [userApiKey]);
+
+  // Initialize RAG service on startup
+  useEffect(() => {
+    const initRAG = async () => {
+      if (hasApiKey && !ragInitialized) {
+        try {
+          await ragService.initializeKnowledgeBase(dzogchenTermsData);
+          setRagInitialized(true);
+          console.log('RAG service initialized successfully');
+        } catch (error) {
+          console.error('Failed to initialize RAG service:', error);
+        }
+      }
+    };
+    initRAG();
+  }, [hasApiKey, ragInitialized]);
 
   // Load saved chat messages on startup
   useEffect(() => {
@@ -144,6 +200,16 @@ const App = () => {
       setShowContemporaryMastersModal(true);
     } else if (parentLabel === 'Tibetan Grammer' && subItem === 'Tibetan Alphabet') {
       setShowTibetanAlphabetModal(true);
+    } else if (parentLabel === 'Dzogchen Lineages' && subItem === 'Longchen Nyingthig') {
+      setShowLongchenNyingthigModal(true);
+    } else if (parentLabel === 'Dzogchen Lineages' && subItem === 'Dudjom Tersar') {
+      setShowDudjomTersarModal(true);
+    } else if (parentLabel === 'Dzogchen Lineages' && subItem === 'Namchö') {
+      setShowNamchoModal(true);
+    } else if (parentLabel === 'Dzogchen Lineages' && subItem === 'Khandro Nyingthig') {
+      setShowKhandroNyingthigModal(true);
+    } else if (parentLabel === 'Dzogchen Lineages' && subItem === 'Nyingthig Yabshi') {
+      setShowNyingthigYabshiModal(true);
     }
   };
 
@@ -151,6 +217,12 @@ const App = () => {
     setShowGalleryModal(false);
     setShowLineageMastersModal(false);
     setShowTibetanAlphabetModal(false);
+    setShowLongchenNyingthigModal(false);
+    setShowDudjomTersarModal(false);
+    setShowNamchoModal(false);
+    setShowKhandroNyingthigModal(false);
+    setShowNyingthigYabshiModal(false);
+    setShowTermaTraditionModal(false);
   };
 
   const handleEditorInput = () => {
@@ -212,9 +284,9 @@ const App = () => {
 
     // Check if API key is available
     if (!hasApiKey) {
-      const errorMessage: Message = { 
-        sender: 'assistant', 
-        content: 'OpenAI API functionality is currently disabled for this public demo. To enable AI chat, please set up your own OpenAI API key in the environment variables.' 
+      const errorMessage: Message = {
+        sender: 'assistant',
+        content: 'No API key configured. Click **🔑 API Key** in the chat header to add your OpenAI API key.'
       };
       setMessages(prev => [...prev, { sender: 'user', content: input }, errorMessage]);
       setInput('');
@@ -227,11 +299,24 @@ const App = () => {
     setInput('');
 
     try {
+      // Base system prompt
+      const baseSystemPrompt = 'You are Rigpa AI, an expert in Tibetan Language and Buddhist Philosophy. Answer all questions with deep knowledge of Dzogchen, Buddhist history, and Tibetan culture. Be clear, respectful, and cite traditional sources when possible. Where ever possible insert the Tibetan term with the English transliteration along with the Tibetan script for any Tibetan terms referenced.';
+      
+      // Get enhanced prompt with RAG context if enabled and initialized
+      let systemPrompt = baseSystemPrompt;
+      if (ragEnabled && ragInitialized) {
+        try {
+          systemPrompt = await ragService.getEnhancedPrompt(input, baseSystemPrompt);
+        } catch (error) {
+          console.error('RAG retrieval error, using base prompt:', error);
+        }
+      }
+
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+          'Authorization': `Bearer ${effectiveApiKey}`,
         },
         body: JSON.stringify({
           //model: 'gpt-3.5-turbo',
@@ -240,7 +325,7 @@ const App = () => {
           messages: [
             {
               role: 'system',
-              content: 'You are Rigpa AI, an expert in Tibetan Language and Buddhist Philosophy. Answer all questions with deep knowledge of Dzogchen, Buddhist history, and Tibetan culture. Be clear, respectful, and cite traditional sources when possible. Where ever possible insert the Tibetan term with the English transliteration along with the Tibetan script for any Tibetan terms referenced.'
+              content: systemPrompt
             },
             ...messages.slice(-10).map(m => ({
               role: m.sender === 'user' ? 'user' : 'assistant',
@@ -248,7 +333,7 @@ const App = () => {
             })),
             { role: 'user', content: input }
           ],
-          max_tokens: 500,
+          max_tokens: 4000,
         }),
       });
 
@@ -335,6 +420,34 @@ const App = () => {
     }
   };
 
+  const saveApiKey = () => {
+    const trimmed = apiKeyInput.trim();
+    if (!trimmed.startsWith('sk-')) {
+      alert('Please enter a valid OpenAI API key (starts with sk-)');
+      return;
+    }
+    const isFirstKey = !userApiKey;
+    localStorage.setItem('openai-api-key', trimmed);
+    setUserApiKey(trimmed);
+    setApiKeyInput('');
+    setShowApiKeyModal(false);
+    setShowApiKeySettings(false);
+    if (isFirstKey) {
+      setActiveMenu('chat');
+    }
+  };
+
+  const clearApiKey = () => {
+    if (window.confirm('Remove your API key? AI chat will be disabled until a new key is entered.')) {
+      localStorage.removeItem('openai-api-key');
+      setUserApiKey('');
+      ragService.setApiKey('');
+      setRagInitialized(false);
+      setShowApiKeySettings(false);
+      setShowApiKeyModal(true);
+    }
+  };
+
   const saveChat = () => {
     if (messages.length === 0) {
       alert('No messages to save.');
@@ -377,6 +490,12 @@ const App = () => {
       label: 'Tibetan Grammer',
       subItems: ['Tibetan Alphabet']
     },
+    { id: 'terma-tradition', label: 'Terma Tradition', subItems: [] },
+    {
+      id: 'lineages',
+      label: 'Dzogchen Lineages',
+      subItems: ['Longchen Nyingthig', 'Dudjom Tersar', 'Namchö', 'Khandro Nyingthig', 'Nyingthig Yabshi']
+    },
     {
       id: 'gallery',
       label: 'Galleries',
@@ -389,70 +508,70 @@ const App = () => {
   const deityImages = [
     { 
       id: 1, 
-      src: `${process.env.PUBLIC_URL}/DorjeDrolo.jpg`, 
+      src: getPublicUrl('DorjeDrolo.jpg'), 
       alt: 'Deity 1', 
       title: 'Dorje Drolo',
       description: 'Dorje Drolo is a wrathful manifestation of Guru Rinpoche (Padmasambhava). This fierce form represents the power to overcome obstacles and negative forces on the spiritual path. Often depicted riding a pregnant tigress, Dorje Drolo embodies the transformative energy needed to cut through illusion and establish the dharma in difficult circumstances.'
     },
     { 
       id: 2, 
-      src: `${process.env.PUBLIC_URL}/Manjushri.jpg`, 
+      src: getPublicUrl('Manjushri.jpg'), 
       alt: 'Deity 2', 
       title: 'Manjushri',
       description: 'Manjushri is the Bodhisattva of Wisdom and represents the perfection of transcendent knowledge. Often depicted holding a flaming sword that cuts through ignorance and a lotus bearing the Perfection of Wisdom sutra, Manjushri embodies the sharp clarity of awakened mind that sees through all conceptual limitations to ultimate truth.'
     },
     { 
       id: 3, 
-      src: `${process.env.PUBLIC_URL}/Padmasambava.jpg`, 
+      src: getPublicUrl('Padmasambava.jpg'), 
       alt: 'Deity 3', 
       title: 'Padmasambhava',
       description: 'Padmasambhava, also known as Guru Rinpoche, is the "Lotus-Born" master who brought Buddhism to Tibet in the 8th century. Revered as the Second Buddha, he established the Dharma in Tibet and hid countless treasure teachings (terma) to be discovered in future times. He represents the perfect union of wisdom and compassion.'
     },
     { 
       id: 4, 
-      src: `${process.env.PUBLIC_URL}/Troma.jpg`, 
+      src: getPublicUrl('Troma.jpg'), 
       alt: 'Deity 4', 
       title: 'Troma Nagmo',
       description: 'Troma Nagmo is a wrathful dakini and protector deity in the Dzogchen tradition. Known as the "Black Wrathful Mother," she represents the fierce compassion that destroys ego-grasping and obstacles to enlightenment. Her practice is considered especially powerful for cutting through the subtlest mental obscurations and revealing the nature of mind.'
     },
     { 
       id: 5, 
-      src: `${process.env.PUBLIC_URL}/Vajrakilaya.jpg`, 
+      src: getPublicUrl('Vajrakilaya.jpg'), 
       alt: 'Deity 5', 
       title: 'Vajrakilaya',
       description: 'Vajrakilaya (Dorje Phurba) is a wrathful deity representing the enlightened activity of all Buddhas. Depicted with three faces and six arms holding ritual daggers (phurbas), Vajrakilaya embodies the power to eliminate obstacles, both outer and inner, that prevent spiritual realization. This practice is central to removing impediments on the path to enlightenment.'
     },
     { 
       id: 6, 
-      src: `${process.env.PUBLIC_URL}/Vajrayogini.jpg`, 
+      src: getPublicUrl('Vajrayogini.jpg'), 
       alt: 'Deity 6', 
       title: 'Vajrayogini',
       description: 'Vajrayogini is a female Buddha representing the union of wisdom and bliss. Often depicted as a dancing red figure holding a curved knife and skull cup, she embodies the transformative power of tantric practice. Vajrayogini represents the wisdom that directly perceives emptiness and the blissful energy that arises from this realization.'
     },
     { 
       id: 7, 
-      src: `${process.env.PUBLIC_URL}/VajrasattvaYabYum.jpg`, 
+      src: getPublicUrl('VajrasattvaYabYum.jpg'), 
       alt: 'Deity 7', 
       title: 'Vajrasattva Yab-Yum',
       description: 'Vajrasattva in union (Yab-Yum) represents the perfect integration of wisdom and compassion, method and wisdom. Vajrasattva is the deity of purification, whose practice cleanses negative karma and obscurations. In union form, this represents the inseparable nature of clarity and emptiness, the fundamental ground of being in Dzogchen.'
     },
     { 
       id: 8, 
-      src: `${process.env.PUBLIC_URL}/PadmasambavaYabYum.jpg`, 
+      src: getPublicUrl('PadmasambavaYabYum.jpg'), 
       alt: 'Deity 8', 
       title: 'Padmasambhava Yab-Yum',
       description: 'Padmasambhava in union with his consort represents the perfect balance of masculine and feminine principles, skillful means and wisdom. This form symbolizes the complete realization where all dualities are transcended and the practitioner embodies the perfect unity of awareness and emptiness that characterizes the Dzogchen view.'
     },
     { 
       id: 9, 
-      src: `${process.env.PUBLIC_URL}/KuntunzangpoYabYum.jpg`, 
+      src: getPublicUrl('KuntunzangpoYabYum.jpg'), 
       alt: 'Deity 9', 
       title: 'Samantabhadra Yab-Yum',
       description: 'Samantabhadra (Kuntuzangpo) in union represents the primordial Buddha, the dharmakaya aspect of enlightenment. In Dzogchen, this figure symbolizes the original purity and spontaneous presence of the nature of mind. The union aspect represents the inseparable unity of awareness and emptiness, the fundamental ground from which all phenomena arise and dissolve.'
     },
     { 
       id: 10, 
-      src: `${process.env.PUBLIC_URL}/PadmasambavaRainbowBody.jpg`, 
+      src: getPublicUrl('PadmasambavaRainbowBody.jpg'), 
       alt: 'Deity 10', 
       title: 'Padmasambhava Rainbow Body',
       description: 'Padmasambhava manifesting the rainbow body represents the ultimate achievement in Dzogchen practice - the dissolution of the physical body into pure light at the time of death. This rainbow light body symbolizes the complete realization of the nature of mind and the perfect integration of wisdom and compassion beyond all conceptual limitations.'
@@ -463,56 +582,56 @@ const App = () => {
   const contemporaryMasters = [
     {
       id: 1,
-      src: `${process.env.PUBLIC_URL}/GyaltrulRinpoche.jpg`,
+      src: getPublicUrl('GyaltrulRinpoche.jpg'),
       alt: 'Gyaltrul Rinpoche',
       title: 'Gyaltrul Rinpoche',
       info: 'Gyaltrul Rinpoche (1925–2023), a senior Nyingma Palyul master, was recognized as the tulku Sampa Künkyap. After fleeing Tibet in 1959 and years in India, he moved to the U.S., founding Tashi Choling and Orgyen Dorje Den, serving Dudjom Rinpoche’s lineage, teaching Dzogchen, and authoring Meditation, Transformation, and Dream Yoga.'
     },
     {
       id: 2,
-      src: `${process.env.PUBLIC_URL}/ChatrulRinpoche.jpg`,
+      src: getPublicUrl('ChatrulRinpoche.jpg'),
       alt: 'Chatrul Rinpoche',
       title: 'Chatrul Rinpoche',
       info: 'Chatral Rinpoche (Chatral Sangye Dorje, 1913–2015) was a renowned Nyingma Dzogchen master and reclusive yogi, a lineage holder of Longchen Nyingtik and Dudjom Tersar. Born in Kham, he lived mainly in Nepal and India, advocated strict vegetarianism and life release, taught widely yet avoided institutions, and passed away in Pharping.'
     },
     {
       id: 3,
-      src: `${process.env.PUBLIC_URL}/YangthangRinpoche.jpg`,
+      src: getPublicUrl('YangthangRinpoche.jpg'),
       alt: 'Yangthang Rinpoche',
       title: 'Yangthang Rinpoche',
       info: 'Yangthang Rinpoche (1930–2016) was a highly revered Nyingma Palyul master from Sikkim, recognized as the reincarnation of tertön Dorje Dechen Lingpa of Dhomang Monastery. Imprisoned for twenty-two years after 1959, he was released in 1981, later teaching widely worldwide, preserving Dzogchen transmissions, and inspiring disciples until his passing in 2016.'
     },
     {
       id: 4,
-      src: `${process.env.PUBLIC_URL}/ChagdudRinpoche.jpg`,
+      src: getPublicUrl('ChagdudRinpoche.jpg'),
       alt: 'Chagdud Rinpoche',
       title: 'Chagdud Rinpoche',
       info: 'Chagdud Tulku Rinpoche (1930–2002) was a Nyingma master and the 14th Chagdud incarnation. He fled Tibet in 1959, aided refugees in India, and moved to the United States in 1979. He founded Chagdud Gonpa Foundation, emphasized Red Tara and Vajrakilaya, established Brazil’s Khadro Ling, and wrote Lord of the Dance.'
     },
     {
       id: 5,
-      src: `${process.env.PUBLIC_URL}/HisHolinessDudjomRinpoche.jpg`,
+      src: getPublicUrl('HisHolinessDudjomRinpoche.jpg'),
       alt: 'His Holiness Dudjom Rinpoche',
       title: 'His Holiness Dudjom Rinpoche',
       info: 'His Holiness Dudjom Rinpoche (Jigdral Yeshe Dorje, 1904–1987) was a preeminent Nyingma master, tertön, and scholar. Recognized as Dudjom Lingpa’s reincarnation, he preserved and taught the Dudjom Tersar. After 1959 exile, he taught across India, Nepal, Europe, and North America, serving as Nyingma’s head in exile, and authored foundational histories of Nyingma.'
     },
     {
       id: 6,
-      src: `${process.env.PUBLIC_URL}/HisHolinessPenorRinpoche.jpg`,
+      src: getPublicUrl('HisHolinessPenorRinpoche.jpg'),
       alt: 'His Holiness Penor Rinpoche',
       title: 'His Holiness Penor Rinpoche',
       info: 'His Holiness Penor Rinpoche (1932–2009), the 11th throne holder of the Palyul lineage, was born in Powo, Kham. After fleeing Tibet, he founded Namdroling Monastery in South India. Supreme Head of the Nyingma school from 1993 to 2001, he was renowned for Dzogchen teachings and ordained thousands, passing in 2009.'
     },
     {
       id: 7,
-      src: `${process.env.PUBLIC_URL}/ChogyamTrungpaRinpoche.jpg`,
+      src: getPublicUrl('ChogyamTrungpaRinpoche.jpg'),
       alt: 'Chogyam Trungpa',
       title: 'Chogyam Trungpa',
       info: 'Chögyam Trungpa Rinpoche (1939–1987), the 11th Trungpa tulku, fled Tibet in 1959, studied at Oxford, and co-founded Scotland’s Samye Ling. After renouncing monastic vows, he moved to North America, founded Naropa University and Shambhala Training, wrote influential books, taught “crazy wisdom,” shaping Western Buddhism.'
     },
     {
       id: 8,
-      src: `${process.env.PUBLIC_URL}/HisHolinessDilgoKhyentseRinpoche.jpg`,
+      src: getPublicUrl('HisHolinessDilgoKhyentseRinpoche.jpg'),
       alt: 'His Holiness Dilgo Khyentse Rinpoche',
       title: 'His Holiness Dilgo Khyentse Rinpoche',
       info: 'His Holiness Dilgo Khyentse Rinpoche (1910–1991) was a highly revered Nyingma master and scholar. Recognized as the reincarnation of the great tertön Pema Ösel Dongak Lingpa, he played a crucial role in preserving and transmitting the teachings of the Nyingma tradition. He was instrumental in the establishment of numerous monasteries and retreat centers, and his teachings continue to inspire practitioners worldwide.'
@@ -523,42 +642,42 @@ const App = () => {
   const lineageMasters = [
     { 
       id: 1, 
-      src: `${process.env.PUBLIC_URL}/Longchenpa.jpeg`, 
+      src: getPublicUrl('Longchenpa.jpeg'), 
       alt: 'Master 1', 
       title: 'Longchenpa',
       description: 'Longchen Rabjam (1308-1364) was one of the greatest scholars and realized masters of the Nyingma tradition. Known as "The Great Vast Expanse," he systematized and clarified the Dzogchen teachings in his profound works including the Seven Treasuries. His writings present the most complete and accessible exposition of the Great Perfection, emphasizing the natural state of primordial awareness.'
     },
     { 
       id: 2, 
-      src: `${process.env.PUBLIC_URL}/DudjomLingpa.jpg`, 
+      src: getPublicUrl('DudjomLingpa.jpg'), 
       alt: 'Master 2', 
       title: 'Dudjom Lingpa',
       description: 'Dudjom Lingpa (1835-1904) was a great tertön (treasure revealer) and master of the Nyingma tradition. He revealed numerous important terma teachings and established retreat centers where practitioners could engage in intensive Dzogchen practice. His lineage continues today through various emanations and heart disciples who maintain his pure transmission of the Great Perfection.'
     },
     { 
       id: 3, 
-      src: `${process.env.PUBLIC_URL}/TertonMigyorDorje.jpg`, 
+      src: getPublicUrl('TertonMigyorDorje.jpg'), 
       alt: 'Master 3', 
       title: 'Tertön Migyur Dorje',
       description: 'Chokgyur Dechen Lingpa, also known as Tertön Migyur Dorje (1829-1870), was one of the greatest treasure revealers of the 19th century. He discovered numerous important terma cycles including profound Dzogchen teachings. His revelations bridge the ancient wisdom of Padmasambhava with the needs of modern practitioners, providing clear instructions for realization.'
     },
     { 
       id: 4, 
-      src: `${process.env.PUBLIC_URL}/RigdzinKunzangSherab.jpg`, 
+      src: getPublicUrl('RigdzinKunzangSherab.jpg'), 
       alt: 'Master 4', 
       title: 'Rigdzin Kunzang Sherab',
       description: 'Rigdzin Kunzang Sherab was a realized master in the tradition of the Great Perfection, known for his profound realization and clear exposition of Dzogchen teachings. Masters like him represent the unbroken lineage of wisdom transmission that maintains the purity and power of these ancient instructions for awakening to our true nature.'
     },
     { 
       id: 5, 
-      src: `${process.env.PUBLIC_URL}/YesheSogyal.jpg`, 
+      src: getPublicUrl('YesheSogyal.jpg'), 
       alt: 'Master 5', 
       title: 'Yeshe Tsogyal',
       description: 'Yeshe Tsogyal (also known as Khandro Yeshe Tsogyal) was the principal consort and spiritual partner of Guru Rinpoche. She was instrumental in receiving, preserving, and hiding many of the treasure teachings. As a fully realized dakini, she represents the wisdom aspect of enlightenment and is revered as the "Mother of all Buddhas" in the Nyingma tradition.'
     },
     {
       id: 6,
-      src: `${process.env.PUBLIC_URL}/JigmeLingpa.jpg`,
+      src: getPublicUrl('JigmeLingpa.jpg'),
       alt: 'Master 6',
       title: 'Jigme Lingpa',
       description: 'Jigme Lingpa (1730–1798) was one of the most important tertöns and masters of the Nyingma school. He revealed the Longchen Nyingthig cycle of teachings, which became the heart-essence of Dzogchen practice for countless practitioners. His life and writings embody the union of scholarship, realization, and compassionate activity.'
@@ -566,7 +685,7 @@ const App = () => {
     ,
     {
       id: 7,
-      src: `${process.env.PUBLIC_URL}/Mandarava.jpg`,
+      src: getPublicUrl('Mandarava.jpg'),
       alt: 'Master 7',
       title: 'Mandarava',
       description: 'Mandarava was a renowned Indian princess and realized consort of Guru Padmasambhava. She attained the rainbow body and is revered as a wisdom dakini, embodying the qualities of realization, devotion, and the transmission of profound teachings. Her life story inspires practitioners to pursue the path of enlightenment with courage and compassion.'
@@ -574,7 +693,7 @@ const App = () => {
     ,
     {
       id: 8,
-      src: `${process.env.PUBLIC_URL}/Saraha.jpg`,
+      src: getPublicUrl('Saraha.jpg'),
       alt: 'Master 8',
       title: 'Saraha',
       description: 'Saraha was one of the earliest and most celebrated Indian Mahasiddhas, renowned for his realization of the nature of mind and his poetic songs of awakening. His teachings on spontaneous presence and direct experience laid the foundation for many later Dzogchen and Mahamudra traditions. Saraha’s life exemplifies the power of realization beyond conventional boundaries.'
@@ -582,7 +701,7 @@ const App = () => {
     ,
     {
       id: 9,
-      src: `${process.env.PUBLIC_URL}/MachigLabdron.jpg`,
+      src: getPublicUrl('MachigLabdron.jpg'),
       alt: 'Master 9',
       title: 'Machig Labdrön',
       description: 'Machig Labdrön (1055–1149) was a renowned Tibetan yogini and the founder of the Chöd practice. Her teachings emphasize cutting through ego-clinging and fear, and her life is celebrated for its profound realization, compassion, and the transmission of unique methods for direct liberation. Machig Labdrön is revered as a wisdom dakini and a model of spiritual courage.'
@@ -590,7 +709,7 @@ const App = () => {
     ,
     {
       id: 10,
-      src: `${process.env.PUBLIC_URL}/GarabDorje.jpg`,
+      src: getPublicUrl('GarabDorje.jpg'),
       alt: 'Master 10',
       title: 'Garab Dorje',
       description: 'Garab Dorje (Prahevajra) is regarded as the first human teacher of Dzogchen, the Great Perfection. He received the direct transmission of the Dzogchen teachings and passed them on to his disciple Manjushrimitra. Garab Dorje’s legacy is the foundational Dzogchen instructions, emphasizing direct introduction to the nature of mind and the path of spontaneous presence.'
@@ -602,7 +721,7 @@ const App = () => {
       <div className="menu-panel">
         <div className="picture-box">
           <img 
-            src={`${process.env.PUBLIC_URL}/Hung.png`} 
+            src={getPublicUrl('Hung.png')} 
             alt="Profile Picture" 
             onError={(e) => {
               e.currentTarget.style.display = 'none';
@@ -626,11 +745,17 @@ const App = () => {
                 className={`menu-button ${activeMenu === menu.id ? 'active' : ''}`}
                 onClick={() => {
                   if (menu.id === 'chat') {
-                    setActiveMenu('chat');
+                    if (!hasApiKey) {
+                      setShowApiKeyModal(true);
+                    } else {
+                      setActiveMenu('chat');
+                    }
                   } else if (menu.id === 'help') {
                     setActiveMenu('help');
                   } else if (menu.id === 'dzogchen-terms') {
                     setActiveMenu('dzogchen-terms');
+                  } else if (menu.id === 'terma-tradition') {
+                    setShowTermaTraditionModal(true);
                   } else {
                     handleMenuClick(menu.id);
                   }
@@ -1081,6 +1206,31 @@ const App = () => {
             <div className="chat-main-header">
               <h2>Rigpa AI Chat</h2>
               <div className="chat-header-buttons">
+                <button
+                  className="kb-manager-button api-key-button"
+                  onClick={() => setShowApiKeySettings(true)}
+                  title={hasApiKey ? 'API Key configured — click to update' : 'No API key — click to add'}
+                >
+                  🔑 API Key{!hasApiKey && <span className="api-key-warning"> !</span>}
+                </button>
+                <button
+                  className="kb-manager-button"
+                  onClick={() => setShowKnowledgeBaseManager(true)}
+                  title="Manage AI Knowledge Base"
+                >
+                  🧠 Knowledge Base
+                </button>
+                <label className="rag-toggle" title={`RAG is ${ragEnabled ? 'enabled' : 'disabled'}`}>
+                  <input 
+                    type="checkbox" 
+                    checked={ragEnabled} 
+                    onChange={(e) => setRagEnabled(e.target.checked)}
+                  />
+                  <span className="toggle-label">
+                    {ragEnabled ? '🔍 RAG On' : '🔍 RAG Off'}
+                  </span>
+                  {ragInitialized && ragEnabled && <span className="rag-status">✓</span>}
+                </label>
                 <button className="clear-chat-button" onClick={saveChat}>
                   💾 Save Chat
                 </button>
@@ -1118,16 +1268,25 @@ const App = () => {
                   </div>
                 )}
               </div>
+              {!hasApiKey && (
+                <div className="api-key-banner">
+                  No API key configured.{' '}
+                  <button className="api-key-banner-link" onClick={() => setShowApiKeySettings(true)}>
+                    Add your OpenAI API key
+                  </button>{' '}
+                  to enable AI chat.
+                </div>
+              )}
               <div className="input-area">
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-                  placeholder="Type your message..."
-                  disabled={loading}
+                  placeholder={hasApiKey ? 'Type your message...' : 'Add an API key to enable AI chat'}
+                  disabled={loading || !hasApiKey}
                 />
-                <button onClick={sendMessage} disabled={loading || !input.trim()}>
+                <button onClick={sendMessage} disabled={loading || !input.trim() || !hasApiKey}>
                   Send
                 </button>
               </div>
@@ -1708,12 +1867,201 @@ const App = () => {
         </div>
       )}
 
+      {/* Longchen Nyingthig Lineage Modal */}
+      {showLongchenNyingthigModal && (
+        <div className="gallery-modal-overlay" onClick={closeAllModals}>
+          <div className="gallery-modal" style={{ width: '90vw', maxWidth: '1100px', height: '88vh', display: 'flex', flexDirection: 'column' }} onClick={(e) => e.stopPropagation()}>
+            <div className="gallery-modal-header">
+              <h2>Longchen Nyingthig Lineage</h2>
+              <button className="close-button" onClick={closeAllModals}>×</button>
+            </div>
+            <iframe
+              src={getPublicUrl('longchen-nyingthig-dzogchen.html')}
+              title="Longchen Nyingthig — Heart Essence of the Vast Expanse"
+              style={{ flex: 1, border: 'none', width: '100%', borderRadius: '0 0 8px 8px' }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Dudjom Tersar Modal */}
+      {showDudjomTersarModal && (
+        <div className="gallery-modal-overlay" onClick={closeAllModals}>
+          <div className="gallery-modal" style={{ width: '90vw', maxWidth: '1100px', height: '88vh', display: 'flex', flexDirection: 'column' }} onClick={(e) => e.stopPropagation()}>
+            <div className="gallery-modal-header">
+              <h2>Dudjom Tersar</h2>
+              <button className="close-button" onClick={closeAllModals}>×</button>
+            </div>
+            <iframe
+              src={getPublicUrl('dudjom-tersar.html')}
+              title="Dudjom Tersar — The New Treasures of Dudjom"
+              style={{ flex: 1, border: 'none', width: '100%', borderRadius: '0 0 8px 8px' }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Namchö Sky Dharma Modal */}
+      {showNamchoModal && (
+        <div className="gallery-modal-overlay" onClick={closeAllModals}>
+          <div className="gallery-modal" style={{ width: '90vw', maxWidth: '1100px', height: '88vh', display: 'flex', flexDirection: 'column' }} onClick={(e) => e.stopPropagation()}>
+            <div className="gallery-modal-header">
+              <h2>Namchö — The Sky Dharma</h2>
+              <button className="close-button" onClick={closeAllModals}>×</button>
+            </div>
+            <iframe
+              src={getPublicUrl('namcho-sky-dharma.html')}
+              title="Namchö — The Sky Dharma"
+              style={{ flex: 1, border: 'none', width: '100%', borderRadius: '0 0 8px 8px' }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Khandro Nyingthig Modal */}
+      {showKhandroNyingthigModal && (
+        <div className="gallery-modal-overlay" onClick={closeAllModals}>
+          <div className="gallery-modal" style={{ width: '90vw', maxWidth: '1100px', height: '88vh', display: 'flex', flexDirection: 'column' }} onClick={(e) => e.stopPropagation()}>
+            <div className="gallery-modal-header">
+              <h2>Khandro Nyingthig</h2>
+              <button className="close-button" onClick={closeAllModals}>×</button>
+            </div>
+            <iframe
+              src={getPublicUrl('khandro-nyingthig.html')}
+              title="Khandro Nyingthig — Heart Essence of the Dakinis"
+              style={{ flex: 1, border: 'none', width: '100%', borderRadius: '0 0 8px 8px' }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Nyingthig Yabshi Modal */}
+      {showNyingthigYabshiModal && (
+        <div className="gallery-modal-overlay" onClick={closeAllModals}>
+          <div className="gallery-modal" style={{ width: '90vw', maxWidth: '1100px', height: '88vh', display: 'flex', flexDirection: 'column' }} onClick={(e) => e.stopPropagation()}>
+            <div className="gallery-modal-header">
+              <h2>Nyingthig Yabshi — The Fourfold Heart Essence</h2>
+              <button className="close-button" onClick={closeAllModals}>×</button>
+            </div>
+            <iframe
+              src={getPublicUrl('nyingthig-yabshi.html')}
+              title="Nyingthig Yabshi — The Fourfold Heart Essence"
+              style={{ flex: 1, border: 'none', width: '100%', borderRadius: '0 0 8px 8px' }}
+            />
+          </div>
+        </div>
+      )}
+
+      {showTermaTraditionModal && (
+        <div className="gallery-modal-overlay" onClick={closeAllModals}>
+          <div className="gallery-modal" style={{ width: '90vw', maxWidth: '1100px', height: '88vh', display: 'flex', flexDirection: 'column' }} onClick={(e) => e.stopPropagation()}>
+            <div className="gallery-modal-header">
+              <h2>Terma Tradition — The Treasure Teaching Lineage</h2>
+              <button className="close-button" onClick={closeAllModals}>×</button>
+            </div>
+            <iframe
+              src={getPublicUrl('padmasambhava-terma-tradition.html')}
+              title="Terma Tradition — The Treasure Teaching Lineage"
+              style={{ flex: 1, border: 'none', width: '100%', borderRadius: '0 0 8px 8px' }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* API Key Entry Modal */}
+      {showApiKeyModal && (
+        <div className="gallery-modal-overlay" onClick={() => setShowApiKeyModal(false)}>
+          <div className="api-key-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="api-key-modal-header">
+              <h2>🔑 OpenAI API Key Required</h2>
+              <button className="close-button" onClick={() => setShowApiKeyModal(false)}>×</button>
+            </div>
+            <div className="api-key-modal-body">
+              <p>To use Rigpa AI chat, enter your OpenAI API key. It is stored only in your browser and sent directly to OpenAI — never to any other server.</p>
+              <p className="api-key-hint">
+                Don't have a key?{' '}
+                <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">
+                  Get one at platform.openai.com
+                </a>
+              </p>
+              <div className="api-key-input-row">
+                <input
+                  type="text"
+                  value={apiKeyInput}
+                  onChange={(e) => setApiKeyInput(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && saveApiKey()}
+                  placeholder="sk-proj-..."
+                  className={`api-key-input${showApiKeyText ? '' : ' api-key-input-masked'}`}
+                  autoComplete="off"
+                  autoFocus
+                />
+                <button className="api-key-toggle" onClick={() => setShowApiKeyText(!showApiKeyText)} title="Show/hide key">
+                  {showApiKeyText ? '🙈' : '👁️'}
+                </button>
+              </div>
+              <button className="api-key-save-btn" onClick={saveApiKey}>
+                Save Key
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* API Key Settings Modal */}
+      {showApiKeySettings && (
+        <div className="gallery-modal-overlay" onClick={() => setShowApiKeySettings(false)}>
+          <div className="api-key-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="api-key-modal-header">
+              <h2>🔑 API Key Settings</h2>
+              <button className="close-button" onClick={() => setShowApiKeySettings(false)}>×</button>
+            </div>
+            <div className="api-key-modal-body">
+              {userApiKey ? (
+                <div className="api-key-current">
+                  <span className="api-key-label">Current key:</span>
+                  <span className="api-key-masked">{userApiKey.slice(0, 8)}••••••••••••{userApiKey.slice(-4)}</span>
+                </div>
+              ) : (
+                <p className="api-key-hint">No user key stored. Using environment key.</p>
+              )}
+              <p>Update your OpenAI API key:</p>
+              <div className="api-key-input-row">
+                <input
+                  type="text"
+                  value={apiKeyInput}
+                  onChange={(e) => setApiKeyInput(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && saveApiKey()}
+                  placeholder="sk-proj-..."
+                  className={`api-key-input${showApiKeyText ? '' : ' api-key-input-masked'}`}
+                  autoComplete="off"
+                  autoFocus
+                />
+                <button className="api-key-toggle" onClick={() => setShowApiKeyText(!showApiKeyText)} title="Show/hide key">
+                  {showApiKeyText ? '🙈' : '👁️'}
+                </button>
+              </div>
+              <div className="api-key-actions">
+                <button className="api-key-save-btn" onClick={saveApiKey}>Save Key</button>
+                {userApiKey && (
+                  <button className="api-key-clear-btn" onClick={clearApiKey}>Clear Key</button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Rigpa AI Tooltip - Rendered at root level to appear above all modals */}
       {showRigpaTooltip && (
         <div className="rigpa-tooltip" style={{ top: `${tooltipPosition.top}px` }}>
           <strong>Rigpa AI</strong>
           <p>An expert in Tibetan Buddhist Philosophy with deep knowledge of Dzogchen, Buddhist history, and Tibetan culture. Ask questions and receive clear, respectful answers citing traditional sources.</p>
         </div>
+      )}
+
+      {/* Knowledge Base Manager Modal */}
+      {showKnowledgeBaseManager && (
+        <KnowledgeBaseManager onClose={() => setShowKnowledgeBaseManager(false)} />
       )}
     </div>
   );

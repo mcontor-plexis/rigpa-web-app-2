@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Terma Tradition of Padmasambhava — Hidden Treasures of the Lotus-Born</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lapis:         #1d3a6e;
+    --deep-lapis:    #0f2247;
+    --azure:         #2a5099;
+    --sky:           #5b7bb8;
+    --gold:          #c9a86a;
+    --bright-gold:   #e2c387;
+    --cream:         #f6efe1;
+    --parchment:     #faf4e3;
+    --ink:           #1a2233;
+    --soft-ink:      #3a4258;
+    --rule:          rgba(29, 58, 110, 0.22);
+    --card:          #fffaf0;
+    --shadow:        0 12px 34px rgba(15, 34, 71, 0.14);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+    font-size: 19px;
+    line-height: 1.68;
+    color: var(--ink);
+    background: var(--parchment);
+  }
+  a { color: var(--lapis); text-decoration: none; border-bottom: 1px dotted var(--azure); transition: color .2s ease; }
+  a:hover { color: var(--deep-lapis); border-bottom-color: var(--gold); }
+
+  /* NAV */
+  nav.top {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(15, 34, 71, 0.96);
+    border-bottom: 1px solid rgba(201, 168, 106, 0.4);
+    backdrop-filter: blur(6px);
+  }
+  nav.top .nav-inner {
+    max-width: 1180px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 28px;
+  }
+  nav.top .brand {
+    font-family: 'Cinzel', serif;
+    color: var(--bright-gold);
+    font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase;
+    border-bottom: none;
+  }
+  nav.top ul {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; gap: 22px; flex-wrap: wrap; justify-content: flex-end;
+  }
+  nav.top a {
+    color: var(--cream);
+    font-family: 'Cinzel', serif;
+    font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    border-bottom: none;
+    padding: 4px 2px;
+  }
+  nav.top a:hover { color: var(--bright-gold); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 110px 28px 130px;
+    background:
+      radial-gradient(ellipse at 25% 30%, rgba(201,168,106,0.22), transparent 55%),
+      radial-gradient(ellipse at 75% 70%, rgba(91,123,184,0.25), transparent 60%),
+      linear-gradient(155deg, #0f2247 0%, #1d3a6e 55%, #081632 100%);
+    color: var(--cream);
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero::before, .hero::after {
+    content: "";
+    position: absolute;
+    border: 1px dashed rgba(226,195,135,0.28);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .hero::before { width: 340px; height: 340px; left: -150px; }
+  .hero::after  { width: 340px; height: 340px; right: -150px; }
+  .hero > * { position: relative; z-index: 1; }
+  .hero .ornament {
+    font-family: 'Cinzel', serif;
+    color: var(--bright-gold);
+    letter-spacing: 0.5em;
+    font-size: 13px;
+    margin-bottom: 22px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(40px, 5.8vw, 72px);
+    line-height: 1.08;
+    margin: 0 0 18px;
+    color: var(--cream);
+    letter-spacing: 0.01em;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--bright-gold);
+    font-weight: 500;
+  }
+  .hero .tibetan {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: #c5cfe5;
+    font-size: 22px;
+    margin: 8px 0 26px;
+    letter-spacing: 0.06em;
+  }
+  .hero .subtitle {
+    max-width: 760px; margin: 0 auto;
+    font-size: 21px; line-height: 1.55;
+    color: #ece2c8;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+  }
+  .hero .byline {
+    margin-top: 38px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .hero .divider {
+    width: 80px; height: 1px; margin: 14px auto 0;
+    background: var(--gold);
+  }
+
+  /* LAYOUT */
+  main { max-width: 960px; margin: 0 auto; padding: 0 28px; }
+  section { padding: 72px 0 32px; scroll-margin-top: 80px; }
+  section + section { border-top: 1px solid var(--rule); }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(30px, 3.8vw, 44px);
+    color: var(--deep-lapis);
+    margin: 0 0 6px;
+    letter-spacing: 0.005em;
+    line-height: 1.15;
+  }
+  h2 + .eyebrow { margin-top: -4px; margin-bottom: 30px; }
+  .eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--azure);
+    margin-bottom: 10px;
+  }
+  h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--lapis);
+    margin: 34px 0 10px;
+    letter-spacing: 0.01em;
+  }
+  h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--azure);
+    margin: 22px 0 6px;
+  }
+  p { margin: 0 0 18px; }
+
+  .dropcap::first-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 68px;
+    font-weight: 500;
+    float: left;
+    line-height: 0.9;
+    padding: 8px 12px 0 0;
+    color: var(--lapis);
+  }
+
+  /* PULL QUOTE */
+  .pullquote {
+    margin: 34px 0;
+    padding: 28px 34px;
+    border-left: 3px solid var(--gold);
+    background: linear-gradient(90deg, rgba(201,168,106,0.10), transparent);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--soft-ink);
+  }
+  .pullquote cite {
+    display: block;
+    margin-top: 14px;
+    font-family: 'Cinzel', serif;
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--azure);
+  }
+
+  /* CARDS */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+    margin: 26px 0 8px;
+  }
+  .grid.two { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--gold);
+    padding: 22px 22px 20px;
+    box-shadow: var(--shadow);
+  }
+  .card h4 {
+    margin-top: 0;
+    color: var(--deep-lapis);
+  }
+  .card .vol-tag {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(29, 58, 110, 0.08);
+    padding: 3px 8px;
+    margin-bottom: 10px;
+  }
+  .card p { font-size: 17px; line-height: 1.55; margin-bottom: 0; }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 38px;
+    margin: 30px 0 10px;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 12px; top: 4px; bottom: 4px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--gold), var(--azure), var(--gold));
+  }
+  .tl-item { position: relative; padding: 6px 0 22px; }
+  .tl-item::before {
+    content: "";
+    position: absolute;
+    left: -33px; top: 12px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--parchment);
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,106,0.18);
+  }
+  .tl-date {
+    font-family: 'Cinzel', serif;
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--azure);
+    margin-bottom: 2px;
+  }
+  .tl-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 600;
+    color: var(--deep-lapis);
+    margin-bottom: 4px;
+  }
+  .tl-body { font-size: 17px; line-height: 1.55; color: var(--soft-ink); }
+
+  /* STAT BANNER */
+  .stat-banner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+    margin: 36px 0 22px;
+    padding: 28px 18px;
+    background: linear-gradient(135deg, #0f2247 0%, #1d3a6e 100%);
+    color: var(--cream);
+    border: 1px solid var(--gold);
+  }
+  .stat {
+    text-align: center;
+    padding: 6px 10px;
+    border-right: 1px solid rgba(201,168,106,0.28);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 500;
+    color: var(--bright-gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: #ece2c8;
+  }
+
+  /* FOOTNOTES */
+  sup.fn {
+    font-size: 11px;
+    vertical-align: super;
+    line-height: 0;
+  }
+  sup.fn a {
+    color: var(--azure);
+    border-bottom: none;
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    padding: 0 1px;
+  }
+  sup.fn a:hover { color: var(--gold); }
+
+  /* BIBLIOGRAPHY */
+  .biblio {
+    background: #fdf7e8;
+    border: 1px solid var(--rule);
+    padding: 32px 34px 28px;
+    margin: 10px 0 40px;
+  }
+  .biblio h3 {
+    margin-top: 0;
+    color: var(--deep-lapis);
+  }
+  .biblio ol {
+    font-size: 16px;
+    line-height: 1.55;
+    padding-left: 22px;
+  }
+  .biblio li { margin-bottom: 10px; color: var(--soft-ink); }
+  .biblio li a { color: var(--lapis); }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 46px 20px 60px;
+    color: var(--azure);
+    border-top: 1px solid var(--rule);
+    background: linear-gradient(180deg, transparent, rgba(29,58,110,0.04));
+  }
+  footer .mark {
+    font-family: 'Cinzel', serif;
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--lapis);
+  }
+  footer .tibetan-phrase {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--soft-ink);
+    margin-top: 12px;
+    font-size: 18px;
+  }
+
+  @media (max-width: 620px) {
+    nav.top .nav-inner { flex-direction: column; gap: 10px; padding: 12px 18px; }
+    nav.top ul { gap: 14px; }
+    .hero { padding: 70px 20px 80px; }
+    .pullquote { padding: 20px 22px; font-size: 20px; }
+    .biblio { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top">
+  <div class="nav-inner">
+    <a href="#top" class="brand">Terma Tradition</a>
+    <ul>
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#what-is">What Is Terma</a></li>
+      <li><a href="#types">Three Types</a></li>
+      <li><a href="#concealers">The Concealers</a></li>
+      <li><a href="#disciples">25 Disciples</a></li>
+      <li><a href="#kings">Five Tertön Kings</a></li>
+      <li><a href="#lingpas">Eight Lingpas</a></li>
+      <li><a href="#authentication">Authentication</a></li>
+      <li><a href="#living">Living Tradition</a></li>
+      <li><a href="#bibliography">Bibliography</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="ornament">· Nyingma Dzogchen Research ·</div>
+  <h1>The Terma Tradition<br /><em>of Padmasambhava</em></h1>
+  <div class="tibetan">གཏེར་མ &nbsp;·&nbsp; gter ma &nbsp;·&nbsp; "hidden treasure"</div>
+  <p class="subtitle">A thousand years of revealed scripture, hidden by the Lotus-Born and his Tibetan consort across the eighth-century landscape and unveiled — text by text, vision by vision — across the millennium that followed by more than a thousand prophesied <em>tertöns</em>.</p>
+  <div class="byline">A Deep Research Presentation</div>
+  <div class="divider"></div>
+</header>
+
+<main>
+
+<!-- INTRODUCTION -->
+<section id="introduction">
+  <div class="eyebrow">Prologue</div>
+  <h2>A Thousand-Year Conversation Across Time</h2>
+  <p class="dropcap">Of all the ways that Tibetan Buddhism has imagined the transmission of sacred teaching across time, none is stranger, more original, or more characteristic of the Nyingma school than the <em>terma</em> tradition. The Tibetan word <em>gter ma</em> means simply "treasure" — but what is being treasured, and how, is unlike anything in the ordinary religious history of the world. A <em>terma</em> is a teaching deliberately concealed, in the eighth century, by Padmasambhava and Yeshe Tsogyal, in physical objects, in landscapes, or in the awareness-streams of disciples — sealed for a future moment when the world would need it, and intended to surface, in that future moment, through a particular prophesied person: a <em>tertön</em>, a "treasure revealer."<sup class="fn"><a href="#ref1">1</a></sup></p>
+
+  <p>The first <em>tertön</em>, by traditional account, was Sangye Lama (1000–1080).<sup class="fn"><a href="#ref19">19</a></sup> Since him there have been more than a thousand. They have produced a body of sacred Tibetan literature so vast that the <em>Rinchen Terdzö</em> — the great nineteenth-century compendium of <em>terma</em>, compiled by Jamgön Kongtrul Lodrö Tayé — runs to sixty-three volumes, and the wider extant <em>terma</em> corpus runs to many times that. Every one of those texts carries the same claim: I was hidden in the eighth century by Padmasambhava himself; I am surfacing now because the time has come.<sup class="fn"><a href="#ref2">2</a></sup></p>
+
+  <div class="pullquote">
+    "Termas were originally concealed by eighth-century Vajrayana masters Padmasambhava and Yeshe Tsogyal, to be discovered by treasure revealers known as tertöns, when the time was ripe."
+    <cite>— Wikipedia, <em>Terma (religion)</em></cite>
+  </div>
+
+  <div class="stat-banner">
+    <div class="stat">
+      <div class="stat-num">8th</div>
+      <div class="stat-label">Century Concealment</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">1000+</div>
+      <div class="stat-label">Tertöns to Date</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">63</div>
+      <div class="stat-label">Vols · Rinchen Terdzö</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">25</div>
+      <div class="stat-label">Disciples · Lord &amp; Subjects</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IS TERMA -->
+<section id="what-is">
+  <div class="eyebrow">Definition</div>
+  <h2>What Terma Actually Is</h2>
+  <p>To understand <em>terma</em>, one must first set aside the ordinary Western category of "discovered ancient text." A <em>terma</em> is not, in the tradition's own self-understanding, a manuscript that someone happened to find in a cave. It is a teaching that was <strong>placed</strong> there — by Padmasambhava — for <strong>this</strong> tertön, in <strong>this</strong> historical moment, with full prophetic knowledge of when, by whom, and for whose benefit it would surface. The placing and the revealing are two halves of one act, separated by a thousand years.<sup class="fn"><a href="#ref3">3</a></sup></p>
+
+  <p>The mechanism by which Padmasambhava is said to have accomplished this involves the technique of <strong>mind-mandate transmission</strong> (<em>gtad rgya</em>): an empowerment in which a teaching is sealed not in ink but in the awareness-continuum of a disciple, with a prophecy of the future life — sometimes hundreds of years later — in which that disciple will reincarnate, recover the teaching, and bring it forth.<sup class="fn"><a href="#ref4">4</a></sup></p>
+
+  <p>Through this technique, Yeshe Tsogyal — Padmasambhava's chief Tibetan consort, said in the tradition to possess perfect recall — wrote down his oral teachings in <strong>dakini script</strong>, a coded symbolic language understood only by the awakened. Padmasambhava and his disciples then concealed these scripts and their associated objects (statues, relics, ritual implements) in physical hiding places throughout Tibet, Bhutan, and the Himalayan borderlands, while parallel teachings were sealed directly into the mindstreams of the future tertöns themselves.<sup class="fn"><a href="#ref5">5</a></sup></p>
+
+  <div class="pullquote">
+    "Padmasambhava's oral teachings to his chief disciple Yeshe Tsogyal, Princess of Kharchen, were recorded in coded language called dakini script and concealed for centuries — to be revealed by tertöns many centuries later."
+    <cite>— Erik Pema Kunsang, introduction to <em>Dakini Teachings</em></cite>
+  </div>
+
+  <h3>The Short Lineage</h3>
+  <p>One of the unusual structural features of <em>terma</em> in the Nyingma tradition is that it is a <strong>"near" or "short" lineage</strong>. Where ordinary <em>kama</em> transmission descends through dozens of human teachers across centuries — with all the attendant risks of dilution, loss, or corruption — a <em>terma</em> reaches its tertön <strong>directly from Padmasambhava</strong>, with only one human link in between. That link is Padmasambhava's prophesied disciple, who reincarnated in the present age as the tertön. The transmission is therefore considered uniquely fresh, uniquely potent, and uniquely matched to the conditions of the time of its emergence.<sup class="fn"><a href="#ref6">6</a></sup></p>
+</section>
+
+<!-- THREE TYPES -->
+<section id="types">
+  <div class="eyebrow">Typology</div>
+  <h2>The Three Modes of Treasure</h2>
+  <p>The tradition classifies <em>terma</em> into three principal modes, distinguished by where the treasure is hidden and how it is recovered:</p>
+
+  <div class="grid">
+    <div class="card">
+      <span class="vol-tag">Sa-ter</span>
+      <h4>Earth Treasure</h4>
+      <p>Physically concealed in the landscape — caves, rocks, lakes, statues, pillars, temples. The tertön is led to the location by prophecies, dreams, or visions. There he or she retrieves a yellow scroll inscribed in dakini script, and the act of seeing the script triggers full memory of the teaching, which the tertön then transcribes into Tibetan.</p>
+    </div>
+    <div class="card">
+      <span class="vol-tag">Gong-ter</span>
+      <h4>Mind Treasure</h4>
+      <p>Concealed not in the world but in the awareness-stream of the disciple-tertön. No physical object is involved. The teaching surfaces from within — in deep meditation, in lucid dreams, or in symbolic visions — at the moment Padmasambhava had prophesied. Often the tertön writes spontaneously, scarcely able to keep up with what is arising.</p>
+    </div>
+    <div class="card">
+      <span class="vol-tag">Dak-nang</span>
+      <h4>Pure Vision</h4>
+      <p>A revelation arising from the realized master's direct visionary encounter with awakened beings — Padmasambhava, Yeshe Tsogyal, deities, dakinis. Distinct from <em>gong-ter</em> in that <em>dak-nang</em> does not necessarily claim ancient origin; it is fresh wisdom, granted in the present, on the strength of the master's realization.</p>
+    </div>
+  </div>
+
+  <p>The three modes are not always cleanly separable in practice. A given tertön's corpus may contain works of all three types, and individual revelations may have features of more than one. Dudjom Lingpa (1835–1904), for example, produced three <em>gong-ter</em> cycles and one <em>sa-ter</em> cycle — twenty volumes in all — across his life, with significant <em>dak-nang</em> elements interlaced throughout.<sup class="fn"><a href="#ref7">7</a></sup></p>
+</section>
+
+<!-- THE CONCEALERS -->
+<section id="concealers">
+  <div class="eyebrow">Eighth Century</div>
+  <h2>Padmasambhava and Yeshe Tsogyal — The Concealers</h2>
+  <p><strong>Padmasambhava</strong> — the Lotus-Born, Guru Rinpoche — arrived in Tibet around 770 at the invitation of King Trisong Detsen and the abbot Śāntarakṣita to subdue the obstacles preventing the establishment of Buddhism. His traditional biography is itself a treasure-revealed text: the <em>Pemathangyik</em> (<em>Padma bka' thang</em>) was revealed centuries later by Orgyen Lingpa (1323–c.1360) and remains the principal source for his life-story. After taming the country's protective spirits and consecrating Samye Monastery, he turned his attention to the vast project that would shape Tibetan Buddhism's deepest temporal logic: the deliberate concealment of teachings for the future.<sup class="fn"><a href="#ref8">8</a></sup></p>
+
+  <p>His chief Tibetan partner in this enterprise was <strong>Yeshe Tsogyal</strong> (c. 757–817), Princess of Kharchen, who is said in the tradition to have possessed total recall — every word she heard, she could repeat verbatim, sometimes years later, sometimes through the mediation of awakened recollection. Padmasambhava taught; she listened; she encoded what she had heard in <em>dakini script</em>, and together they concealed manuscripts, statues, ritual implements, and entire mandalas of practice in lakes, mountainsides, pillar-cavities, and remote cliffs across the Tibetan plateau and the Himalayan borderlands.<sup class="fn"><a href="#ref9">9</a></sup></p>
+
+  <p>The reason most often given in the traditional sources is twofold. First: certain teachings were too potent — too easily distorted, too liable to harm in the wrong hands — to circulate openly in the eighth century. Second: Padmasambhava foresaw that the tradition itself would face a crisis. King Langdarma's persecution (838–841) would nearly end Tibetan Buddhism within a generation; later, internal sectarian quarrels, foreign invasions, and the calamities of the twentieth century would each take their toll. The concealed treasures were a survival mechanism — and more than a survival mechanism: they were a way of making the teaching responsive to time, releasing each cycle precisely when it would do most good.<sup class="fn"><a href="#ref10">10</a></sup></p>
+
+  <div class="pullquote">
+    "He concealed these as treasures in various places — including rocks, lakes, temples, statues, and in the mindstream of the recipient — and prophesied that in the future, these disciples would reincarnate, reveal these teachings from their place of concealment, and spread them for the sake of beings."
+    <cite>— Treasury of Lives, <em>The Modes of Transmission of Nyingma Teachings</em></cite>
+  </div>
+</section>
+
+<!-- 25 DISCIPLES -->
+<section id="disciples">
+  <div class="eyebrow">The Future Vessels</div>
+  <h2>The Twenty-Five — Lord and Subjects</h2>
+  <p>The pivotal figures in this whole architecture are the <strong>"Lord and Subjects" — the twenty-five</strong> (<em>rje 'bangs nyer lnga</em>): Padmasambhava's twenty-five principal Tibetan disciples, who included King Trisong Detsen himself, Yeshe Tsogyal, the great translator Vairotsana, Namkhai Nyingpo, Nyak Jñānakumāra, and others. To each of these twenty-five Padmasambhava transmitted specific teachings, sealed those teachings into their awareness-streams through <em>mind-mandate transmission</em>, and prophesied the future life in which each disciple would reincarnate as a tertön and reveal the teaching he had been entrusted with.<sup class="fn"><a href="#ref11">11</a></sup></p>
+
+  <p>Every authentic tertön of the subsequent millennium is therefore traditionally regarded as the rebirth of one or another of these twenty-five — sometimes named explicitly in the prophecies, sometimes identified retrospectively by recognized masters. Pema Lingpa is said to be a rebirth of Princess Pema Sal; Jigme Lingpa of King Trisong Detsen and (in another aspect) of Vimalamitra; Chokgyur Lingpa of Murub Tsenpo (a son of Trisong Detsen); and so on. The system is not arbitrary: it specifies <em>which</em> tertöns can reveal <em>which</em> teachings, and the appearance of a particular treasure becomes a criterion for the recognition of a particular incarnate.<sup class="fn"><a href="#ref12">12</a></sup></p>
+</section>
+
+<!-- FIVE TERTÖN KINGS -->
+<section id="kings">
+  <div class="eyebrow">The Sovereign Five</div>
+  <h2>The Five Tertön Kings</h2>
+  <p>Among the thousand-plus historical tertöns, the tradition singles out five as the <strong>Five Sovereign Tertöns</strong> or <strong>Five Tertön Kings</strong> — <em>gter ston rgyal po lnga</em>. These five are not necessarily the most prolific or the most chronologically continuous; they are the five whose treasure-cycles came to occupy the most central place in the practice life of the Nyingma tradition.<sup class="fn"><a href="#ref13">13</a></sup></p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-date">1124–1192</div>
+      <div class="tl-title">Nyangrel Nyima Özer</div>
+      <div class="tl-body">The first of the Five Tertön Kings, recognized as a rebirth of King Trisong Detsen. His most influential revelation is the <em>Kagyé Deshek Düpa</em> ("Embodiment of the Sugatas of the Eight Great Sadhana Teachings"), still practiced today; he also revealed the foundational biography of Padmasambhava, the <em>Zanglingma</em>.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">1212–1270</div>
+      <div class="tl-title">Guru Chöwang (Guru Chökyi Wangchuk)</div>
+      <div class="tl-body">Second of the Five. Among his most influential revelations: the <em>Lama Sangdü</em> ("Secret Embodiment of the Guru"), which gathers the inner-sadhana practices of the Eight Great Mandalas, and a wealth of teachings on the Eight Heruka Mandalas.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">1346–1405</div>
+      <div class="tl-title">Dorje Lingpa</div>
+      <div class="tl-body">Third of the Five. Significant for revealing both Buddhist and Bön <em>terma</em>, an unusual cross-traditional achievement — and for opening hidden lands (<em>beyul</em>) in eastern Bhutan and southern Tibet that have remained sacred geography for centuries.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">1450–1521</div>
+      <div class="tl-title">Pema Lingpa</div>
+      <div class="tl-body">Fourth and, by Bhutanese reckoning, foremost of the Five — second only in importance to Padmasambhava in Bhutan's religious self-understanding. Famous for his retrieval of <em>terma</em> from the depths of Burning Lake (Mebar Tsho) in the Tang valley with a butter lamp burning underwater, witnessed by crowds. His treasures form the basis of major Bhutanese liturgies still performed today.<sup class="fn"><a href="#ref20">20</a></sup></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">1820–1892</div>
+      <div class="tl-title">Jamyang Khyentse Wangpo</div>
+      <div class="tl-body">Fifth and last of the Five Tertön Kings. Co-founder of the nineteenth-century Rimé (non-sectarian) movement; recognized as the rebirth of Chetsün Sengé Wangchuk; revealer of the <em>Chetsün Nyingthig</em> and dozens of other cycles. Together with Jamgön Kongtrul, he gathered, edited, and re-transmitted the entire Nyingma <em>terma</em> heritage at a moment when it might otherwise have begun to dissipate.</div>
+    </div>
+  </div>
+</section>
+
+<!-- EIGHT LINGPAS -->
+<section id="lingpas">
+  <div class="eyebrow">The Eight Great Lingpas</div>
+  <h2>The Eight Great Lingpas &amp; Other Major Tertöns</h2>
+  <p>Beyond the Five Sovereign Tertöns, the tradition recognizes a second cardinal grouping: the <strong>Eight Great Lingpas</strong> (<em>gling pa brgyad</em>) — eight tertöns whose names share the suffix <em>-lingpa</em> ("isle" or "continent"). Their cycles, alongside the Five Kings', shape the mainstream of Nyingma practice.<sup class="fn"><a href="#ref14">14</a></sup></p>
+
+  <div class="grid">
+    <div class="card">
+      <span class="vol-tag">1295–1375</span>
+      <h4>Rinchen Lingpa</h4>
+      <p>The first of the eight, an early Bhutanese tertön of the fourteenth century.</p>
+    </div>
+    <div class="card">
+      <span class="vol-tag">1340–1396</span>
+      <h4>Sangye Lingpa</h4>
+      <p>Revealer of the <em>Lama Gongdü</em> ("Embodiment of the Realization of the Guru") in thirteen volumes — one of the most extensive single <em>terma</em> cycles ever revealed.</p>
+    </div>
+    <div class="card">
+      <span class="vol-tag">1346–1405</span>
+      <h4>Dorje Lingpa</h4>
+      <p>Also counted among the Five Kings; cross-tradition revealer of Buddhist and Bön cycles.</p>
+    </div>
+    <div class="card">
+      <span class="vol-tag">14th c.</span>
+      <h4>Karma Lingpa</h4>
+      <p>Revealer of the <em>Shyitro Gongpa Rangdrol</em> — the cycle of "Self-Liberation through the Intent of the Peaceful and Wrathful Deities." From this cycle comes the <em>Bardo Tödrol Chenmo</em>, known in the West as the <em>Tibetan Book of the Dead</em>.<sup class="fn"><a href="#ref21">21</a></sup></p>
+    </div>
+    <div class="card">
+      <span class="vol-tag">1403–1471</span>
+      <h4>Ratna Lingpa</h4>
+      <p>Compiler of the <em>Nyingma Gyübum</em> — the first systematic collection of the Nyingma tantras — alongside his own treasure-revelations.</p>
+    </div>
+    <div class="card">
+      <span class="vol-tag">1408–1489</span>
+      <h4>Kunkyong Lingpa</h4>
+      <p>Major fifteenth-century tertön with cycles preserved within the <em>Rinchen Terdzö</em>.</p>
+    </div>
+    <div class="card">
+      <span class="vol-tag">1450–1521</span>
+      <h4>Pema Lingpa</h4>
+      <p>Of the Five Kings; the dominant Bhutanese tertön (his Burning Lake recovery is the iconic image of the <em>terma</em> tradition).</p>
+    </div>
+    <div class="card">
+      <span class="vol-tag">1480–1535</span>
+      <h4>Padma Tsewang Gyalpo</h4>
+      <p>The eighth Lingpa in the standard enumeration; a 16th-century tertön of significant influence in eastern Tibet.</p>
+    </div>
+  </div>
+
+  <h3>Other Cardinal Tertöns</h3>
+  <p>Beyond the formal groupings, several other tertöns are pivotal to the mainstream of Nyingma practice and deserve mention here:</p>
+
+  <div class="grid">
+    <div class="card">
+      <h4>Sangye Lama (1000–1080)</h4>
+      <p>The first tertön. Begins the entire historical tradition of treasure-revelation, four centuries after Padmasambhava's concealments.</p>
+    </div>
+    <div class="card">
+      <h4>Pema Ledreltsel (1291–1315)</h4>
+      <p>Brief-lived but consequential: revealer of the Khandro Nyingthig, prefiguring his own next rebirth as Longchenpa.</p>
+    </div>
+    <div class="card">
+      <h4>Orgyen Lingpa (1323–c.1360)</h4>
+      <p>Revealer of the <em>Pemathangyik</em>, the standard biography of Padmasambhava himself — itself a <em>terma</em>.</p>
+    </div>
+    <div class="card">
+      <h4>Jigme Lingpa (1730–1798)</h4>
+      <p>Revealer of the <em>Longchen Nyingthig</em> — a <em>gong-ter</em> arising from three visions of Longchenpa, and today the most widely practiced single Dzogchen cycle in the Nyingma world.</p>
+    </div>
+    <div class="card">
+      <h4>Chokgyur Dechen Lingpa (1829–1870)</h4>
+      <p>Friend, collaborator, and visionary partner of Jamyang Khyentse Wangpo and Jamgön Kongtrul. His many cycles, especially the <em>Lamey Tukdrub Barchey Künsel</em>, are central to nineteenth-century and modern Kagyü-Nyingma joint practice.</p>
+    </div>
+    <div class="card">
+      <h4>Dudjom Lingpa &amp; Dudjom Rinpoche</h4>
+      <p>The 19th–20th-century father–emanation pair whose <em>Dudjom Tersar</em> ("New Treasures of Dudjom") forms one of the most actively practiced contemporary <em>terma</em> cycles, especially in the Nyingma diaspora.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AUTHENTICATION -->
+<section id="authentication">
+  <div class="eyebrow">Discernment</div>
+  <h2>Authentication, Controversy &amp; the Question of Truth</h2>
+  <p>Because <em>terma</em> claims a very specific kind of authority — direct from Padmasambhava, untouched by intervening centuries — it has always been accompanied by an equally specific need for <strong>authentication</strong>. The tradition has elaborated criteria over centuries: prophecies in the Padmasambhava biographies that name the future tertön; the presence of a "treasure custodian" (<em>chödak</em>) appointed by previous prophecy; the recognition by senior masters of the tertön's identity as a particular reborn disciple; signs at the time of revelation (rainbows, trembling earth, dakini song, the witness of the local people); and the internal coherence and yogic efficacy of the revealed cycle when subsequently practiced.<sup class="fn"><a href="#ref15">15</a></sup></p>
+
+  <p>These standards have not prevented the appearance, across the centuries, of <em>terma</em> claims that the wider Nyingma community subsequently rejected as inauthentic. The tradition has its own internal critical apparatus — and it has used it. Senior masters in each generation have written authoritative judgments of which recent <em>terma</em> are reliable and which are not.</p>
+
+  <h3>The Sakya Pandita Critique</h3>
+  <p>The most famous external critique came from outside the Nyingma school: from <strong>Sakya Pandita Kunga Gyaltsen</strong> (1182–1251), the great Sakya scholar, whose <em>Distinguishing the Three Vows</em> argued that "fabricated tantras" had crept into Tibet under the cover of <em>terma</em>-status and that vigilance against apocrypha was a religious duty. Sakya Pandita's was a measured argument, not a rejection of <em>terma</em> as such — and indeed, by the 14th century the Sakya school itself was receiving <em>terma</em> teachings beginning with their third throne-holder. But his critique remains the classic statement of the skeptical case, and the tradition's serious answer to it produced a more rigorous internal authentication standard than would otherwise have emerged.<sup class="fn"><a href="#ref16">16</a></sup></p>
+
+  <h3>Modern Scholarship</h3>
+  <p>Contemporary academic study of <em>terma</em> begins, in English, with <strong>Janet Gyatso</strong>'s landmark <em>Apparitions of the Self: The Secret Autobiographies of a Tibetan Visionary</em> (Princeton, 1998), a translation and study of two extraordinary self-narratives by Jigme Lingpa. Gyatso's work treats <em>terma</em> as a distinctive Tibetan literary genre with its own conventions, semiotics, and metaphysics — and provides what remains the clearest scholarly account of the metaphysical process by which a treasure-text is held to be transmitted, the role of the dakini in that transmission, and the apparent paradox of an "advanced Buddhist practitioner steeped in 'no-self' producing an autobiography about his spiritual achievements."<sup class="fn"><a href="#ref17">17</a></sup></p>
+
+  <p>Other significant scholarly contributions include Tulku Thondup's <em>Hidden Teachings of Tibet</em> (Wisdom, 1986), which presents the tradition from within; David Germano and Janet Gyatso's "Longchenpa and the Possession of the Dakinis" (in <em>Tantra in Practice</em>, 2000); and the ongoing translation and analysis work of the Padmakara, Lotsawa House, and Tsadra Foundation projects, which have made significant portions of the Five Kings' and Eight Lingpas' cycles available in English for the first time.<sup class="fn"><a href="#ref18">18</a></sup></p>
+</section>
+
+<!-- LIVING TRADITION -->
+<section id="living">
+  <div class="eyebrow">Into the Present</div>
+  <h2>The Living Tradition</h2>
+  <p>What is striking about <em>terma</em> as a tradition is that it has not stopped. It is not, like the canon-formation of most religious traditions, a closed event in deep history. New <em>terma</em> have continued to appear in every generation — including the twentieth and twenty-first — and there is no traditional reason to expect them to stop.</p>
+
+  <p>The principal twentieth-century examples illustrate the continuing vitality of the form. <strong>Dudjom Lingpa</strong> (1835–1904), and his recognized emanation <strong>Dudjom Rinpoche</strong> (1904–1987), produced the <em>Dudjom Tersar</em> — twenty volumes of treasures, the last cycle of which was a <em>sa-ter</em> revealed under conditions of remarkable witness. <strong>Dilgo Khyentse Rinpoche</strong> (1910–1991) revealed his own cycles within the Khyentse line. <strong>Chatral Rinpoche</strong> (1913–2015), one of the most respected Nyingma yogins of the modern era, was an authenticated tertön. The pattern continues into the twenty-first century with masters such as <strong>Khandro Täre Lhamo</strong> (1938–2002) and <strong>Namkhai Norbu</strong> (1938–2018).</p>
+
+  <h3>The Great Compendia</h3>
+  <p>Two great nineteenth-century compendia preserve the bulk of the tradition's textual heritage:</p>
+
+  <div class="grid two">
+    <div class="card">
+      <h4>Rinchen Terdzö (Treasury of Precious Termas)</h4>
+      <p>Compiled by <strong>Jamgön Kongtrul Lodrö Tayé</strong> (1813–1899) under the encouragement of Jamyang Khyentse Wangpo. Sixty-three volumes gathering the most important <em>terma</em> from the eleventh through the nineteenth centuries — the indispensable single reference for any practicing master of the broader Nyingma <em>terma</em> heritage.<sup class="fn"><a href="#ref22">22</a></sup></p>
+    </div>
+    <div class="card">
+      <h4>Damngak Dzö &amp; the Five Treasuries</h4>
+      <p>Kongtrul's wider <em>Five Treasuries</em> project, of which the <em>Rinchen Terdzö</em> is one, also includes the <em>Damngak Dzö</em> (Treasury of Pith Instructions), the <em>Kagyü Ngakdzö</em>, the <em>Sheja Dzö</em>, and the <em>Gyachen Kadzö</em> — collectively a Rimé ("non-sectarian") preservation effort that saved tens of thousands of pages of practice-literature from the brink of loss.</p>
+    </div>
+  </div>
+
+  <p>The institutional inheritance of the <em>terma</em> tradition today flows through the Nyingma diaspora — Mindrolling, Palyul, Dzogchen, Shechen, and Kathok monasteries and their associated centers worldwide — and through the lay practice traditions of Bhutan and the Himalayan borderlands. Translation projects (notably Lotsawa House, the Padmakara Translation Group, and the Tsadra Foundation initiatives) are now, for the first time, making the bulk of the tradition's textual base accessible in English and other Western languages.</p>
+
+  <div class="pullquote">
+    "Since the first tertön Sangye Lama, right up until the present day, there have been over a thousand tertöns — and the tradition continues. New <em>terma</em> may appear in any generation in which the conditions and the prophesied person come together."
+    <cite>— Treasury of Lives, on the modes of Nyingma transmission</cite>
+  </div>
+</section>
+
+<!-- BIBLIOGRAPHY -->
+<section id="bibliography">
+  <div class="biblio">
+    <h3>Sources &amp; Further Reading</h3>
+    <ol>
+      <li id="ref1"><strong>"Terma (religion)"</strong> — Wikipedia. Standard overview of <em>terma</em>: definition, origin in Padmasambhava and Yeshe Tsogyal, role of tertöns, types. <a href="https://en.wikipedia.org/wiki/Terma_(religion)">en.wikipedia.org</a></li>
+      <li id="ref2"><strong>Jamgön Kongtrul Lodrö Tayé</strong>, <em>Rinchen Terdzö</em> (rin chen gter mdzod chen mo), 63 vols. — the great 19th-century compendium of <em>terma</em>. Discussed in <em>Treasury of Lives</em>, "Jamgön Kongtrul" entry. Counts of total tertöns ("over a thousand") from Rigpa Wiki, <em>Tertön</em>. <a href="https://www.rigpawiki.org/index.php?title=Tert%C3%B6n">rigpawiki.org</a></li>
+      <li id="ref3">Tulku Thondup, <em>Hidden Teachings of Tibet: An Explanation of the Terma Tradition of Tibetan Buddhism</em> (Wisdom Publications, 1986; rev. ed. 1997). The standard insider's exposition of how the tradition understands itself.</li>
+      <li id="ref4"><strong>Mind-mandate transmission</strong> (<em>gtad rgya</em>) — Rigpa Wiki, <em>Mind terma</em>. Mechanism of sealing teachings into a disciple's awareness-stream. <a href="https://www.rigpawiki.org/index.php?title=Mind_terma">rigpawiki.org</a></li>
+      <li id="ref5"><strong>Yeshe Tsogyal and dakini script</strong> — Erik Pema Kunsang's introduction to <em>Dakini Teachings: Padmasambhava's Oral Instructions to Lady Tsogyal</em> (Rangjung Yeshe Publications, 1990); Padmakara Translation Group's introduction to <em>Lady of the Lotus-Born</em> (Shambhala, 1999). <a href="https://rywiki.tsadra.org/index.php/Dakini_Teachings">rywiki.tsadra.org</a></li>
+      <li id="ref6"><strong>"Terma" / Near Lineage</strong> — Tibetan Buddhist Encyclopedia, <em>Kama, Terma and Pure Vision Lines of Transmission</em>. <a href="https://www.tibetanbuddhistencyclopedia.com/en/index.php/Kama,_Terma_and_Pure_Vision_Lines_of_transmission">tibetanbuddhistencyclopedia.com</a></li>
+      <li id="ref7">Three modes (<em>sa-ter</em>, <em>gong-ter</em>, <em>dak-nang</em>) — Wikipedia, <em>Terma (religion)</em>; New World Encyclopedia, <em>Terma (Buddhism)</em>; Rigpa Wiki, <em>Mind terma</em>. <a href="https://www.newworldencyclopedia.org/entry/Terma_(Buddhism)">newworldencyclopedia.org</a></li>
+      <li id="ref8"><strong>Padmasambhava</strong> — Treasury of Lives biography by Alexander Gardner. <a href="https://treasuryoflives.org/biographies/view/Padmasambhava/9617">treasuryoflives.org</a>; Yeshe Tsogyal &amp; Nyangrel Nyima Özer, <em>The Lotus-Born: The Life Story of Padmasambhava</em>, trans. Erik Pema Kunsang (Shambhala, 1999).</li>
+      <li id="ref9"><strong>Yeshe Tsogyal</strong> — Wikipedia. <a href="https://en.wikipedia.org/wiki/Yeshe_Tsogyal">en.wikipedia.org</a>; Treasury of Lives entry. The principal hagiography is the <em>Mother of Knowledge: The Enlightenment of Yeshe Tsogyal</em> revealed by Taksham Nüden Dorje.</li>
+      <li id="ref10">Concealment as historical preparation against persecution — Dudjom Rinpoche, <em>The Nyingma School of Tibetan Buddhism: Its Fundamentals and History</em>, trans. Gyurme Dorje &amp; Matthew Kapstein (Wisdom, 1991), vol. 1.</li>
+      <li id="ref11"><strong>"The 25 Disciples of Padmasambhava"</strong> (<em>rje 'bangs nyer lnga</em>) — Mandalas Life list with biographical detail; Rigpa Wiki entries for each major disciple. <a href="https://mandalas.life/list/padmasambhava-and-his-25-disciples/">mandalas.life</a></li>
+      <li id="ref12">Tertöns as incarnations of the twenty-five — Treasury of Lives, <em>The Modes of Transmission of Nyingma Teachings</em>. <a href="https://treasuryoflives.org/bo/foundations/view/9">treasuryoflives.org</a></li>
+      <li id="ref13"><strong>"Five Tertön Kings"</strong> — Wikipedia, <em>Tertön</em>; Rigpa Wiki, <em>Tertön</em>. The standard enumeration: Nyangrel Nyima Özer, Guru Chöwang, Dorje Lingpa, Pema Lingpa, Jamyang Khyentse Wangpo. <a href="https://en.wikipedia.org/wiki/Tert%C3%B6n">en.wikipedia.org</a></li>
+      <li id="ref14"><strong>Eight Great Lingpas</strong> — Tibetan Buddhist Encyclopedia, <em>Eight Lingpas</em>. <a href="https://tibetanbuddhistencyclopedia.com/en/index.php/Eight_Lingpas">tibetanbuddhistencyclopedia.com</a></li>
+      <li id="ref15">Authentication criteria — Tulku Thondup, <em>Hidden Teachings of Tibet</em>, ch. on signs and recognition of tertöns; Dudjom Rinpoche, <em>Nyingma School</em>, vol. 1.</li>
+      <li id="ref16"><strong>Sakya Pandita Kunga Gyaltsen (1182–1251)</strong>, <em>sDom gsum rab dbye</em> ("Distinguishing the Three Vows"). Discussed in Janet Gyatso, <em>Apparitions of the Self</em>, ch. 4.</li>
+      <li id="ref17"><strong>Janet Gyatso</strong>, <em>Apparitions of the Self: The Secret Autobiographies of a Tibetan Visionary</em> (Princeton University Press, 1998). <a href="https://press.princeton.edu/books/paperback/9780691009483/apparitions-of-the-self">press.princeton.edu</a></li>
+      <li id="ref18">Modern translation projects — Lotsawa House (<a href="https://www.lotsawahouse.org/">lotsawahouse.org</a>); Padmakara Translation Group; Tsadra Foundation (<a href="https://tsadra.org/">tsadra.org</a>).</li>
+      <li id="ref19"><strong>Sangye Lama (1000–1080)</strong>, the first tertön — Rigpa Wiki. <a href="https://www.rigpawiki.org/index.php?title=Sangy%C3%A9_Lama">rigpawiki.org</a></li>
+      <li id="ref20"><strong>Pema Lingpa (1450–1521)</strong> and the Burning Lake — Wikipedia, <em>Pema Lingpa</em>. <a href="https://en.wikipedia.org/wiki/Pema_Lingpa">en.wikipedia.org</a></li>
+      <li id="ref21"><strong>Karma Lingpa</strong> and the <em>Bardo Tödrol</em> — Rigpa Wiki, <em>Karma Lingpa</em>. <a href="https://www.rigpawiki.org/index.php?title=Karma_Lingpa">rigpawiki.org</a></li>
+      <li id="ref22"><strong>Jamgön Kongtrul Lodrö Tayé</strong> and the <em>Five Treasuries</em> — Treasury of Lives biography; introductions to the multi-volume English translations of the <em>Treasury of Knowledge</em> and the <em>Treasury of Precious Instructions</em> (Snow Lion / Shambhala).</li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="mark">· Terma · Hidden Treasures of the Lotus-Born ·</div>
+  <div class="tibetan-phrase">"Concealed in the eighth century · revealed when the time is ripe."</div>
+</footer>
+
+</body>
+</html>

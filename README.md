@@ -8,15 +8,19 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 1. Clone the repository
 2. Install dependencies: `npm install`
-3. Set up environment variables:
-   - Copy `.env.example` to `.env`
-   - Add your OpenAI API key to `.env`
-   - Get your API key from [OpenAI API Keys](https://platform.openai.com/api-keys)
-4. Start the development server: `npm start`
+3. Start the development server: `npm start`
+4. Click **Rigpa AI** in the sidebar and enter your OpenAI API key when prompted
+
+No `.env` file is required. Your API key is entered via the in-app modal and stored in your browser's `localStorage` — it is never committed to the repository or sent anywhere other than OpenAI.
+
+Get an API key at [platform.openai.com/api-keys](https://platform.openai.com/api-keys).
 
 ## Features
 
-- **Rigpa AI Chat**: Interactive AI assistant for Dzogchen-related questions
+- **Rigpa AI Chat**: Interactive AI assistant for Dzogchen-related questions, powered by GPT-4o with RAG over the knowledge base
+- **API Key Management**: Enter, update, or clear your OpenAI API key via the 🔑 button in the chat header — stored locally in your browser
+- **Knowledge Base Manager**: Add custom texts to ground AI responses via semantic search (RAG)
+- **Dzogchen Lineages**: In-depth presentations on Longchen Nyingthig, Dudjom Tersar, Namchö, Khandro Nyingthig, and Nyingthig Yabshi
 - **Dzogchen Terms Dictionary**: Comprehensive glossary of Buddhist terms
 - **Tibetan Alphabet Learning**: Interactive Tibetan script reference
 - **Spiritual Gallery**: Collection of deity images and lineage masters

@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nyingthig Yabshi — The Fourfold Heart Essence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --emerald:       #134d3b;
+    --deep-emerald:  #0a3628;
+    --forest:        #1e5d4a;
+    --moss:          #2d7a5e;
+    --gold:          #c9a86a;
+    --bright-gold:   #e2c387;
+    --cream:         #f6efe1;
+    --parchment:     #faf4e3;
+    --ink:           #1d2a22;
+    --soft-ink:      #3e4e44;
+    --rule:          rgba(19, 77, 59, 0.22);
+    --card:          #fffaf0;
+    --shadow:        0 12px 34px rgba(10, 54, 40, 0.14);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+    font-size: 19px;
+    line-height: 1.68;
+    color: var(--ink);
+    background: var(--parchment);
+  }
+  a { color: var(--emerald); text-decoration: none; border-bottom: 1px dotted var(--forest); transition: color .2s ease; }
+  a:hover { color: var(--deep-emerald); border-bottom-color: var(--gold); }
+
+  /* ===== NAV ===== */
+  nav.top {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(10, 54, 40, 0.96);
+    border-bottom: 1px solid rgba(201, 168, 106, 0.4);
+    backdrop-filter: blur(6px);
+  }
+  nav.top .nav-inner {
+    max-width: 1180px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 28px;
+  }
+  nav.top .brand {
+    font-family: 'Cinzel', serif;
+    color: var(--bright-gold);
+    font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase;
+    border-bottom: none;
+  }
+  nav.top ul {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; gap: 22px; flex-wrap: wrap; justify-content: flex-end;
+  }
+  nav.top a {
+    color: var(--cream);
+    font-family: 'Cinzel', serif;
+    font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    border-bottom: none;
+    padding: 4px 2px;
+  }
+  nav.top a:hover { color: var(--bright-gold); }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    padding: 110px 28px 130px;
+    background:
+      radial-gradient(ellipse at 25% 30%, rgba(201,168,106,0.22), transparent 55%),
+      radial-gradient(ellipse at 75% 70%, rgba(45,122,94,0.30), transparent 60%),
+      linear-gradient(155deg, #0a3628 0%, #134d3b 55%, #071e15 100%);
+    color: var(--cream);
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero::before, .hero::after {
+    content: "";
+    position: absolute;
+    border: 1px dashed rgba(226,195,135,0.28);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .hero::before {
+    width: 340px; height: 340px;
+    left: -150px;
+  }
+  .hero::after {
+    width: 340px; height: 340px;
+    right: -150px;
+  }
+  .hero > * { position: relative; z-index: 1; }
+  .hero .ornament {
+    font-family: 'Cinzel', serif;
+    color: var(--bright-gold);
+    letter-spacing: 0.5em;
+    font-size: 13px;
+    margin-bottom: 22px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(42px, 6vw, 76px);
+    line-height: 1.08;
+    margin: 0 0 18px;
+    color: var(--cream);
+    letter-spacing: 0.01em;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--bright-gold);
+    font-weight: 500;
+  }
+  .hero .tibetan {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: #bfd9c9;
+    font-size: 22px;
+    margin: 8px 0 26px;
+    letter-spacing: 0.06em;
+  }
+  .hero .subtitle {
+    max-width: 760px; margin: 0 auto;
+    font-size: 21px; line-height: 1.55;
+    color: #ece2c8;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+  }
+  .hero .byline {
+    margin-top: 38px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .hero .divider {
+    width: 80px; height: 1px; margin: 14px auto 0;
+    background: var(--gold);
+  }
+
+  /* ===== LAYOUT ===== */
+  main { max-width: 960px; margin: 0 auto; padding: 0 28px; }
+  section { padding: 72px 0 32px; scroll-margin-top: 80px; }
+  section + section { border-top: 1px solid var(--rule); }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(30px, 3.8vw, 44px);
+    color: var(--deep-emerald);
+    margin: 0 0 6px;
+    letter-spacing: 0.005em;
+    line-height: 1.15;
+  }
+  h2 + .eyebrow { margin-top: -4px; margin-bottom: 30px; }
+  .eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--forest);
+    margin-bottom: 10px;
+  }
+  h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--emerald);
+    margin: 34px 0 10px;
+    letter-spacing: 0.01em;
+  }
+  h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--forest);
+    margin: 22px 0 6px;
+  }
+  p { margin: 0 0 18px; }
+
+  .dropcap::first-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 68px;
+    font-weight: 500;
+    float: left;
+    line-height: 0.9;
+    padding: 8px 12px 0 0;
+    color: var(--emerald);
+  }
+
+  /* ===== PULL QUOTE ===== */
+  .pullquote {
+    margin: 34px 0;
+    padding: 28px 34px;
+    border-left: 3px solid var(--gold);
+    background: linear-gradient(90deg, rgba(201,168,106,0.10), transparent);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--soft-ink);
+  }
+  .pullquote cite {
+    display: block;
+    margin-top: 14px;
+    font-family: 'Cinzel', serif;
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--forest);
+  }
+
+  /* ===== CARDS ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+    margin: 26px 0 8px;
+  }
+  .grid.two { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--gold);
+    padding: 22px 22px 20px;
+    box-shadow: var(--shadow);
+  }
+  .card h4 {
+    margin-top: 0;
+    color: var(--deep-emerald);
+  }
+  .card .vol-tag {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(19, 77, 59, 0.08);
+    padding: 3px 8px;
+    margin-bottom: 10px;
+  }
+  .card p { font-size: 17px; line-height: 1.55; margin-bottom: 0; }
+
+  /* ===== TIMELINE ===== */
+  .timeline {
+    position: relative;
+    padding-left: 38px;
+    margin: 30px 0 10px;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 12px; top: 4px; bottom: 4px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--gold), var(--forest), var(--gold));
+  }
+  .tl-item { position: relative; padding: 6px 0 22px; }
+  .tl-item::before {
+    content: "";
+    position: absolute;
+    left: -33px; top: 12px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--parchment);
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,106,0.18);
+  }
+  .tl-date {
+    font-family: 'Cinzel', serif;
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--forest);
+    margin-bottom: 2px;
+  }
+  .tl-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 600;
+    color: var(--deep-emerald);
+    margin-bottom: 4px;
+  }
+  .tl-body { font-size: 17px; line-height: 1.55; color: var(--soft-ink); }
+
+  /* ===== STAT BANNER ===== */
+  .stat-banner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+    margin: 36px 0 22px;
+    padding: 28px 18px;
+    background: linear-gradient(135deg, #0a3628 0%, #134d3b 100%);
+    color: var(--cream);
+    border: 1px solid var(--gold);
+  }
+  .stat {
+    text-align: center;
+    padding: 6px 10px;
+    border-right: 1px solid rgba(201,168,106,0.28);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 500;
+    color: var(--bright-gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: #ece2c8;
+  }
+
+  /* ===== YABSHI DIAGRAM ===== */
+  .yabshi-diagram {
+    margin: 30px 0;
+    padding: 28px 22px;
+    background: #fdf7e8;
+    border: 1px solid var(--rule);
+  }
+  .yabshi-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 14px;
+  }
+  .yabshi-row.last { margin-bottom: 0; }
+  .yabshi-cell {
+    padding: 18px 18px 14px;
+    background: #fffbf0;
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--gold);
+  }
+  .yabshi-cell.synth {
+    border-left: 4px solid var(--moss);
+    background: linear-gradient(90deg, rgba(45,122,94,0.08), #fffbf0 40%);
+  }
+  .yc-role {
+    font-family: 'Cinzel', serif;
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--moss);
+    margin-bottom: 4px;
+  }
+  .yc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--deep-emerald);
+    margin-bottom: 4px;
+  }
+  .yc-note {
+    font-size: 15px;
+    color: var(--soft-ink);
+    line-height: 1.5;
+  }
+
+  /* ===== FOOTNOTES ===== */
+  sup.fn {
+    font-size: 11px;
+    vertical-align: super;
+    line-height: 0;
+  }
+  sup.fn a {
+    color: var(--forest);
+    border-bottom: none;
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    padding: 0 1px;
+  }
+  sup.fn a:hover { color: var(--gold); }
+
+  /* ===== BIBLIOGRAPHY ===== */
+  .biblio {
+    background: #fdf7e8;
+    border: 1px solid var(--rule);
+    padding: 32px 34px 28px;
+    margin: 10px 0 40px;
+  }
+  .biblio h3 {
+    margin-top: 0;
+    color: var(--deep-emerald);
+  }
+  .biblio ol {
+    font-size: 16px;
+    line-height: 1.55;
+    padding-left: 22px;
+  }
+  .biblio li { margin-bottom: 10px; color: var(--soft-ink); }
+  .biblio li a { color: var(--emerald); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    padding: 46px 20px 60px;
+    color: var(--forest);
+    border-top: 1px solid var(--rule);
+    background: linear-gradient(180deg, transparent, rgba(19,77,59,0.04));
+  }
+  footer .mark {
+    font-family: 'Cinzel', serif;
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--emerald);
+  }
+  footer .tibetan-phrase {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--soft-ink);
+    margin-top: 12px;
+    font-size: 18px;
+  }
+
+  @media (max-width: 620px) {
+    nav.top .nav-inner { flex-direction: column; gap: 10px; padding: 12px 18px; }
+    nav.top ul { gap: 14px; }
+    .hero { padding: 70px 20px 80px; }
+    .pullquote { padding: 20px 22px; font-size: 20px; }
+    .biblio { padding: 22px 20px; }
+    .yabshi-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top">
+  <div class="nav-inner">
+    <a href="#top" class="brand">Nyingthig Yabshi</a>
+    <ul>
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#name">The Name</a></li>
+      <li><a href="#two-lineages">Two Lineages</a></li>
+      <li><a href="#vimalamitra">Vimalamitra</a></li>
+      <li><a href="#concealed">Hidden Centuries</a></li>
+      <li><a href="#longchenpa">Longchenpa</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#volumes">Thirteen Volumes</a></li>
+      <li><a href="#living">Living Lineage</a></li>
+      <li><a href="#bibliography">Bibliography</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="ornament">· Nyingma Dzogchen Research ·</div>
+  <h1>Nyingthig Yabshi<br /><em>The Fourfold Heart Essence</em></h1>
+  <div class="tibetan">སྙིང་ཐིག་ཡ་བཞི &nbsp;·&nbsp; snying thig ya bzhi</div>
+  <p class="subtitle">The thirteen-volume compendium in which Longchen Rabjam wove together the two great streams of Dzogchen innermost-essence transmission — Vimalamitra's line from India and Padmasambhava's line through the dakinis — into a single, complete corpus that has anchored the Nyingma <em>menngagde</em> transmission ever since.</p>
+  <div class="byline">A Deep Research Presentation</div>
+  <div class="divider"></div>
+</header>
+
+<main>
+
+<!-- INTRODUCTION -->
+<section id="introduction">
+  <div class="eyebrow">Prologue</div>
+  <h2>The Treasury That Contains All the Other Treasuries</h2>
+  <p class="dropcap">Among the vast literatures of Tibetan Buddhism, one collection holds a place apart: the <em>Nyingthig Yabshi</em>, or <em>Fourfold Heart Essence</em>. It is not a single revelation; it is not a single author's work. It is the <strong>great compendium</strong> — the collection in which the fourteenth-century master Longchen Rabjam (Longchenpa, 1308–1364) gathered, edited, and synthesized the whole extant body of the oldest Dzogchen pith-instruction (<em>menngagde</em>) teachings into one coherent, thirteen-volume architecture.<sup class="fn"><a href="#ref1">1</a></sup></p>
+
+  <p>In doing so, Longchenpa solved a problem the Nyingma tradition had carried for five centuries. By his time the Dzogchen "Heart-Essence" instruction — the innermost level of the Great Perfection — had reached Tibet along two parallel lines: the <strong>Vima Nyingthig</strong> from the Indian <em>paṇḍita</em> Vimalamitra, transmitted to Tibet in the 780s under King Trisong Detsen, and the <strong>Khandro Nyingthig</strong> from Padmasambhava, sealed in dakini form and hidden as terma. Each line had its own history of concealment, rainbow-body transmission, rediscovery, and near-loss. Each had its own commentaries and practice cycles. Each was nearly impossible to practice by itself.<sup class="fn"><a href="#ref2">2</a></sup></p>
+
+  <p>Longchenpa united them. He re-edited both root cycles, composed a companion commentary to each — the <em>Lama Yangtig</em> for the Vima, the <em>Khandro Yangtig</em> for the Khandro — and then wrote a third, synthesizing work, the <em>Zabmo Yangtig</em>, that distills the essence of both. The resulting five-part, thirteen-volume collection is the <strong>Nyingthig Yabshi</strong>.<sup class="fn"><a href="#ref3">3</a></sup></p>
+
+  <div class="pullquote">
+    "The Nyingthig Yabshi is the practice aspect of Longchenpa's writings and the basis of the Old Nyingthig — a thirteen-volume collection in which he synthesized the Vima Nyingtik of Vimalamitra and the Khandro Nyingtik of Guru Rinpoche, and explained all the practical details in the light of his own realization."
+    <cite>— Rigpa Wiki, <em>Nyingtik Yabshyi</em></cite>
+  </div>
+
+  <div class="stat-banner">
+    <div class="stat">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Sections · Yabshi</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Component Cycles</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">13</div>
+      <div class="stat-label">Canonical Volumes</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">380+</div>
+      <div class="stat-label">Individual Texts</div>
+    </div>
+  </div>
+</section>
+
+<!-- THE NAME -->
+<section id="name">
+  <div class="eyebrow">Philology</div>
+  <h2>What "Nyingthig Yabshi" Means</h2>
+  <p>The Tibetan <em>snying thig ya bzhi</em> translates word by word as "heart-drop, the fourfold." <strong>Nyingthig</strong> (<em>snying thig</em>) — "heart essence" or "heart drop" — is the technical name for the innermost, most distilled class of Dzogchen teachings: the pith-instruction (<em>menngagde</em>) cycle, considered the pinnacle of the three classes of Dzogchen (<em>semde</em>, <em>longde</em>, <em>menngagde</em>).<sup class="fn"><a href="#ref4">4</a></sup> <strong>Yabshi</strong> (<em>ya bzhi</em>) means "having four parts" or "the fourfold set." Thus: <em>The Fourfold Heart Essence</em>.<sup class="fn"><a href="#ref5">5</a></sup></p>
+
+  <p>The "four" in the title is not arbitrary. It reflects a traditional architecture of <strong>two mothers</strong> (<em>ma</em>) and <strong>two children</strong> (<em>bu</em>): two root-tantra cycles and their two companion commentaries. Longchenpa's fifth work, the Zabmo Yangtig, is the synthesizing key that ties the four together — sometimes counted separately, sometimes as the crown of the fourfold architecture.<sup class="fn"><a href="#ref5">5</a></sup></p>
+</section>
+
+<!-- TWO LINEAGES -->
+<section id="two-lineages">
+  <div class="eyebrow">Origins</div>
+  <h2>Two Streams, One Ocean</h2>
+  <p>The Nyingthig Yabshi carries two distinct streams of transmission. Both descend, in the traditional Nyingma account, from the primordial Buddha <strong>Samantabhadra</strong> through the dharmakāya lineage, into the sambhogakāya vidyādhara Vajrasattva, and then into the human world through <strong>Garab Dorje</strong>, the first human Dzogchen lineage holder. From Garab Dorje the teachings flow to <strong>Mañjuśrīmitra</strong>, then to <strong>Śrī Siṃha</strong> — and from Śrī Siṃha the two streams diverge.<sup class="fn"><a href="#ref6">6</a></sup></p>
+
+  <div class="grid two">
+    <div class="card">
+      <h4>The Indian Stream · Vima Nyingthig</h4>
+      <p>Śrī Siṃha — <strong>Jñānasūtra</strong> — <strong>Vimalamitra</strong> — into Tibet (late 8th c.) — Nyang Tingdzin Zangpo and four others. Concealed at Samye Chimphu. Later restored through Chetsün Sengé Wangchuk's rainbow-body transmission and through direct <em>terma</em> rediscovery.</p>
+    </div>
+    <div class="card">
+      <h4>The Dakini Stream · Khandro Nyingthig</h4>
+      <p>Śrī Siṃha — <strong>Padmasambhava</strong> — Princess Pema Sal (sealed by the syllable <em>NRI</em>) and Yeshe Tsogyal — concealed in the Dakpo region. Recovered as terma by <strong>Pema Ledreltsel</strong> (r. 1313) and transmitted through Gyalse Lekden to Longchenpa.</p>
+    </div>
+  </div>
+
+  <p>By the fourteenth century, both streams had reached Longchenpa: the Vima through the Chetsün line of oral transmission, the Khandro through the short, recently revealed terma line. He received them both — and recognized that together they formed a single complete system.</p>
+</section>
+
+<!-- VIMALAMITRA -->
+<section id="vimalamitra">
+  <div class="eyebrow">Late 8th Century</div>
+  <h2>Vimalamitra — The Master Who Comes Every Hundred Years</h2>
+  <p>Vimalamitra (<em>dri med bshes gnyen</em>, "Stainless Friend") was, by traditional account, born in Western India. He trained under three of the greatest Indian Dzogchen masters — <strong>Buddhaguhya</strong>, <strong>Jñānasūtra</strong>, and <strong>Śrī Siṃha</strong> — and received from them the complete transmission of the Great Perfection. He is regarded, alongside Padmasambhava and Vairotsana, as one of the three founding forefathers of Dzogchen in Tibet, and in particular as the foremost transmitter of the <em>Instruction Class</em> (<em>menngagde</em>).<sup class="fn"><a href="#ref7">7</a></sup></p>
+
+  <p>Invited by emissaries of <strong>King Trisong Detsen</strong>, Vimalamitra came to Tibet in the late 8th century. Over thirteen years at the royal court and at Samye monastery, he translated tantras, established the Dzogchen <em>menngagde</em> transmission, and, in the room known as <strong>Atsé Barkhang</strong> at Samye, bestowed the Innermost Secret Nyingthig of Dzogpachenpo in strictest secrecy to five disciples: <strong>King Trisong Detsen</strong> himself, <strong>Prince Muné Tsenpo</strong>, <strong>Nyangben Tingdzin Zangpo</strong>, and the great translators <strong>Kawa Paltsek</strong> and <strong>Chokro Lui Gyaltsen</strong>.<sup class="fn"><a href="#ref8">8</a></sup></p>
+
+  <p>Before leaving Tibet, Vimalamitra concealed the texts of his innermost teaching at <strong>Samye Chimphu</strong>, sealing them for the sake of future generations — a precaution, it turned out, that saved the lineage during the dark age of persecution under King Langdarma. Vimalamitra himself departed for <strong>Wutai Shan</strong>, the sacred five-peaked mountain in China, where tradition holds he remains to this day in a rainbow body, promising to send an emanation back to Tibet every hundred years so long as the teaching endures.<sup class="fn"><a href="#ref9">9</a></sup></p>
+
+  <div class="pullquote">
+    "The quintessence of Vimalamitra's teaching is known as the <em>Vima Nyingthig</em> — one of the Heart-Essence teachings of the Great Perfection. Having translated these extremely profound instructions, he concealed the texts at Samye Chimphu for the sake of future generations."
+    <cite>— Treasury of Lives, <em>Vimalamitra</em></cite>
+  </div>
+</section>
+
+<!-- CONCEALED / HIDDEN CENTURIES -->
+<section id="concealed">
+  <div class="eyebrow">9th–13th Centuries</div>
+  <h2>The Hidden Centuries — Rainbow Body in the Dark Age</h2>
+  <p>Of Vimalamitra's five Tibetan disciples, <strong>Nyang Tingdzin Zangpo</strong> became the principal preserver. He practiced the Vima Nyingthig for fifty-five years, attaining ultimate realization, and then — knowing that a time of persecution was coming — hid the explanatory tantras in various locations within the Uru Shai Lhakhang temple, so that the teaching would survive whatever came.<sup class="fn"><a href="#ref10">10</a></sup></p>
+
+  <p>When the persecution came (under King Langdarma, r. 838–841), the Nyingma kama-lineage (oral) tantras of Dzogchen were indeed nearly lost. But Nyang Tingdzin Zangpo's hidden texts remained. He transmitted the oral pith-instructions to <strong>Bé Lodrö Wangchuk</strong>, attained the rainbow body — his physical form dissolving into light — and passed from the world.<sup class="fn"><a href="#ref10">10</a></sup></p>
+
+  <h3>The Chetsün Line</h3>
+  <p>The oral-instruction stream then passed from Bé Lodrö Wangchuk to <strong>Dangma Lhundrup Gyaltsen</strong>, and from him to the eleventh-century master <strong>Chetsün Sengé Wangchuk</strong>. Chetsün Sengé Wangchuk's role was pivotal: for an entire month he received a direct visionary transmission from <strong>Vimalamitra himself</strong>, who appeared to him in his wisdom body and bestowed the complete Vima Nyingthig.<sup class="fn"><a href="#ref11">11</a></sup></p>
+
+  <p>At the age of 125, having completed his mission of preserving and transmitting the cycle, Chetsün Sengé Wangchuk attained the rainbow body — vanishing bodily into the sky in a cloud of rainbow light. The Vima Nyingthig thus reached the fourteenth century partly as "hidden treasure" (<em>terma</em>) and partly as "unbroken oral transmission" (<em>kama</em>) — a dual tradition of exceptional purity precisely because it had been carried, at key junctures, by masters who had literally left the ordinary world in bodies of light.<sup class="fn"><a href="#ref11">11</a></sup></p>
+
+  <h3>The Dakini Line</h3>
+  <p>Meanwhile, the Khandro Nyingthig had lain completely concealed. Padmasambhava's transmission to Princess Pema Sal was sealed by the wrathful dakini-protectress Shaza Khamoche at the rock of Daklha Tramo Drak in Dakpo, and would remain hidden until the early fourteenth century — when Pema Sal's rebirth, the tertön <strong>Pema Ledreltsel</strong>, revealed the cycle in 1313, transmitted it to his chief disciple <strong>Gyalse Lekden</strong>, and — dying young — predicted his own next rebirth, who would complete the work: Longchen Rabjam.<sup class="fn"><a href="#ref12">12</a></sup></p>
+</section>
+
+<!-- LONGCHENPA -->
+<section id="longchenpa">
+  <div class="eyebrow">1308–1364</div>
+  <h2>Longchen Rabjam — The Compiler</h2>
+  <p>Longchenpa is, by broad consensus, the greatest scholar-yogin in the entire Nyingma tradition — an astonishing polymath whose collected writings run to more than 250 titles spanning sutra, tantra, philosophy, poetry, and pith-instruction. Born in 1308 in central Tibet, identified as the reincarnation of Pema Ledreltsel, he received both Nyingthig streams during his early years and devoted the rest of his life to preserving, editing, and transmitting them.<sup class="fn"><a href="#ref13">13</a></sup></p>
+
+  <p>From <strong>Kumārāja</strong>, his root guru, Longchenpa received the full Vima Nyingthig line descended through Chetsün Sengé Wangchuk. From <strong>Gyalse Lekden</strong>, he received the Khandro Nyingthig in its newly revealed form. Then — at his hermitage at <strong>Gangri Thökar</strong>, south of Lhasa — he began the work of his maturity: composing his own companion treasures and commentaries, editing the mother cycles for clarity, and constructing the Nyingthig Yabshi as a single architectural whole.<sup class="fn"><a href="#ref13">13</a></sup></p>
+
+  <p>What Longchenpa produced was not a simple anthology. It was a re-organization of an entire literature in the light of his own realization. In his editing and his commentaries, he reconciled apparent differences between the two streams; he filled in missing empowerment liturgies; he wrote new pith-instruction manuals where the root texts had only offered aphorisms; and he composed synthesizing works that drew the whole together. The Nyingthig Yabshi is — in the phrase most often used by later tradition — <strong>"the practice-aspect of Longchenpa's writings."</strong><sup class="fn"><a href="#ref14">14</a></sup></p>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <div class="eyebrow">Structure</div>
+  <h2>The Fourfold Architecture</h2>
+  <p>The logic of the Nyingthig Yabshi is a pairing of <strong>mothers</strong> and <strong>children</strong>. Each of the two root-terma cycles (the "mothers," <em>ma yig</em>) is accompanied by Longchenpa's own companion cycle (the "children," <em>bu yig</em>) — composed partly as commentary, partly as revealed mind-treasure (<em>dgongs gter</em>). A fifth, synthesizing collection, the Zabmo Yangtig, draws the essence of both lines into one integrated path.<sup class="fn"><a href="#ref15">15</a></sup></p>
+
+  <div class="yabshi-diagram">
+    <div class="yabshi-row">
+      <div class="yabshi-cell">
+        <div class="yc-role">Mother · Indian Line</div>
+        <div class="yc-title">Vima Nyingthig</div>
+        <div class="yc-note">The Heart Essence of Vimalamitra — root terma &amp; kama texts preserving the late 8th-century Indian transmission.</div>
+      </div>
+      <div class="yabshi-cell">
+        <div class="yc-role">Child · Longchenpa's Commentary</div>
+        <div class="yc-title">Lama Yangtik</div>
+        <div class="yc-note">The <em>Wish-Fulfilling Jewel</em> — 35 treatises expanding the Vima cycle, with its four empowerments (elaborate, simple, extremely simple, utterly simple).</div>
+      </div>
+    </div>
+    <div class="yabshi-row">
+      <div class="yabshi-cell">
+        <div class="yc-role">Mother · Dakini Line</div>
+        <div class="yc-title">Khandro Nyingthig</div>
+        <div class="yc-note">The Heart Essence of the Dakinis — Padmasambhava's transmission to Princess Pema Sal, revealed in 1313 by Pema Ledreltsel.</div>
+      </div>
+      <div class="yabshi-cell">
+        <div class="yc-role">Child · Longchenpa's Commentary</div>
+        <div class="yc-title">Khandro Yangtik</div>
+        <div class="yc-note">The <em>Innermost Essence of the Dakinis</em> — Longchenpa's mind-treasure companion, written amid visions of Guru Rinpoche and Yeshe Tsogyal.</div>
+      </div>
+    </div>
+    <div class="yabshi-row last">
+      <div class="yabshi-cell synth" style="grid-column: 1 / -1;">
+        <div class="yc-role">Synthesis · The Key</div>
+        <div class="yc-title">Zabmo Yangtik</div>
+        <div class="yc-note">The <em>Profound Quintessence</em> — Longchenpa's own distillation drawing both mothers and both children into a single, compressed path of practice. Often regarded as the most concentrated distillation of the entire collection.</div>
+      </div>
+    </div>
+  </div>
+
+  <p>This fourfold (or strictly speaking fivefold) architecture is the reason the collection is called the <em>Yabshi</em> — "Fourfold" — even though the thirteen-volume edition contains five component cycles. The "four" refers to the mother/child pairing: <strong>two mothers, two children</strong>. The Zabmo Yangtig stands above, or outside, the enumeration: it is the synthesizing crown of the whole architecture.<sup class="fn"><a href="#ref15">15</a></sup></p>
+
+  <div class="pullquote">
+    "The Vima Nyingtik and Khandro Nyingtik are the 'mother' Nyingtik texts; the Lama Yangtik and Khandro Yangtik are the 'child' texts — hence another common name for the collection, the <em>Four Mother and Child Sections of Nyingtik</em>."
+    <cite>— Rangjung Yeshe Wiki, <em>Nyingtik Yabshi</em></cite>
+  </div>
+</section>
+
+<!-- VOLUMES -->
+<section id="volumes">
+  <div class="eyebrow">Contents</div>
+  <h2>The Thirteen Volumes</h2>
+  <p>The most widely known edition of the Nyingthig Yabshi runs to thirteen volumes. The ordering below follows the traditional Adzom Chögar and Derge arrangements used in most modern printings.<sup class="fn"><a href="#ref16">16</a></sup></p>
+
+  <div class="grid">
+    <div class="card">
+      <span class="vol-tag">Volumes 1–2</span>
+      <h4>Lama Yangtik</h4>
+      <p>Longchenpa's <em>Wish-Fulfilling Jewel</em> — his 35-treatise commentary cycle on the Vima Nyingthig, mainly grounded in the Dzogchen <em>Garland of Pearls</em> tantra. Contains the four empowerments and their pith instructions.</p>
+    </div>
+    <div class="card">
+      <span class="vol-tag">Volumes 3–6</span>
+      <h4>Vima Nyingthig</h4>
+      <p>The root "mother" cycle transmitted from Vimalamitra — four volumes encompassing tantra, sadhana, empowerment liturgy, and pith instruction, including the core Seventeen Tantras reference framework.</p>
+    </div>
+    <div class="card">
+      <span class="vol-tag">Volumes 7–9</span>
+      <h4>Khandro Yangtik</h4>
+      <p>Longchenpa's three-volume <em>Innermost Essence of the Dakinis</em> — his mind-treasure companion to the Khandro Nyingthig. Central works include the <em>Precious Treasury of Meaningful Words</em>, the <em>Precious Golden Garland</em>, and the <em>Cloud Oceans of the Profound Meaning</em>.</p>
+    </div>
+    <div class="card">
+      <span class="vol-tag">Volumes 10–11</span>
+      <h4>Khandro Nyingthig</h4>
+      <p>The root "mother" cycle of Padmasambhava's line: the <em>Six Tantras of Liberation-by-Wearing</em> and the <em>Three Testaments of the Buddha</em>, with their associated empowerments and instruction texts, as revealed by Pema Ledreltsel.</p>
+    </div>
+    <div class="card">
+      <span class="vol-tag">Volumes 12–13</span>
+      <h4>Zabmo Yangtik</h4>
+      <p>Longchenpa's two-volume <em>Profound Quintessence</em> — the synthesizing cycle drawing together the key-points of both mother streams into a single compressed path, itself subsequently used by Jigme Lingpa as a structural model for the <em>Longchen Nyingthig</em>.</p>
+    </div>
+    <div class="card">
+      <span class="vol-tag">All Volumes</span>
+      <h4>Scope of the Whole</h4>
+      <p>More than 380 individual texts; genres ranging from history, biography, and lineage-narrative to tantra, sādhana, empowerment ritual, offering liturgy, dakini-song, and pith-instruction manuals. Arguably the most comprehensive single corpus of Dzogchen <em>menngagde</em> preserved in any language.</p>
+    </div>
+  </div>
+
+  <p>The 13-volume Adzom Chögar edition was published at Derge in 1808, combining the Lama Yangtik and Khandro Yangtik collections into print form alongside the root cycles; contemporary scholarly editions (including those catalogued at Rangjung Yeshe Texts Archive and at the Buddhist Digital Resource Center) follow substantially the same structure.<sup class="fn"><a href="#ref17">17</a></sup></p>
+</section>
+
+<!-- LIVING LINEAGE -->
+<section id="living">
+  <div class="eyebrow">Into the Present</div>
+  <h2>The Living Lineage</h2>
+  <p>Because Longchenpa compiled the Yabshi to serve as the complete <em>menngagde</em> curriculum of the Nyingma tradition, the collection has been a living, actively transmitted body of teaching for nearly seven centuries. Every major Dzogchen master since Longchenpa has held at least some portion of it, and many have held the whole.</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-date">14th Century</div>
+      <div class="tl-title">Longchen Rabjam (1308–1364)</div>
+      <div class="tl-body">Compiles the Yabshi at Gangri Thökar; composes the Lama Yangtik, Khandro Yangtik, and Zabmo Yangtig; transmits the complete Khandro Nyingthig to eight fortunate disciples at Samye Chimphu.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">18th Century</div>
+      <div class="tl-title">Jigme Lingpa (1730–1798)</div>
+      <div class="tl-body">Receives the entire Yabshi transmission; in a further series of three visions, Longchenpa himself appears and compresses the lineage into a "short" transmission. Jigme Lingpa then reveals the <em>Longchen Nyingthig</em> — a gongter cycle that functions as a condensed, practice-oriented refraction of the Yabshi's essentials. Between Longchenpa and Jigme Lingpa there are otherwise fourteen intervening masters.<sup class="fn"><a href="#ref18">18</a></sup></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">19th Century</div>
+      <div class="tl-title">Patrul, Nyoshul, Khenpo Ngaga</div>
+      <div class="tl-body">The line passes from Jigme Lingpa to Jigme Gyalwe Nyugu, then to <strong>Patrul Rinpoche</strong>, then to <strong>Nyoshul Lungtok Tenpe Nyima</strong>, who transmits to <strong>Khenchen Ngakgi Wangpo (Khenpo Ngaga)</strong>. Each was a principal pillar of the Yabshi transmission in his generation.<sup class="fn"><a href="#ref19">19</a></sup></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">19th Century · Rimé</div>
+      <div class="tl-title">Jamyang Khyentse Wangpo (1820–1892)</div>
+      <div class="tl-body">The co-founder of the Rimé (non-sectarian) movement, recognized as the rebirth of Chetsün Sengé Wangchuk himself. Preserves and re-transmits the full Yabshi, and reveals the <em>Chetsün Nyingtik</em> as a gongter drawing directly on Vimalamitra's teachings — a fresh revelation from within the same lineage he had held eight hundred years earlier.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">20th Century</div>
+      <div class="tl-title">Dilgo Khyentse Rinpoche (1910–1991)</div>
+      <div class="tl-body">The principal holder of the Khyentse lineage after the passing of Jamyang Khyentse Chökyi Lodrö. By the age of sixty-four, he had given the combined empowerments of the Nyingthig Yabshi and the Longchen Nyingthig more than ten times; the Jigme Lingpa oral transmission, more rarely — twice in Bhutan and once in India. Carried the complete transmission into the Nyingma diaspora.<sup class="fn"><a href="#ref20">20</a></sup></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">Late 20th Century</div>
+      <div class="tl-title">Penor Rinpoche (1932–2009)</div>
+      <div class="tl-body">3rd Drubwang Pema Norbu, Palyul throneholder, receives the complete Nyingthig Yabshi with detailed textual explanation from Dilgo Khyentse — carrying the line into the Palyul monastic network worldwide and ensuring that formal study of the Yabshi continued in exile.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2023–</div>
+      <div class="tl-title">Nyingtik Yabzhi Translation Project</div>
+      <div class="tl-body">Launched September 2023 under Lotsawa House with funding from the Tsadra Foundation, senior advisor <strong>Alak Zenkar Rinpoche</strong>. The first large-scale scholarly effort to translate the complete thirteen-volume collection into English. Initial focus: the Lama Yangtig section, with the Vima Nyingthig and Khandro cycles to follow.<sup class="fn"><a href="#ref21">21</a></sup></div>
+    </div>
+  </div>
+
+  <h3>The Yabshi's Place in Today's Nyingma World</h3>
+  <p>Every living Nyingma Dzogchen lineage draws, at some level, on the Nyingthig Yabshi. Jigme Lingpa's Longchen Nyingthig is structurally a Yabshi-derivative; Dudjom Lingpa and Dudjom Rinpoche's Tersar cycles refine Yabshi practice methods with new terma; the Namchö of Mingyur Dorje is a parallel stream that nevertheless operates on the same underlying <em>menngagde</em> framework. When contemporary Dzogchen teachers speak of trekchö and tögal, of the four visions, of rainbow body, of pointing-out transmission and the four empowerments — they are speaking from a vocabulary that Longchenpa, working with what Vimalamitra and Padmasambhava had left behind, assembled and stabilized into a single coherent architecture seven hundred years ago.<sup class="fn"><a href="#ref22">22</a></sup></p>
+</section>
+
+<!-- BIBLIOGRAPHY -->
+<section id="bibliography">
+  <div class="biblio">
+    <h3>Sources &amp; Further Reading</h3>
+    <ol>
+      <li id="ref1"><strong>"Nyingtik Yabshyi"</strong> — Rigpa Wiki. Foundational article on the compilation, its 13-volume structure, and Longchenpa's role as editor and synthesizer. <a href="https://www.rigpawiki.org/index.php?title=Nyingtik_Yabshyi">rigpawiki.org</a></li>
+      <li id="ref2"><strong>"Nyingtik Yabshi"</strong> — Rangjung Yeshe Wiki. Includes commentary on the distinction between the Vima and Khandro streams and their independent transmission histories. <a href="https://rywiki.tsadra.org/index.php/Nyingtik_Yabshi">rywiki.tsadra.org</a></li>
+      <li id="ref3">Dezhung Rinpoche, <em>Survey of the Nyingtik Yabzhi and the Longchen Nyingtik</em> — Lotsawa House. Contemporary scholarly overview of the structure and contents. <a href="https://www.lotsawahouse.org/tibetan-masters/dezhung-rinpoche/nyingtik-yabzhi-longchen-nyingtik-survey">lotsawahouse.org</a></li>
+      <li id="ref4">David Germano, "Architecture and Absence in the Secret Tantric History of the Great Perfection" (<em>Journal of the International Association of Buddhist Studies</em> 17.2, 1994) — standard Western scholarly treatment of the <em>snying thig</em> literary category.</li>
+      <li id="ref5"><strong>"Nyingthig Yabzhi"</strong> — Tibetan Buddhist Encyclopedia. Confirms the "two mothers, two children" pairing and the supplemental role of the Zabmo Yangtig. <a href="https://www.tibetanbuddhistencyclopedia.com/en/index.php?title=Nyingthig_Yabzhi">tibetanbuddhistencyclopedia.com</a></li>
+      <li id="ref6">Dudjom Rinpoche, <em>The Nyingma School of Tibetan Buddhism: Its Fundamentals and History</em>, trans. Gyurme Dorje &amp; Matthew Kapstein (Wisdom, 1991), vol. 1 — classical Nyingma account of the trans-human Dzogchen lineage from Samantabhadra through Garab Dorje, Mañjuśrīmitra, and Śrī Siṃha.</li>
+      <li id="ref7"><strong>Vimalamitra</strong> — Treasury of Lives biography. <a href="https://treasuryoflives.org/biographies/view/Vimalamitra/9985">treasuryoflives.org</a>; Wikipedia, "Vimalamitra." <a href="https://en.wikipedia.org/wiki/Vimalamitra">en.wikipedia.org</a></li>
+      <li id="ref8">Five Tibetan disciples at Atsé Barkhang, Samye — Khenpo Namdrol Rinpoche, <em>Nyingtik Yabshyi: Its Origins and Transmission</em> (Rangjung Yeshe Texts Archive PDF). <a href="https://rywikitexts.tsadra.org/images/e/eb/Nyingtik_Yabshyi_(khenpo_namdrol_intro).pdf">rywikitexts.tsadra.org</a></li>
+      <li id="ref9">Concealment at Samye Chimphu, departure for Wutai Shan, and the hundred-year emanation promise — Tibetan Buddhist Encyclopedia, <em>Vimalamitra</em>. <a href="https://tibetanbuddhistencyclopedia.com/en/index.php/Vimalamitra">tibetanbuddhistencyclopedia.com</a></li>
+      <li id="ref10"><strong>Nyang Tingdzin Zangpo</strong> — Rigpa Wiki and Tibetan Buddhist Encyclopedia. Fifty-five-year retreat, textual concealment at Uru Shai Lhakhang, transmission to Bé Lodrö Wangchuk, attainment of rainbow body. <a href="https://www.rigpawiki.org/index.php?title=Nyang_Tingdzin_Zangpo">rigpawiki.org</a></li>
+      <li id="ref11"><strong>Chetsün Sengé Wangchuk</strong> — Rigpa Wiki and Rangjung Yeshe Wiki. Direct visionary transmission from Vimalamitra; attainment of rainbow body at 125. <a href="https://www.rigpawiki.org/index.php?title=Chets%C3%BCn_Seng%C3%A9_Wangchuk">rigpawiki.org</a>; <a href="https://rywiki.tsadra.org/index.php/Chetsun_Senge_Wangchuk">rywiki.tsadra.org</a></li>
+      <li id="ref12">Khandro Nyingthig revelation by Pema Ledreltsel (1291–1315) — Rangjung Yeshe Wiki entry. <a href="https://rywiki.tsadra.org/index.php/Pema_Ledrel_Tsal">rywiki.tsadra.org</a></li>
+      <li id="ref13"><strong>Longchen Rabjam (1308–1364)</strong> — Alexander Gardner, Treasury of Lives. <a href="https://treasuryoflives.org/biographies/view/Longchenpa-Drime-Wozer/P1583">treasuryoflives.org</a>; Wikipedia, "Longchenpa." <a href="https://en.wikipedia.org/wiki/Longchenpa">en.wikipedia.org</a></li>
+      <li id="ref14">Jampa Mackenzie Stewart, <em>The Life of Longchenpa: The Omniscient Dharma King of the Vast Expanse</em> (Shambhala / Snow Lion, 2013) — chapters on the composition of the Yangtik cycles at Gangri Thökar.</li>
+      <li id="ref15">Mother–child architecture — Rigpa Wiki, <em>Nyingtik Yabshyi</em> and <em>Lama Yangtik</em>. The Lama Yangtik is explicitly a 35-treatise commentary cycle on the Vima Nyingthig, centered on the Dzogchen <em>Garland of Pearls</em> tantra. <a href="https://www.rigpawiki.org/index.php?title=Lama_Yangtik">rigpawiki.org</a></li>
+      <li id="ref16">13-volume layout (Lama Yangtik vols 1–2; Vima Nyingthig vols 3–6; Khandro Yangtik vols 7–9; Khandro Nyingthig vols 10–11; Zabmo Yangtig vols 12–13) — Vimala Treasures, 13-Volume Nyingthig Yabshi. <a href="https://vimalatreasures.org/products/nyingthig-yabshi-by-kunkyen-longchen-rabjam-13-volumes">vimalatreasures.org</a></li>
+      <li id="ref17">Adzom Chögar and Derge printings (1808) — Rigpa Wiki, <em>Nyingtik Yabshyi Index Adzom</em>. <a href="https://www.rigpawiki.org/index.php?title=Nyingtik_Yabshyi_Index_Adzom">rigpawiki.org</a></li>
+      <li id="ref18"><strong>Jigme Lingpa (1730–1798)</strong> — the fourteen-master intervening lineage and the three visionary encounters with Longchenpa which compressed the line. Tulku Thondup, <em>Masters of Meditation and Miracles</em> (Shambhala, 1996); Lotsawa House, <em>Longchen Nyingtik Series</em>. <a href="https://www.lotsawahouse.org/topics/longchen-nyingtik/">lotsawahouse.org</a></li>
+      <li id="ref19">Patrul Rinpoche — Nyoshul Lungtok — Khenchen Ngakgi Wangpo (Khenpo Ngaga) — Longchen Nyingtik Institute, "Lineage." <a href="https://nyingtik.org/lineage/">nyingtik.org</a></li>
+      <li id="ref20"><strong>Dilgo Khyentse Rinpoche (1910–1991)</strong> — Tulku Thondup, <em>A Brief Biography of Dilgo Khyentse Rinpoche</em>, republished at the Tibetan Buddhist Altar site. Confirms the 10+ combined Yabshi / Longchen Nyingthig empowerments and the three oral-transmission occasions for Jigme Lingpa. <a href="https://www.tibetanbuddhistaltar.org/a-brief-biography-of-dilgo-khyentse-rinpoche-tulku-thondup/">tibetanbuddhistaltar.org</a></li>
+      <li id="ref21"><strong>Nyingtik Yabzhi Translation Project</strong> — Lotsawa House project page. Launched September 2023, Tsadra Foundation funding, senior advisor Alak Zenkar Rinpoche. <a href="https://www.lotsawahouse.org/about/nyingtik-yabzhi-project">lotsawahouse.org</a></li>
+      <li id="ref22">Structural relationship of the Nyingthig Yabshi to later cycles (Longchen Nyingthig, Dudjom Tersar, Namchö, Chetsün Nyingthig) — Matthieu Ricard, <em>General Bibliographical Notes</em>, Rangjung Yeshe Wiki. <a href="https://rywiki.tsadra.org/index.php/General_Bibliographical_Notes_from_Matthieu_Ricard">rywiki.tsadra.org</a></li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="mark">· Nyingthig Yabshi · The Fourfold Heart Essence ·</div>
+  <div class="tibetan-phrase">"Two streams, one ocean — the whole tradition held in a single architecture."</div>
+</footer>
+
+</body>
+</html>
