@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/rigpa-web-app-2/static/css/main.cda0bf47.css",
-    "main.js": "/rigpa-web-app-2/static/js/main.e1eb2ccd.js",
+    "main.css": "/rigpa-web-app-2/static/css/main.91dbbc94.css",
+    "main.js": "/rigpa-web-app-2/static/js/main.54789cfc.js",
     "index.html": "/rigpa-web-app-2/index.html",
-    "main.cda0bf47.css.map": "/rigpa-web-app-2/static/css/main.cda0bf47.css.map",
-    "main.e1eb2ccd.js.map": "/rigpa-web-app-2/static/js/main.e1eb2ccd.js.map"
+    "main.91dbbc94.css.map": "/rigpa-web-app-2/static/css/main.91dbbc94.css.map",
+    "main.54789cfc.js.map": "/rigpa-web-app-2/static/js/main.54789cfc.js.map"
   },
   "entrypoints": [
-    "static/css/main.cda0bf47.css",
-    "static/js/main.e1eb2ccd.js"
+    "static/css/main.91dbbc94.css",
+    "static/js/main.54789cfc.js"
   ]
 }
