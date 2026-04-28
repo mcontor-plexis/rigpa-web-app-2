@@ -1198,7 +1198,7 @@ const App = () => {
         ) : activeMenu === 'dzogchen-terms' ? (
           // Dzogchen Terms Content
           <div className="dzogchen-terms-main-content">
-            <DzogchenTermsMainContent onClose={() => setActiveMenu(null)} />
+            <DzogchenTermsMainContent onClose={() => setActiveMenu(null)} apiKey={effectiveApiKey} />
           </div>
         ) : activeMenu === 'chat' ? (
           // Chat Content
