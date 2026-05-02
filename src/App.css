@@ -2249,6 +2249,310 @@ button:disabled {
   }
 }
 
+/* ── Tibetan Grammar Main Content ─────────────────────────────────────────── */
+
+.grammar-main-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  border: 1px solid #444;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.grammar-main-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.grammar-main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background-color: #1f1f1f;
+  border: 2px solid #333;
+  border-radius: 9px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.grammar-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.grammar-main-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.grammar-subtitle {
+  font-family: "Noto Sans Tibetan", "Microsoft Himalaya", "Tibetan Machine Uni", serif;
+  color: #fbbf24;
+  font-size: 16px;
+}
+
+.grammar-main-header .close-button {
+  background: none;
+  border: 2px solid #555;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.grammar-main-header .close-button:hover {
+  background-color: #dc2626;
+  border-color: #dc2626;
+}
+
+.grammar-tabs-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 0 2px 10px;
+  flex-shrink: 0;
+}
+
+.grammar-tab-btn {
+  background: #2a2a2a;
+  border: 1px solid #444;
+  color: #9ca3af;
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.grammar-tab-btn:hover {
+  background: #333;
+  color: #e0e0e0;
+  border-color: #666;
+}
+
+.grammar-tab-btn.active {
+  background: #1d4ed8;
+  border-color: #3b82f6;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.grammar-body {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.grammar-tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 20px;
+}
+
+.grammar-intro-box {
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-left: 4px solid #3b82f6;
+  border-radius: 8px;
+  padding: 14px 18px;
+  color: #d1d5db;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.grammar-intro-box strong {
+  color: #93c5fd;
+}
+
+.grammar-intro-box em {
+  color: #fbbf24;
+}
+
+/* Grammar Cards Grid */
+.grammar-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 16px;
+}
+
+.grammar-card {
+  background: #1f1f1f;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.grammar-card-title {
+  color: #60a5fa;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.grammar-rule {
+  color: #d1d5db;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.grammar-example {
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.grammar-tibetan {
+  font-family: "Noto Sans Tibetan", "Microsoft Himalaya", "Tibetan Machine Uni", serif;
+  font-size: 20px;
+  color: #fbbf24;
+  line-height: 1.6;
+}
+
+.grammar-wylie {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #a78bfa;
+  font-style: italic;
+}
+
+.grammar-english {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.grammar-note {
+  font-size: 12px;
+  color: #6b7280;
+  font-style: italic;
+  margin: 0;
+  padding-top: 4px;
+  border-top: 1px solid #2a2a2a;
+}
+
+/* Stacked consonants grid */
+.grammar-stack-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.grammar-stack-example {
+  background: #2d2d2d;
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  padding: 14px 20px;
+  text-align: center;
+  min-width: 140px;
+}
+
+.grammar-stack-example .tibetan-letter {
+  font-size: 32px;
+  margin-bottom: 6px;
+}
+
+.grammar-stack-example .wylie {
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.grammar-stack-example .sound {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* Common Patterns Tab */
+.pattern-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pattern-row {
+  background: #1f1f1f;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: grid;
+  grid-template-columns: 160px 1fr 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.pattern-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #60a5fa;
+}
+
+.pattern-formula {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #a78bfa;
+  font-style: italic;
+  font-family: "Noto Sans Tibetan", "Microsoft Himalaya", serif;
+}
+
+.pattern-example {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+@media (max-width: 900px) {
+  .grammar-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pattern-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .grammar-tabs-bar {
+    gap: 4px;
+  }
+
+  .grammar-tab-btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
 /* Full Screen Image Modal Styles */
 .fullscreen-modal-overlay {
   position: fixed;
