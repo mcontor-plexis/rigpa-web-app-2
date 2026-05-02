@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import './App.css';
 import DzogchenTermsMainContent from './components/DzogchenTermsMainContent';
+import TibetanGrammarMainContent from './components/TibetanGrammarMainContent';
 import KnowledgeBaseManager from './components/KnowledgeBaseManager';
 import { ragService } from './services/ragService';
 import { dzogchenTermsData } from './components/DzogchenTermsData';
@@ -34,7 +35,7 @@ const App = () => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [showGalleryModal, setShowGalleryModal] = useState(false);
   const [showLineageMastersModal, setShowLineageMastersModal] = useState(false);
-  const [showTibetanAlphabetModal, setShowTibetanAlphabetModal] = useState(false);
+  const showTibetanAlphabetModal = false;
   const [showLongchenNyingthigModal, setShowLongchenNyingthigModal] = useState(false);
   const [showDudjomTersarModal, setShowDudjomTersarModal] = useState(false);
   const [showNamchoModal, setShowNamchoModal] = useState(false);
@@ -181,11 +182,13 @@ const App = () => {
     }
 
     if (menuId === 'help') {
-      setActiveMenu('help'); // Show editor in main content
+      setActiveMenu('help');
     } else if (menuId === 'dzogchen-terms') {
-      setActiveMenu('dzogchen-terms'); // Show Dzogchen Terms in main content
+      setActiveMenu('dzogchen-terms');
     } else if (menuId === 'chat') {
-      setActiveMenu('chat'); // Show chat in main content
+      setActiveMenu('chat');
+    } else if (menuId === 'tibetan-grammar') {
+      setActiveMenu('tibetan-grammar');
     } else {
       setActiveMenu(activeMenu === menuId ? null : menuId);
     }
@@ -198,8 +201,6 @@ const App = () => {
       setShowLineageMastersModal(true);
     } else if (parentLabel === 'Galleries' && subItem === 'Contemporary Masters') {
       setShowContemporaryMastersModal(true);
-    } else if (parentLabel === 'Tibetan Grammer' && subItem === 'Tibetan Alphabet') {
-      setShowTibetanAlphabetModal(true);
     } else if (parentLabel === 'Dzogchen Lineages' && subItem === 'Longchen Nyingthig') {
       setShowLongchenNyingthigModal(true);
     } else if (parentLabel === 'Dzogchen Lineages' && subItem === 'Dudjom Tersar') {
@@ -216,7 +217,6 @@ const App = () => {
   const closeAllModals = () => {
     setShowGalleryModal(false);
     setShowLineageMastersModal(false);
-    setShowTibetanAlphabetModal(false);
     setShowLongchenNyingthigModal(false);
     setShowDudjomTersarModal(false);
     setShowNamchoModal(false);
@@ -485,11 +485,7 @@ const App = () => {
   const menuItems = [
     { id: 'chat', label: 'Rigpa AI', subItems: [] },
     { id: 'dzogchen-terms', label: 'Master Dzogchen Terms', subItems: [] },
-    {
-      id: 'dictionary',
-      label: 'Tibetan Grammer',
-      subItems: ['Tibetan Alphabet']
-    },
+    { id: 'tibetan-grammar', label: 'Tibetan Grammar', subItems: [] },
     { id: 'terma-tradition', label: 'Terma Tradition', subItems: [] },
     {
       id: 'lineages',
@@ -1200,6 +1196,10 @@ const App = () => {
           <div className="dzogchen-terms-main-content">
             <DzogchenTermsMainContent onClose={() => setActiveMenu(null)} apiKey={effectiveApiKey} />
           </div>
+        ) : activeMenu === 'tibetan-grammar' ? (
+          <div className="grammar-main-wrapper">
+            <TibetanGrammarMainContent onClose={() => setActiveMenu(null)} />
+          </div>
         ) : activeMenu === 'chat' ? (
           // Chat Content
           <div className="chat-main-content">
@@ -1409,13 +1409,13 @@ const App = () => {
         </div>
       )}
 
-      {/* Tibetan Alphabet Modal */}
+      {/* Tibetan Alphabet Modal — content moved to TibetanGrammarMainContent */}
       {showTibetanAlphabetModal && (
         <div className="gallery-modal-overlay" onClick={closeAllModals}>
           <div className="gallery-modal" onClick={(e) => e.stopPropagation()}>
             <div className="gallery-modal-header">
               <h2>Tibetan Alphabet</h2>
-			  <button className="close-button" onClick={closeAllModals}>
+              <button className="close-button" onClick={closeAllModals}>
                 ×
               </button>
             </div>
