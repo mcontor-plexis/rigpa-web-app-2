@@ -217,6 +217,7 @@ const App = () => {
   const closeAllModals = () => {
     setShowGalleryModal(false);
     setShowLineageMastersModal(false);
+    setShowContemporaryMastersModal(false);
     setShowLongchenNyingthigModal(false);
     setShowDudjomTersarModal(false);
     setShowNamchoModal(false);
@@ -1856,13 +1857,26 @@ const App = () => {
               <div className="deity-info-box">
                 <div className="deity-info-header">
                   <h3>{currentDeityInfo.title}</h3>
-                  <button
-                    className="info-close-button"
-                    onClick={toggleDeityInfo}
-                    title="Close information"
-                  >
-                    ×
-                  </button>
+                  <div className="deity-info-header-actions">
+                    <button
+                      className="ask-ai-btn"
+                      onClick={() => {
+                        closeFullScreenImage();
+                        closeAllModals();
+                        handleAskAI(`Tell me more about ${currentDeityInfo.title} in the context of Tibetan Buddhism and Dzogchen. ${currentDeityInfo.description || currentDeityInfo.info}`);
+                      }}
+                      title="Ask Rigpa AI about this"
+                    >
+                      Ask AI
+                    </button>
+                    <button
+                      className="info-close-button"
+                      onClick={toggleDeityInfo}
+                      title="Close information"
+                    >
+                      ×
+                    </button>
+                  </div>
                 </div>
                 <div className="deity-info-content">
                   <p>{currentDeityInfo.description || currentDeityInfo.info}</p>

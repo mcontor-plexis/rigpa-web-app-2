@@ -2706,6 +2706,12 @@ button:disabled {
   font-weight: 600;
 }
 
+.deity-info-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .info-close-button {
   background: none;
   border: 2px solid #555;
