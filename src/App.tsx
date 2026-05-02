@@ -279,8 +279,9 @@ const App = () => {
     }
   };
 
-  const sendMessage = async () => {
-    if (!input.trim()) return;
+  const sendMessage = async (messageOverride?: string) => {
+    const msg = messageOverride ?? input;
+    if (!msg.trim()) return;
 
     // Check if API key is available
     if (!hasApiKey) {
@@ -288,25 +289,25 @@ const App = () => {
         sender: 'assistant',
         content: 'No API key configured. Click **🔑 API Key** in the chat header to add your OpenAI API key.'
       };
-      setMessages(prev => [...prev, { sender: 'user', content: input }, errorMessage]);
-      setInput('');
+      setMessages(prev => [...prev, { sender: 'user', content: msg }, errorMessage]);
+      if (!messageOverride) setInput('');
       return;
     }
 
-    const userMessage: Message = { sender: 'user', content: input };
+    const userMessage: Message = { sender: 'user', content: msg };
     setMessages(prev => [...prev, userMessage]);
     setLoading(true);
-    setInput('');
+    if (!messageOverride) setInput('');
 
     try {
       // Base system prompt
       const baseSystemPrompt = 'You are Rigpa AI, an expert in Tibetan Language and Buddhist Philosophy. Answer all questions with deep knowledge of Dzogchen, Buddhist history, and Tibetan culture. Be clear, respectful, and cite traditional sources when possible. Where ever possible insert the Tibetan term with the English transliteration along with the Tibetan script for any Tibetan terms referenced.';
-      
+
       // Get enhanced prompt with RAG context if enabled and initialized
       let systemPrompt = baseSystemPrompt;
       if (ragEnabled && ragInitialized) {
         try {
-          systemPrompt = await ragService.getEnhancedPrompt(input, baseSystemPrompt);
+          systemPrompt = await ragService.getEnhancedPrompt(msg, baseSystemPrompt);
         } catch (error) {
           console.error('RAG retrieval error, using base prompt:', error);
         }
@@ -331,7 +332,7 @@ const App = () => {
               role: m.sender === 'user' ? 'user' : 'assistant',
               content: m.content
             })),
-            { role: 'user', content: input }
+            { role: 'user', content: msg }
           ],
           max_tokens: 4000,
         }),
@@ -358,6 +359,11 @@ const App = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleAskAI = (question: string) => {
+    setActiveMenu('chat');
+    sendMessage(question);
   };
 
   const openFullScreenImage = (src: string, title: string, info?: any) => {
@@ -1198,7 +1204,7 @@ const App = () => {
           </div>
         ) : activeMenu === 'tibetan-grammar' ? (
           <div className="grammar-main-wrapper">
-            <TibetanGrammarMainContent onClose={() => setActiveMenu(null)} />
+            <TibetanGrammarMainContent onClose={() => setActiveMenu(null)} onAskAI={handleAskAI} />
           </div>
         ) : activeMenu === 'chat' ? (
           // Chat Content
@@ -1286,7 +1292,7 @@ const App = () => {
                   placeholder={hasApiKey ? 'Type your message...' : 'Add an API key to enable AI chat'}
                   disabled={loading || !hasApiKey}
                 />
-                <button onClick={sendMessage} disabled={loading || !input.trim() || !hasApiKey}>
+                <button onClick={() => sendMessage()} disabled={loading || !input.trim() || !hasApiKey}>
                   Send
                 </button>
               </div>

@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 interface Props {
   onClose: () => void;
+  onAskAI?: (question: string) => void;
 }
 
 const TABS = ['Script & Sounds', 'Sentence Structure', 'Particles', 'Verb System', 'Nouns & Honorifics', 'Common Patterns'] as const;
 type Tab = typeof TABS[number];
+
+const AskAIContext = createContext<((q: string) => void) | undefined>(undefined);
 
 // ── Shared primitives ─────────────────────────────────────────────────────────
 
@@ -30,20 +33,35 @@ interface GrammarCardProps {
   examples?: { tibetan: string; wylie: string; english: string }[];
   note?: string;
 }
-const GrammarCard: React.FC<GrammarCardProps> = ({ title, rule, examples, note }) => (
-  <div className="grammar-card">
-    <h4 className="grammar-card-title">{title}</h4>
-    <p className="grammar-rule">{rule}</p>
-    {examples && examples.map((ex, i) => (
-      <div key={i} className="grammar-example">
-        <div className="grammar-tibetan">{ex.tibetan}</div>
-        <div className="grammar-wylie">{ex.wylie}</div>
-        <div className="grammar-english">{ex.english}</div>
+const GrammarCard: React.FC<GrammarCardProps> = ({ title, rule, examples, note }) => {
+  const askAI = useContext(AskAIContext);
+  const question = `I'm studying Tibetan grammar. Can you give me a deeper explanation of "${title}" with additional examples? Here is the rule I'm reading: ${rule}`;
+  return (
+    <div className="grammar-card">
+      <div className="grammar-card-header">
+        <h4 className="grammar-card-title">{title}</h4>
+        {askAI && (
+          <button
+            className="ask-ai-btn"
+            onClick={() => askAI(question)}
+            title="Ask Rigpa AI to explain this rule"
+          >
+            Ask AI
+          </button>
+        )}
       </div>
-    ))}
-    {note && <p className="grammar-note">{note}</p>}
-  </div>
-);
+      <p className="grammar-rule">{rule}</p>
+      {examples && examples.map((ex, i) => (
+        <div key={i} className="grammar-example">
+          <div className="grammar-tibetan">{ex.tibetan}</div>
+          <div className="grammar-wylie">{ex.wylie}</div>
+          <div className="grammar-english">{ex.english}</div>
+        </div>
+      ))}
+      {note && <p className="grammar-note">{note}</p>}
+    </div>
+  );
+};
 
 // ── Tab: Script & Sounds ──────────────────────────────────────────────────────
 
@@ -562,38 +580,40 @@ const CommonPatternsTab: React.FC = () => (
 
 // ── Main Component ────────────────────────────────────────────────────────────
 
-const TibetanGrammarMainContent: React.FC<Props> = ({ onClose }) => {
+const TibetanGrammarMainContent: React.FC<Props> = ({ onClose, onAskAI }) => {
   const [activeTab, setActiveTab] = useState<Tab>('Script & Sounds');
 
   return (
-    <div className="grammar-main-content">
-      <div className="grammar-main-header">
-        <div className="grammar-header-left">
-          <h2>Tibetan Grammar</h2>
-          <span className="grammar-subtitle">བོད་སྐད་ཀྱི་བརྡ་སྤྲོད།</span>
+    <AskAIContext.Provider value={onAskAI}>
+      <div className="grammar-main-content">
+        <div className="grammar-main-header">
+          <div className="grammar-header-left">
+            <h2>Tibetan Grammar</h2>
+            <span className="grammar-subtitle">བོད་སྐད་ཀྱི་བརྡ་སྤྲོད།</span>
+          </div>
+          <button className="close-button" onClick={onClose}>×</button>
         </div>
-        <button className="close-button" onClick={onClose}>×</button>
+        <div className="grammar-tabs-bar">
+          {TABS.map(tab => (
+            <button
+              key={tab}
+              className={`grammar-tab-btn${activeTab === tab ? ' active' : ''}`}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+        <div className="grammar-body">
+          {activeTab === 'Script & Sounds' && <ScriptAndSoundsTab />}
+          {activeTab === 'Sentence Structure' && <SentenceStructureTab />}
+          {activeTab === 'Particles' && <ParticlesTab />}
+          {activeTab === 'Verb System' && <VerbSystemTab />}
+          {activeTab === 'Nouns & Honorifics' && <NounsAndHonorificsTab />}
+          {activeTab === 'Common Patterns' && <CommonPatternsTab />}
+        </div>
       </div>
-      <div className="grammar-tabs-bar">
-        {TABS.map(tab => (
-          <button
-            key={tab}
-            className={`grammar-tab-btn${activeTab === tab ? ' active' : ''}`}
-            onClick={() => setActiveTab(tab)}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
-      <div className="grammar-body">
-        {activeTab === 'Script & Sounds' && <ScriptAndSoundsTab />}
-        {activeTab === 'Sentence Structure' && <SentenceStructureTab />}
-        {activeTab === 'Particles' && <ParticlesTab />}
-        {activeTab === 'Verb System' && <VerbSystemTab />}
-        {activeTab === 'Nouns & Honorifics' && <NounsAndHonorificsTab />}
-        {activeTab === 'Common Patterns' && <CommonPatternsTab />}
-      </div>
-    </div>
+    </AskAIContext.Provider>
   );
 };
 
